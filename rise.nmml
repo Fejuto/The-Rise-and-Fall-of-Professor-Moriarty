@@ -2,8 +2,8 @@
 <project>
 	<app title="rise" file="rise" main="Main" version="0.0.1" company="Zaphod" />
 	
-	<window width="640" height="480" fps="30" orientation="portrait" resizable="true" if="web" />
-	<window width="640" height="480" fps="30" orientation="landscape" fullscreen="false" unless="web" />
+	<window width="640" height="480" fps="60" orientation="portrait" resizable="true" if="web" />
+	<window width="640" height="480" fps="60" orientation="landscape" fullscreen="false" unless="web" />
  	<ios compiler="gcc" />
  	
 	<set name="BUILD_DIR" value="export" />
@@ -48,8 +48,9 @@
 	<assets path="assets/data" include="*.png" type="image" />
 	<assets path="assets/data/vcr" include="*.png" type="image" />
 	<assets path="assets/data/vis" include="*.png" type="image" />
+	<assets path="assets/rise" include="*.swf"/>
 	
-	<icon name="assets/HaxeFlixel.svg" />
+	<!--<icon name="assets/HaxeFlixel.svg" />-->
 	
 	<haxelib name="nme" />
 	<haxelib name="flixel"/>

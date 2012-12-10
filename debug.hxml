@@ -1,0 +1,11 @@
+-main Main 
+-cp source
+-lib nme
+-lib flixel
+-D web
+-swf-version 10.1
+-swf9 bin/swf/rise.swf
+-swf-header 640:480:60:ffffff
+-cp export/flash/haxe
+--no-inline
+-debug

@@ -8,6 +8,7 @@ import nme.events.KeyboardEvent;
 import nme.Lib;
 import nme.ui.Keyboard;
 import org.flixel.FlxGame;
+import nme.installer.Assets;
 
 /**
  * @author Joshua Granick
@@ -27,7 +28,7 @@ class Main extends Sprite
 	
 	private function init(?e:Event = null):Void 
 	{
-		/*if (hasEventListener(Event.ADDED_TO_STAGE))
+		if (hasEventListener(Event.ADDED_TO_STAGE))
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 		}
@@ -39,7 +40,7 @@ class Main extends Sprite
 		
 		#if (cpp || neko)
 		Lib.current.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUP);
-		#end*/
+		#end
 	}
 	
 	#if (cpp || neko)
