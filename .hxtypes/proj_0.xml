@@ -1192,137 +1192,6 @@
 	See [Type] for the haXe Reflection API.</haxe_doc></class>
 	<class path="EnumValue" params="" file="/usr/lib/haxe/std/EnumValue.hx" extern="1"><haxe_doc>An abstract type that represents any enum value.
 	See [Type] for the haXe Reflection API.</haxe_doc></class>
-	<class path="Hash" params="T" file="/usr/lib/haxe/std/flash/_std/Hash.hx">
-		<toString public="1" set="method" line="66">
-			<f a=""><c path="String"/></f>
-			<haxe_doc>Returns an displayable representation of the hashtable content.</haxe_doc>
-		</toString>
-		<iterator public="1" set="method" line="57">
-			<f a=""><t path="Iterator"><c path="Hash.T"/></t></f>
-			<haxe_doc>Returns an iterator of all values in the hashtable.</haxe_doc>
-		</iterator>
-		<keys public="1" set="method" line="53">
-			<f a=""><t path="Iterator"><c path="String"/></t></f>
-			<haxe_doc>Returns an iterator of all keys in the hashtable.</haxe_doc>
-		</keys>
-		<remove public="1" set="method" line="46">
-			<f a="key">
-				<c path="String"/>
-				<e path="Bool"/>
-			</f>
-			<haxe_doc>Removes a hashtable entry. Returns [true] if
-		there was such entry.</haxe_doc>
-		</remove>
-		<exists public="1" set="method" line="42">
-			<f a="key">
-				<c path="String"/>
-				<e path="Bool"/>
-			</f>
-			<haxe_doc>Tells if a value exists for the given key.
-		In particular, it's useful to tells if a key has
-		a [null] value versus no value.</haxe_doc>
-		</exists>
-		<get public="1" set="method" line="38">
-			<f a="key">
-				<c path="String"/>
-				<t path="Null"><c path="Hash.T"/></t>
-			</f>
-			<haxe_doc>Get a value for the given key.</haxe_doc>
-		</get>
-		<set public="1" set="method" line="34">
-			<f a="key:value">
-				<c path="String"/>
-				<c path="Hash.T"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>Set a value for the given key.</haxe_doc>
-		</set>
-		<h><c path="flash.utils.Dictionary"/></h>
-		<new public="1" set="method" line="30">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>Creates a new empty hashtable.</haxe_doc>
-		</new>
-		<haxe_doc>Hashtable over a set of elements, using [String] as keys.
-	Other kind of keys are not possible on all platforms since they
-	can't always be implemented efficiently.</haxe_doc>
-		<meta><m n=":core_api"/></meta>
-	</class>
-	<class path="IntHash" params="T" file="/usr/lib/haxe/std/flash/_std/IntHash.hx">
-		<toString public="1" set="method" line="65">
-			<f a=""><c path="String"/></f>
-			<haxe_doc>Returns an displayable representation of the hashtable content.</haxe_doc>
-		</toString>
-		<iterator public="1" set="method" line="56">
-			<f a=""><t path="Iterator"><c path="IntHash.T"/></t></f>
-			<haxe_doc>Returns an iterator of all values in the hashtable.</haxe_doc>
-		</iterator>
-		<keys public="1" set="method" line="52">
-			<f a=""><t path="Iterator"><c path="Int"/></t></f>
-			<haxe_doc>Returns an iterator of all keys in the hashtable.</haxe_doc>
-		</keys>
-		<remove public="1" set="method" line="46">
-			<f a="key">
-				<c path="Int"/>
-				<e path="Bool"/>
-			</f>
-			<haxe_doc>Removes a hashtable entry. Returns [true] if
-		there was such entry.</haxe_doc>
-		</remove>
-		<exists public="1" set="method" line="42">
-			<f a="key">
-				<c path="Int"/>
-				<e path="Bool"/>
-			</f>
-			<haxe_doc>Tells if a value exists for the given key.
-		In particular, it's useful to tells if a key has
-		a [null] value versus no value.</haxe_doc>
-		</exists>
-		<get public="1" set="method" line="38">
-			<f a="key">
-				<c path="Int"/>
-				<t path="Null"><c path="IntHash.T"/></t>
-			</f>
-			<haxe_doc>Get a value for the given key.</haxe_doc>
-		</get>
-		<set public="1" set="method" line="34">
-			<f a="key:value">
-				<c path="Int"/>
-				<c path="IntHash.T"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>Set a value for the given key.</haxe_doc>
-		</set>
-		<h><c path="flash.utils.Dictionary"/></h>
-		<new public="1" set="method" line="30">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>Creates a new empty hashtable.</haxe_doc>
-		</new>
-		<haxe_doc>Hashtable over a set of elements, using [Int] as keys.
-	On Flash and Javascript, the underlying structure is an Object.</haxe_doc>
-		<meta><m n=":core_api"/></meta>
-	</class>
-	<class path="IntIter" params="" file="/usr/lib/haxe/std/IntIter.hx">
-		<next public="1" set="method" line="53">
-			<f a=""><c path="Int"/></f>
-			<haxe_doc>Moves to the next item of the iterator.</haxe_doc>
-		</next>
-		<hasNext public="1" set="method" line="46">
-			<f a=""><e path="Bool"/></f>
-			<haxe_doc>Returns true if the iterator has other items, false otherwise.</haxe_doc>
-		</hasNext>
-		<max><c path="Int"/></max>
-		<min><c path="Int"/></min>
-		<new public="1" set="method" line="38">
-			<f a="min:max">
-				<c path="Int"/>
-				<c path="Int"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc><![CDATA[Iterate from [min] (inclusive) to [max] (exclusive).
-		If [max <= min], the iterator will not act as a countdown.]]></haxe_doc>
-		</new>
-		<haxe_doc>Integer iterator. Used for interval implementation.</haxe_doc>
-	</class>
 	<class path="flash.display.DisplayObject" params="" file="/usr/lib/haxe/std/flash/display/DisplayObject.hx" extern="1">
 		<extends path="flash.events.EventDispatcher"/>
 		<implements path="flash.display.IBitmapDrawable"/>
@@ -1542,6 +1411,461 @@
 		<dropTarget public="1" set="null"><c path="flash.display.DisplayObject"/></dropTarget>
 		<buttonMode public="1"><e path="Bool"/></buttonMode>
 		<new public="1" set="method"><f a=""><e path="Void"/></f></new>
+	</class>
+	<class path="org.flixel.FlxGame" params="" file="/usr/lib/haxe/lib/flixel/1,07/org/flixel/FlxGame.hx">
+		<extends path="flash.display.Sprite"/>
+		<clickableArea public="1" static="1">
+			<t path="nme.display.Sprite"/>
+			<haxe_doc>* This sprite is needed in c++ version of games.</haxe_doc>
+		</clickableArea>
+		<getDebugger public="1" set="method" line="1088"><f a=""><c path="org.flixel.system.FlxDebugger"/></f></getDebugger>
+		<debugger public="1" get="getDebugger" set="null"><c path="org.flixel.system.FlxDebugger"/></debugger>
+		<createFocusScreen set="method" line="1045">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* Sets up the darkened overlay with the big white "play" button that appears when a flixel game loses focus.</haxe_doc>
+		</createFocusScreen>
+		<createSoundTray set="method" line="970">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* Sets up the "sound tray", the little volume meter that pops down sometimes.</haxe_doc>
+		</createSoundTray>
+		<create set="method" line="861">
+			<f a="FlashEvent">
+				<t path="nme.events.Event"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Used to instantiate the guts of the flixel game object once we have a valid reference to the root.
+	 * 
+	 * @param	FlashEvent	Just a Flash system event, not too important for our purposes.</haxe_doc>
+		</create>
+		<draw set="method" line="831">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* Goes through the game state and draws all the game objects and special effects.</haxe_doc>
+		</draw>
+		<update set="method" line="807">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* This function is called by step() and updates the actual game state.
+	 * May be called multiple times per "frame" or draw call.</haxe_doc>
+		</update>
+		<updateSoundTray set="method" line="772">
+			<f a="MS">
+				<c path="Float"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* This function just updates the soundtray object.</haxe_doc>
+		</updateSoundTray>
+		<step set="method" line="676">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* This is the main game update logic section.
+	 * The onEnterFrame() handler is in charge of calling this
+	 * the appropriate number of times each frame.
+	 * This block handles state changes, replays, all that good stuff.</haxe_doc>
+		</step>
+		<switchState set="method" line="632">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* If there is a state change requested during the update loop,
+	 * this function handles actual destroying the old state and related processes,
+	 * and calls creates on the new state and plugs it into the game object.</haxe_doc>
+		</switchState>
+		<resetGame get="inline" set="null" line="619">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* Internal method to create a new instance of iState and reset the game.
+	 * This gets called when the game is created, as well as when a new state is requested.</haxe_doc>
+		</resetGame>
+		<onEnterFrame set="method" line="567">
+			<f a="?FlashEvent">
+				<t path="nme.events.Event"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Handles the onEnterFrame call and figures out how many updates and draw calls to do.
+	 * @param	FlashEvent	Flash event.</haxe_doc>
+		</onEnterFrame>
+		<onFocusLost set="method" line="550">
+			<f a="?FlashEvent">
+				<t path="nme.events.Event"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash event.</haxe_doc>
+		</onFocusLost>
+		<onFocus set="method" line="534">
+			<f a="?FlashEvent">
+				<t path="nme.events.Event"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash event.</haxe_doc>
+		</onFocus>
+		<onTouchMove get="inline" set="null" line="478">
+			<f a="FlashEvent">
+				<t path="nme.events.TouchEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash touch event.</haxe_doc>
+		</onTouchMove>
+		<onTouchEnd get="inline" set="null" line="469">
+			<f a="FlashEvent">
+				<t path="nme.events.TouchEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash touch event.</haxe_doc>
+		</onTouchEnd>
+		<onTouchBegin get="inline" set="null" line="460">
+			<f a="FlashEvent">
+				<t path="nme.events.TouchEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash touch event.</haxe_doc>
+		</onTouchBegin>
+		<onMouseWheel set="method" line="447">
+			<f a="FlashEvent">
+				<t path="nme.events.MouseEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash mouse event.</haxe_doc>
+		</onMouseWheel>
+		<onMouseUp set="method" line="434">
+			<f a="FlashEvent">
+				<t path="nme.events.MouseEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash mouse event.</haxe_doc>
+		</onMouseUp>
+		<onMouseDown set="method" line="390">
+			<f a="FlashEvent">
+				<t path="nme.events.MouseEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash mouse event.</haxe_doc>
+		</onMouseDown>
+		<onKeyDown set="method" line="352">
+			<f a="FlashEvent">
+				<t path="nme.events.KeyboardEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash keyboard event.</haxe_doc>
+		</onKeyDown>
+		<onKeyUp set="method" line="284">
+			<f a="FlashEvent">
+				<t path="nme.events.KeyboardEvent"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Internal event handler for input and focus.
+	 * @param	FlashEvent	Flash keyboard event.</haxe_doc>
+		</onKeyUp>
+		<showSoundTray set="method" line="258">
+			<f a="?Silent">
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Makes the little volume tray slide out.
+	 * @param	Silent	Whether or not it should beep.</haxe_doc>
+		</showSoundTray>
+		<_replayCallback public="1">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>* This function, if set, is triggered when the callback stops playing.</haxe_doc>
+		</_replayCallback>
+		<_replayTimer public="1">
+			<c path="Int"/>
+			<haxe_doc>* Helps time out a replay if necessary.</haxe_doc>
+		</_replayTimer>
+		<_replayCancelKeys public="1">
+			<c path="Array"><c path="String"/></c>
+			<haxe_doc>* Array that keeps track of keypresses that can cancel a replay.
+	 * Handy for skipping cutscenes or getting out of attract modes!</haxe_doc>
+		</_replayCancelKeys>
+		<_recording public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Flag for whether a new recording is being made.</haxe_doc>
+		</_recording>
+		<_replaying public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Flag for whether a replay is currently playing.</haxe_doc>
+		</_replaying>
+		<_recordingRequested public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Flag for whether a new recording was requested.</haxe_doc>
+		</_recordingRequested>
+		<_replayRequested public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Flag for whether a playback of a recording was requested.</haxe_doc>
+		</_replayRequested>
+		<_replay public="1">
+			<c path="org.flixel.system.FlxReplay"/>
+			<haxe_doc>* Container for a game replay object.</haxe_doc>
+		</_replay>
+		<_debuggerUp public="1">
+			<e path="Bool"/>
+			<haxe_doc>* A handy boolean that keeps track of whether the debugger exists and is currently visible.</haxe_doc>
+		</_debuggerUp>
+		<_debugger public="1">
+			<c path="org.flixel.system.FlxDebugger"/>
+			<haxe_doc>* The debugger overlay object.</haxe_doc>
+		</_debugger>
+		<_soundTrayBars>
+			<c path="Array"><t path="nme.display.Bitmap"/></c>
+			<haxe_doc>* Helps display the volume bars on the sound tray.</haxe_doc>
+		</_soundTrayBars>
+		<_updateSoundTray>
+			<e path="Bool"/>
+			<haxe_doc>* Because reading any data from DisplayObject is insanely expensive in hxcpp, keep track of whether we need to update it or not.</haxe_doc>
+		</_updateSoundTray>
+		<_soundTrayTimer>
+			<c path="Float"/>
+			<haxe_doc>* Helps us auto-hide the sound tray after a volume change.</haxe_doc>
+		</_soundTrayTimer>
+		<_soundTray>
+			<t path="nme.display.Sprite"/>
+			<haxe_doc><![CDATA[* The sound tray display container (see <code>createSoundTray()</code>).]]></haxe_doc>
+		</_soundTray>
+		<_focus>
+			<t path="nme.display.Sprite"/>
+			<haxe_doc><![CDATA[* The "focus lost" screen (see <code>createFocusScreen()</code>).]]></haxe_doc>
+		</_focus>
+		<_requestedReset public="1">
+			<e path="Bool"/>
+			<haxe_doc>* A flag for keeping track of whether a game reset was requested or not.</haxe_doc>
+		</_requestedReset>
+		<_requestedState public="1">
+			<c path="org.flixel.FlxState"/>
+			<haxe_doc>* If a state change was requested, the new state object is stored here until we switch to it.</haxe_doc>
+		</_requestedState>
+		<_maxAccumulation public="1">
+			<c path="Int"/>
+			<haxe_doc>* Max allowable accumulation (see _accumulator).
+	 * Should always (and automatically) be set to roughly 2x the flash player framerate.</haxe_doc>
+		</_maxAccumulation>
+		<_flashFramerate public="1">
+			<c path="Int"/>
+			<haxe_doc>* Framerate of the Flash player (NOT the game loop). Default = 30.</haxe_doc>
+		</_flashFramerate>
+		<_stepSeconds public="1">
+			<c path="Float"/>
+			<haxe_doc>* Optimization so we don't have to divide _step by 1000 to get its value in seconds every frame. Supposed to be internal.</haxe_doc>
+		</_stepSeconds>
+		<_step public="1">
+			<c path="Int"/>
+			<haxe_doc>* Milliseconds of time per step of the game loop.  FlashEvent.g. 60 fps = 16ms. Supposed to be internal.</haxe_doc>
+		</_step>
+		<_elapsedMS public="1">
+			<c path="Int"/>
+			<haxe_doc>* Milliseconds of time since last step. Supposed to be internal.</haxe_doc>
+		</_elapsedMS>
+		<_lostFocus>
+			<e path="Bool"/>
+			<haxe_doc>* Whether the Flash player lost focus.</haxe_doc>
+		</_lostFocus>
+		<_accumulator>
+			<c path="Int"/>
+			<haxe_doc>* Total number of milliseconds elapsed since last update loop.
+	 * Counts down as we step through the game loop.</haxe_doc>
+		</_accumulator>
+		<_mark>
+			<c path="Int"/>
+			<haxe_doc>* Helper variable to help calculate elapsed time.</haxe_doc>
+		</_mark>
+		<_total>
+			<c path="Int"/>
+			<haxe_doc>* Total number of milliseconds elapsed since game start.</haxe_doc>
+		</_total>
+		<_iState>
+			<c path="Class"><c path="org.flixel.FlxState"/></c>
+			<haxe_doc>* Class type of the initial/first game state for the game, usually MenuState or something like that.</haxe_doc>
+		</_iState>
+		<_mouse public="1">
+			<t path="nme.display.Sprite"/>
+			<haxe_doc>* Mouse cursor.</haxe_doc>
+		</_mouse>
+		<_state public="1">
+			<c path="org.flixel.FlxState"/>
+			<haxe_doc>* Current game state.</haxe_doc>
+		</_state>
+		<forceDebugger public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Initialize and allow the flixel debugger overlay even in release mode.
+	 * Also useful if you don't use FlxPreloader!
+	 * @default false</haxe_doc>
+		</forceDebugger>
+		<useSystemCursor public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Tells flixel to use the default system mouse cursor instead of custom Flixel mouse cursors.
+	 * @default false</haxe_doc>
+		</useSystemCursor>
+		<useSoundHotKeys public="1">
+			<e path="Bool"/>
+			<haxe_doc>* Sets 0, -, and + to control the global volume sound volume.
+	 * @default true</haxe_doc>
+		</useSoundHotKeys>
+		<junk><c path="String"/></junk>
+		<new public="1" set="method" line="207">
+			<f a="GameSizeX:GameSizeY:InitialState:?Zoom:?GameFramerate:?FlashFramerate:?UseSystemCursor">
+				<c path="Int"/>
+				<c path="Int"/>
+				<c path="Class"><c path="org.flixel.FlxState"/></c>
+				<c path="Float"/>
+				<c path="Int"/>
+				<c path="Int"/>
+				<e path="Bool"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>* Instantiate a new game object.
+	 * @param	GameSizeX		The width of your game in game pixels, not necessarily final display pixels (see Zoom).
+	 * @param	GameSizeY		The height of your game in game pixels, not necessarily final display pixels (see Zoom).
+	 * @param	InitialState	The class name of the state you want to create and switch to first (e.g. MenuState).
+	 * @param	Zoom			The default level of zoom for the game's cameras (e.g. 2 = all pixels are now drawn at 2x).  Default = 1.
+	 * @param	GameFramerate	How frequently the game should update (default is 60 times per second).
+	 * @param	FlashFramerate	Sets the actual display framerate for Flash player (default is 30 times per second).
+	 * @param	UseSystemCursor	Whether to use the default OS mouse pointer, or to use custom flixel ones.</haxe_doc>
+		</new>
+		<haxe_doc>* FlxGame is the heart of all flixel games, and contains a bunch of basic game loops and things.
+ * It is a long and sloppy file that you shouldn't have to worry about too much!
+ * It is basically only used to create your game object in the first place,
+ * after that FlxG and FlxState have all the useful stuff you actually need.</haxe_doc>
+	</class>
+	<class path="Game" params="" file="source/Game.hx">
+		<extends path="org.flixel.FlxGame"/>
+		<create set="method" line="22" override="1"><f a="FlashEvent">
+	<t path="nme.events.Event"/>
+	<e path="Void"/>
+</f></create>
+		<new public="1" set="method" line="9"><f a=""><e path="Void"/></f></new>
+	</class>
+	<class path="Hash" params="T" file="/usr/lib/haxe/std/flash/_std/Hash.hx">
+		<toString public="1" set="method" line="66">
+			<f a=""><c path="String"/></f>
+			<haxe_doc>Returns an displayable representation of the hashtable content.</haxe_doc>
+		</toString>
+		<iterator public="1" set="method" line="57">
+			<f a=""><t path="Iterator"><c path="Hash.T"/></t></f>
+			<haxe_doc>Returns an iterator of all values in the hashtable.</haxe_doc>
+		</iterator>
+		<keys public="1" set="method" line="53">
+			<f a=""><t path="Iterator"><c path="String"/></t></f>
+			<haxe_doc>Returns an iterator of all keys in the hashtable.</haxe_doc>
+		</keys>
+		<remove public="1" set="method" line="46">
+			<f a="key">
+				<c path="String"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Removes a hashtable entry. Returns [true] if
+		there was such entry.</haxe_doc>
+		</remove>
+		<exists public="1" set="method" line="42">
+			<f a="key">
+				<c path="String"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Tells if a value exists for the given key.
+		In particular, it's useful to tells if a key has
+		a [null] value versus no value.</haxe_doc>
+		</exists>
+		<get public="1" set="method" line="38">
+			<f a="key">
+				<c path="String"/>
+				<t path="Null"><c path="Hash.T"/></t>
+			</f>
+			<haxe_doc>Get a value for the given key.</haxe_doc>
+		</get>
+		<set public="1" set="method" line="34">
+			<f a="key:value">
+				<c path="String"/>
+				<c path="Hash.T"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Set a value for the given key.</haxe_doc>
+		</set>
+		<h><c path="flash.utils.Dictionary"/></h>
+		<new public="1" set="method" line="30">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>Creates a new empty hashtable.</haxe_doc>
+		</new>
+		<haxe_doc>Hashtable over a set of elements, using [String] as keys.
+	Other kind of keys are not possible on all platforms since they
+	can't always be implemented efficiently.</haxe_doc>
+		<meta><m n=":core_api"/></meta>
+	</class>
+	<class path="IntHash" params="T" file="/usr/lib/haxe/std/flash/_std/IntHash.hx">
+		<toString public="1" set="method" line="65">
+			<f a=""><c path="String"/></f>
+			<haxe_doc>Returns an displayable representation of the hashtable content.</haxe_doc>
+		</toString>
+		<iterator public="1" set="method" line="56">
+			<f a=""><t path="Iterator"><c path="IntHash.T"/></t></f>
+			<haxe_doc>Returns an iterator of all values in the hashtable.</haxe_doc>
+		</iterator>
+		<keys public="1" set="method" line="52">
+			<f a=""><t path="Iterator"><c path="Int"/></t></f>
+			<haxe_doc>Returns an iterator of all keys in the hashtable.</haxe_doc>
+		</keys>
+		<remove public="1" set="method" line="46">
+			<f a="key">
+				<c path="Int"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Removes a hashtable entry. Returns [true] if
+		there was such entry.</haxe_doc>
+		</remove>
+		<exists public="1" set="method" line="42">
+			<f a="key">
+				<c path="Int"/>
+				<e path="Bool"/>
+			</f>
+			<haxe_doc>Tells if a value exists for the given key.
+		In particular, it's useful to tells if a key has
+		a [null] value versus no value.</haxe_doc>
+		</exists>
+		<get public="1" set="method" line="38">
+			<f a="key">
+				<c path="Int"/>
+				<t path="Null"><c path="IntHash.T"/></t>
+			</f>
+			<haxe_doc>Get a value for the given key.</haxe_doc>
+		</get>
+		<set public="1" set="method" line="34">
+			<f a="key:value">
+				<c path="Int"/>
+				<c path="IntHash.T"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc>Set a value for the given key.</haxe_doc>
+		</set>
+		<h><c path="flash.utils.Dictionary"/></h>
+		<new public="1" set="method" line="30">
+			<f a=""><e path="Void"/></f>
+			<haxe_doc>Creates a new empty hashtable.</haxe_doc>
+		</new>
+		<haxe_doc>Hashtable over a set of elements, using [Int] as keys.
+	On Flash and Javascript, the underlying structure is an Object.</haxe_doc>
+		<meta><m n=":core_api"/></meta>
+	</class>
+	<class path="IntIter" params="" file="/usr/lib/haxe/std/IntIter.hx">
+		<next public="1" set="method" line="53">
+			<f a=""><c path="Int"/></f>
+			<haxe_doc>Moves to the next item of the iterator.</haxe_doc>
+		</next>
+		<hasNext public="1" set="method" line="46">
+			<f a=""><e path="Bool"/></f>
+			<haxe_doc>Returns true if the iterator has other items, false otherwise.</haxe_doc>
+		</hasNext>
+		<max><c path="Int"/></max>
+		<min><c path="Int"/></min>
+		<new public="1" set="method" line="38">
+			<f a="min:max">
+				<c path="Int"/>
+				<c path="Int"/>
+				<e path="Void"/>
+			</f>
+			<haxe_doc><![CDATA[Iterate from [min] (inclusive) to [max] (exclusive).
+		If [max <= min], the iterator will not act as a countdown.]]></haxe_doc>
+		</new>
+		<haxe_doc>Integer iterator. Used for interval implementation.</haxe_doc>
 	</class>
 	<class path="Main" params="" file="source/Main.hx">
 		<extends path="flash.display.Sprite"/>
@@ -2127,326 +2451,6 @@
 		<progress><t path="nme.display.Sprite"/></progress>
 		<outline><t path="nme.display.Sprite"/></outline>
 		<new public="1" set="method" line="11"><f a=""><e path="Void"/></f></new>
-	</class>
-	<class path="org.flixel.FlxGame" params="" file="/usr/lib/haxe/lib/flixel/1,07/org/flixel/FlxGame.hx">
-		<extends path="flash.display.Sprite"/>
-		<clickableArea public="1" static="1">
-			<t path="nme.display.Sprite"/>
-			<haxe_doc>* This sprite is needed in c++ version of games.</haxe_doc>
-		</clickableArea>
-		<getDebugger public="1" set="method" line="1088"><f a=""><c path="org.flixel.system.FlxDebugger"/></f></getDebugger>
-		<debugger public="1" get="getDebugger" set="null"><c path="org.flixel.system.FlxDebugger"/></debugger>
-		<createFocusScreen set="method" line="1045">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* Sets up the darkened overlay with the big white "play" button that appears when a flixel game loses focus.</haxe_doc>
-		</createFocusScreen>
-		<createSoundTray set="method" line="970">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* Sets up the "sound tray", the little volume meter that pops down sometimes.</haxe_doc>
-		</createSoundTray>
-		<create set="method" line="861">
-			<f a="FlashEvent">
-				<t path="nme.events.Event"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Used to instantiate the guts of the flixel game object once we have a valid reference to the root.
-	 * 
-	 * @param	FlashEvent	Just a Flash system event, not too important for our purposes.</haxe_doc>
-		</create>
-		<draw set="method" line="831">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* Goes through the game state and draws all the game objects and special effects.</haxe_doc>
-		</draw>
-		<update set="method" line="807">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* This function is called by step() and updates the actual game state.
-	 * May be called multiple times per "frame" or draw call.</haxe_doc>
-		</update>
-		<updateSoundTray set="method" line="772">
-			<f a="MS">
-				<c path="Float"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* This function just updates the soundtray object.</haxe_doc>
-		</updateSoundTray>
-		<step set="method" line="676">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* This is the main game update logic section.
-	 * The onEnterFrame() handler is in charge of calling this
-	 * the appropriate number of times each frame.
-	 * This block handles state changes, replays, all that good stuff.</haxe_doc>
-		</step>
-		<switchState set="method" line="632">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* If there is a state change requested during the update loop,
-	 * this function handles actual destroying the old state and related processes,
-	 * and calls creates on the new state and plugs it into the game object.</haxe_doc>
-		</switchState>
-		<resetGame get="inline" set="null" line="619">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* Internal method to create a new instance of iState and reset the game.
-	 * This gets called when the game is created, as well as when a new state is requested.</haxe_doc>
-		</resetGame>
-		<onEnterFrame set="method" line="567">
-			<f a="?FlashEvent">
-				<t path="nme.events.Event"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Handles the onEnterFrame call and figures out how many updates and draw calls to do.
-	 * @param	FlashEvent	Flash event.</haxe_doc>
-		</onEnterFrame>
-		<onFocusLost set="method" line="550">
-			<f a="?FlashEvent">
-				<t path="nme.events.Event"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash event.</haxe_doc>
-		</onFocusLost>
-		<onFocus set="method" line="534">
-			<f a="?FlashEvent">
-				<t path="nme.events.Event"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash event.</haxe_doc>
-		</onFocus>
-		<onTouchMove get="inline" set="null" line="478">
-			<f a="FlashEvent">
-				<t path="nme.events.TouchEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash touch event.</haxe_doc>
-		</onTouchMove>
-		<onTouchEnd get="inline" set="null" line="469">
-			<f a="FlashEvent">
-				<t path="nme.events.TouchEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash touch event.</haxe_doc>
-		</onTouchEnd>
-		<onTouchBegin get="inline" set="null" line="460">
-			<f a="FlashEvent">
-				<t path="nme.events.TouchEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash touch event.</haxe_doc>
-		</onTouchBegin>
-		<onMouseWheel set="method" line="447">
-			<f a="FlashEvent">
-				<t path="nme.events.MouseEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash mouse event.</haxe_doc>
-		</onMouseWheel>
-		<onMouseUp set="method" line="434">
-			<f a="FlashEvent">
-				<t path="nme.events.MouseEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash mouse event.</haxe_doc>
-		</onMouseUp>
-		<onMouseDown set="method" line="390">
-			<f a="FlashEvent">
-				<t path="nme.events.MouseEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash mouse event.</haxe_doc>
-		</onMouseDown>
-		<onKeyDown set="method" line="352">
-			<f a="FlashEvent">
-				<t path="nme.events.KeyboardEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash keyboard event.</haxe_doc>
-		</onKeyDown>
-		<onKeyUp set="method" line="284">
-			<f a="FlashEvent">
-				<t path="nme.events.KeyboardEvent"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Internal event handler for input and focus.
-	 * @param	FlashEvent	Flash keyboard event.</haxe_doc>
-		</onKeyUp>
-		<showSoundTray set="method" line="258">
-			<f a="?Silent">
-				<e path="Bool"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Makes the little volume tray slide out.
-	 * @param	Silent	Whether or not it should beep.</haxe_doc>
-		</showSoundTray>
-		<_replayCallback public="1">
-			<f a=""><e path="Void"/></f>
-			<haxe_doc>* This function, if set, is triggered when the callback stops playing.</haxe_doc>
-		</_replayCallback>
-		<_replayTimer public="1">
-			<c path="Int"/>
-			<haxe_doc>* Helps time out a replay if necessary.</haxe_doc>
-		</_replayTimer>
-		<_replayCancelKeys public="1">
-			<c path="Array"><c path="String"/></c>
-			<haxe_doc>* Array that keeps track of keypresses that can cancel a replay.
-	 * Handy for skipping cutscenes or getting out of attract modes!</haxe_doc>
-		</_replayCancelKeys>
-		<_recording public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Flag for whether a new recording is being made.</haxe_doc>
-		</_recording>
-		<_replaying public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Flag for whether a replay is currently playing.</haxe_doc>
-		</_replaying>
-		<_recordingRequested public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Flag for whether a new recording was requested.</haxe_doc>
-		</_recordingRequested>
-		<_replayRequested public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Flag for whether a playback of a recording was requested.</haxe_doc>
-		</_replayRequested>
-		<_replay public="1">
-			<c path="org.flixel.system.FlxReplay"/>
-			<haxe_doc>* Container for a game replay object.</haxe_doc>
-		</_replay>
-		<_debuggerUp public="1">
-			<e path="Bool"/>
-			<haxe_doc>* A handy boolean that keeps track of whether the debugger exists and is currently visible.</haxe_doc>
-		</_debuggerUp>
-		<_debugger public="1">
-			<c path="org.flixel.system.FlxDebugger"/>
-			<haxe_doc>* The debugger overlay object.</haxe_doc>
-		</_debugger>
-		<_soundTrayBars>
-			<c path="Array"><t path="nme.display.Bitmap"/></c>
-			<haxe_doc>* Helps display the volume bars on the sound tray.</haxe_doc>
-		</_soundTrayBars>
-		<_updateSoundTray>
-			<e path="Bool"/>
-			<haxe_doc>* Because reading any data from DisplayObject is insanely expensive in hxcpp, keep track of whether we need to update it or not.</haxe_doc>
-		</_updateSoundTray>
-		<_soundTrayTimer>
-			<c path="Float"/>
-			<haxe_doc>* Helps us auto-hide the sound tray after a volume change.</haxe_doc>
-		</_soundTrayTimer>
-		<_soundTray>
-			<t path="nme.display.Sprite"/>
-			<haxe_doc><![CDATA[* The sound tray display container (see <code>createSoundTray()</code>).]]></haxe_doc>
-		</_soundTray>
-		<_focus>
-			<t path="nme.display.Sprite"/>
-			<haxe_doc><![CDATA[* The "focus lost" screen (see <code>createFocusScreen()</code>).]]></haxe_doc>
-		</_focus>
-		<_requestedReset public="1">
-			<e path="Bool"/>
-			<haxe_doc>* A flag for keeping track of whether a game reset was requested or not.</haxe_doc>
-		</_requestedReset>
-		<_requestedState public="1">
-			<c path="org.flixel.FlxState"/>
-			<haxe_doc>* If a state change was requested, the new state object is stored here until we switch to it.</haxe_doc>
-		</_requestedState>
-		<_maxAccumulation public="1">
-			<c path="Int"/>
-			<haxe_doc>* Max allowable accumulation (see _accumulator).
-	 * Should always (and automatically) be set to roughly 2x the flash player framerate.</haxe_doc>
-		</_maxAccumulation>
-		<_flashFramerate public="1">
-			<c path="Int"/>
-			<haxe_doc>* Framerate of the Flash player (NOT the game loop). Default = 30.</haxe_doc>
-		</_flashFramerate>
-		<_stepSeconds public="1">
-			<c path="Float"/>
-			<haxe_doc>* Optimization so we don't have to divide _step by 1000 to get its value in seconds every frame. Supposed to be internal.</haxe_doc>
-		</_stepSeconds>
-		<_step public="1">
-			<c path="Int"/>
-			<haxe_doc>* Milliseconds of time per step of the game loop.  FlashEvent.g. 60 fps = 16ms. Supposed to be internal.</haxe_doc>
-		</_step>
-		<_elapsedMS public="1">
-			<c path="Int"/>
-			<haxe_doc>* Milliseconds of time since last step. Supposed to be internal.</haxe_doc>
-		</_elapsedMS>
-		<_lostFocus>
-			<e path="Bool"/>
-			<haxe_doc>* Whether the Flash player lost focus.</haxe_doc>
-		</_lostFocus>
-		<_accumulator>
-			<c path="Int"/>
-			<haxe_doc>* Total number of milliseconds elapsed since last update loop.
-	 * Counts down as we step through the game loop.</haxe_doc>
-		</_accumulator>
-		<_mark>
-			<c path="Int"/>
-			<haxe_doc>* Helper variable to help calculate elapsed time.</haxe_doc>
-		</_mark>
-		<_total>
-			<c path="Int"/>
-			<haxe_doc>* Total number of milliseconds elapsed since game start.</haxe_doc>
-		</_total>
-		<_iState>
-			<c path="Class"><c path="org.flixel.FlxState"/></c>
-			<haxe_doc>* Class type of the initial/first game state for the game, usually MenuState or something like that.</haxe_doc>
-		</_iState>
-		<_mouse public="1">
-			<t path="nme.display.Sprite"/>
-			<haxe_doc>* Mouse cursor.</haxe_doc>
-		</_mouse>
-		<_state public="1">
-			<c path="org.flixel.FlxState"/>
-			<haxe_doc>* Current game state.</haxe_doc>
-		</_state>
-		<forceDebugger public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Initialize and allow the flixel debugger overlay even in release mode.
-	 * Also useful if you don't use FlxPreloader!
-	 * @default false</haxe_doc>
-		</forceDebugger>
-		<useSystemCursor public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Tells flixel to use the default system mouse cursor instead of custom Flixel mouse cursors.
-	 * @default false</haxe_doc>
-		</useSystemCursor>
-		<useSoundHotKeys public="1">
-			<e path="Bool"/>
-			<haxe_doc>* Sets 0, -, and + to control the global volume sound volume.
-	 * @default true</haxe_doc>
-		</useSoundHotKeys>
-		<junk><c path="String"/></junk>
-		<new public="1" set="method" line="207">
-			<f a="GameSizeX:GameSizeY:InitialState:?Zoom:?GameFramerate:?FlashFramerate:?UseSystemCursor">
-				<c path="Int"/>
-				<c path="Int"/>
-				<c path="Class"><c path="org.flixel.FlxState"/></c>
-				<c path="Float"/>
-				<c path="Int"/>
-				<c path="Int"/>
-				<e path="Bool"/>
-				<e path="Void"/>
-			</f>
-			<haxe_doc>* Instantiate a new game object.
-	 * @param	GameSizeX		The width of your game in game pixels, not necessarily final display pixels (see Zoom).
-	 * @param	GameSizeY		The height of your game in game pixels, not necessarily final display pixels (see Zoom).
-	 * @param	InitialState	The class name of the state you want to create and switch to first (e.g. MenuState).
-	 * @param	Zoom			The default level of zoom for the game's cameras (e.g. 2 = all pixels are now drawn at 2x).  Default = 1.
-	 * @param	GameFramerate	How frequently the game should update (default is 60 times per second).
-	 * @param	FlashFramerate	Sets the actual display framerate for Flash player (default is 30 times per second).
-	 * @param	UseSystemCursor	Whether to use the default OS mouse pointer, or to use custom flixel ones.</haxe_doc>
-		</new>
-		<haxe_doc>* FlxGame is the heart of all flixel games, and contains a bunch of basic game loops and things.
- * It is a long and sloppy file that you shouldn't have to worry about too much!
- * It is basically only used to create your game object in the first place,
- * after that FlxG and FlxState have all the useful stuff you actually need.</haxe_doc>
-	</class>
-	<class path="ProjectClass" params="" file="source/ProjectClass.hx">
-		<extends path="org.flixel.FlxGame"/>
-		<new public="1" set="method" line="8"><f a=""><e path="Void"/></f></new>
 	</class>
 	<class path="Reflect" params="" file="/usr/lib/haxe/std/flash/_std/Reflect.hx">
 		<hasField public="1" set="method" line="28" static="1">

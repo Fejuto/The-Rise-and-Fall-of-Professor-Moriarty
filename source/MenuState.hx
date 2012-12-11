@@ -21,7 +21,7 @@ class MenuState extends FlxState
 		#else
 		FlxG.bgColor = {rgb: 0x131c1b, a: 0xff};
 		#end		
-		FlxG.mouse.show();
+		//FlxG.mouse.show();
 	}
 	
 	override public function destroy():Void
