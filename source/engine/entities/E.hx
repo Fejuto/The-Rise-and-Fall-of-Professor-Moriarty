@@ -2,16 +2,44 @@ package engine.entities;
 import nme.events.EventDispatcher;
 import haxe.rtti.Meta;
 import haxe.rtti.Infos;
+import nme.events.Event;
+import flash.events.Event;
 
-class E implements Infos{
+class E extends EventDispatcher, implements Infos{
+	public static inline var DESTROY = "DESTROY";
 	
+	public var m:EventMap;
 	var parent:E;
+	var children:Array<E>;
 	var map:Hash<Dynamic>;
-
+	
 	public function new(parent : E = null){
+		super();
+		this.m = new EventMap();
 		this.parent = parent;
+		this.children = new Array<E>();
 		this.map = new Hash<Dynamic>();
+
 		map.set(getName(E, ""), this);
+		if(parent != null){
+			parent.addChild(this);
+			m.add(parent, DESTROY, onDestroy);
+		}
+	}
+	
+	public function destroy():Void{
+		onDestroy();
+	}
+	
+	function onDestroy():Void{
+		dispatchEvent(new Event(DESTROY));
+		m.removeAll();
+		if(parent != null){
+			parent.removeChild(this);		
+		}
+		for(key in map.keys()){
+			map.remove(key);
+		}
 	}
 	
 	public function addC<T:(Infos)>(type:Class<T>, name:String = "", args:Array<Dynamic> = null):T{
@@ -30,6 +58,18 @@ class E implements Infos{
 		var mapping = getMapping(type, name);
 		if(mapping == null) throw "could not find mapping for " + getName(type, name);
 		return mapping;
+	}
+	
+	public function broadcast(e:Event):Void{
+		
+	}
+	
+	function addChild(e:E):Void{
+		children.push(e);
+	}
+	
+	function removeChild(e:E):Void{
+		children.remove(e);
 	}
 	
 	inline function getName<T:(Infos)>(type:Class<T>, name:String):String{

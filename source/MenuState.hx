@@ -14,6 +14,7 @@ import org.flixel.FlxU;
 import engine.entities.E;
 import engine.entities.C;
 import haxe.Json;
+import flash.display.Sprite;
 
 class MenuState extends FlxState
 {
@@ -40,7 +41,6 @@ class MenuState extends FlxState
 	
 	function init():Void{
 		var e = new E();
-		var c = e.addC(C);
-		trace(c);
+		var c = e.addC(TestC);
 	}
 }
