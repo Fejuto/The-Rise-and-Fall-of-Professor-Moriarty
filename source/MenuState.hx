@@ -11,17 +11,21 @@ import org.flixel.FlxSprite;
 import org.flixel.FlxState;
 import org.flixel.FlxText;
 import org.flixel.FlxU;
+import engine.entities.E;
+import engine.entities.C;
+import haxe.Json;
 
 class MenuState extends FlxState
 {
 	override public function create():Void
 	{
 		#if !neko
-		FlxG.bgColor = 0xff131c1b;
+		FlxG.bgColor = 0xffffffff;
 		#else
-		FlxG.bgColor = {rgb: 0x131c1b, a: 0xff};
-		#end		
-		//FlxG.mouse.show();
+		FlxG.bgColor = {rgb: 0xffffff, a: 0xff};
+		#end	
+		
+		init();	
 	}
 	
 	override public function destroy():Void
@@ -33,4 +37,10 @@ class MenuState extends FlxState
 	{
 		super.update();
 	}	
+	
+	function init():Void{
+		var e = new E();
+		var c = e.addC(C);
+		trace(c);
+	}
 }

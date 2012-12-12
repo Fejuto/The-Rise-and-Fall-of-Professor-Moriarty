@@ -1,4 +1,4 @@
--main Main 
+-main Main
 -cp source
 -lib nme
 -lib flixel
@@ -8,4 +8,3 @@
 -swf-header 640:480:60:ffffff
 -cp export/flash/haxe
 --no-inline
--debug
