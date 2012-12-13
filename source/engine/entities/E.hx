@@ -76,14 +76,22 @@ class E extends EventDispatcher, implements Infos{
 		return Type.getClassName(type) + "|" + name;
 	}
 	
-	function inject<T:(Infos)>(instance:T):Void{
-		var instanceType = Type.getClass(instance);
-		var metaFields = Meta.getFields(instanceType);
+	function inject<T:(Infos)>(instance:T, type:Class<Dynamic> = null):Void{
+		if(type == null){
+			inject(instance, Type.getClass(instance));
+			return;
+		}
+		
+		if(Type.getSuperClass(type) != null){
+			inject(instance, Type.getSuperClass(type));
+		}
+		
+		var metaFields = Meta.getFields(type);
 		for(field in Reflect.fields(metaFields)){
 			var metaField = Reflect.field(metaFields, field);
 			if(Reflect.hasField(metaField, "inject")){
 				var injectMeta = Reflect.field(metaField, "inject");
-				var injectType = getFieldType(instanceType, field);
+				var injectType = getFieldType(type, field);
 				var injectName = injectMeta != null ? injectMeta[0] : ""; 
 				var mapping = getMapping(injectType, injectName);
 				if(mapping == null) throw "could not find mapping for " + getName(injectType, injectName);

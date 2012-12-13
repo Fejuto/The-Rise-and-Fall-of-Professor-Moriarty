@@ -9,7 +9,7 @@ class SpriteC extends C{
 		
 	public function init(graphic:Dynamic):Void{
 		flxSprite = new FlxSprite();
-		flxSprite.loadGraphic(graphic);
+		//flxSprite.loadGraphic(graphic);
 		renderS.add(flxSprite);
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
