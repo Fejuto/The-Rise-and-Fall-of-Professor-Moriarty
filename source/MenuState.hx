@@ -13,34 +13,29 @@ import org.flixel.FlxText;
 import org.flixel.FlxU;
 import engine.entities.E;
 import engine.entities.C;
-import haxe.Json;
 import flash.display.Sprite;
+import rise.UpdateS;
+import rise.SpriteC;
+import rise.RenderS;
+import rise.NodeFactoryS;
 
 class MenuState extends FlxState
 {
-	override public function create():Void
-	{
-		#if !neko
-		FlxG.bgColor = 0xffffffff;
-		#else
-		FlxG.bgColor = {rgb: 0xffffff, a: 0xff};
-		#end	
-		
-		init();	
-	}
+	var e:E;
 	
-	override public function destroy():Void
-	{
-		super.destroy();
+	override public function create():Void{
+		FlxG.bgColor = 0xffffffff;
+		init();
 	}
-
-	override public function update():Void
-	{
-		super.update();
-	}	
 	
 	function init():Void{
-		var e = new E();
-		var c = e.addC(TestC);
+		e = new E();
+		e.addC(UpdateS).init();
+		e.addC(RenderS).init(this);
+		e.addC(NodeFactoryS).init();
+	}
+
+	override public function update():Void{
+		e.getC(UpdateS).update();
 	}
 }

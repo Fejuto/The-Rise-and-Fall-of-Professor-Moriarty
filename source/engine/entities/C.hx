@@ -9,7 +9,7 @@ class C extends EventDispatcher, implements haxe.rtti.Infos{
 	public function new(){
 		super();
 		m = new EventMap();
-		m.add(e, E.DESTROY, onDestroy);
+		//m.add(e, E.DESTROY, onDestroy);
 	}
 	
 	function onDestroy():Void{
