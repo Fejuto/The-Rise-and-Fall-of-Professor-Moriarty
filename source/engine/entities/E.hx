@@ -23,16 +23,21 @@ class E extends EventDispatcher, implements Infos{
 		map.set(getName(E, ""), this);
 		if(parent != null){
 			parent.addChild(this);
-			m.add(parent, DESTROY, onDestroy);
 		}
+		
+		m.add(this, DESTROY, onDestroy);
 	}
 	
 	public function destroy():Void{
-		onDestroy();
+		broadcastDepthFirst(new Event(DESTROY));
+	}
+	
+	var priorityCounter:Int = 0;
+	public function getNextPriority():Int{
+		return ++priorityCounter;
 	}
 	
 	function onDestroy():Void{
-		dispatchEvent(new Event(DESTROY));
 		m.removeAll();
 		if(parent != null){
 			parent.removeChild(this);		
@@ -40,6 +45,13 @@ class E extends EventDispatcher, implements Infos{
 		for(key in map.keys()){
 			map.remove(key);
 		}
+	}
+	
+	public function broadcastDepthFirst(e:Event):Void{
+		for (child in children){
+			child.broadcastDepthFirst(e);
+		}
+		dispatchEvent(e);
 	}
 	
 	public function addC<T:(Infos)>(type:Class<T>, name:String = "", args:Array<Dynamic> = null):T{

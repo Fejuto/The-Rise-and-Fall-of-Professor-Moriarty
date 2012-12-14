@@ -5,7 +5,8 @@ import nme.events.Event;
 class C extends EventDispatcher, implements haxe.rtti.Infos{
 	@inject public var e(default, setE):E;
 	function setE(v:E):E{
-		m.add(e, E.DESTROY, onDestroy);
+		if(e != null) throw "can't change e";
+		m.add(e, E.DESTROY, onDestroy, false, e.getNextPriority());
 		return e = v;
 	}
 	
