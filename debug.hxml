@@ -2,6 +2,7 @@
 -cp source
 -lib nme
 -lib flixel
+-lib actuate
 -D web
 -swf-version 10.1
 -swf9 bin/swf/rise.swf

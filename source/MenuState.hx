@@ -36,6 +36,7 @@ class MenuState extends FlxState
 	}
 
 	override public function update():Void{
+		super.update();
 		e.getC(UpdateS).update();
 	}
 }

@@ -10,6 +10,7 @@ import nme.ui.Keyboard;
 import org.flixel.FlxGame;
 import nme.installer.Assets;
 import haxe.Json;
+import nme.events.MouseEvent;
 /**
  * @author Joshua Granick
  */
@@ -61,11 +62,13 @@ class Main extends Sprite
 	
 	// Entry point
 	public static function main() {
+		#if debug
 		#if (flash9 || flash10)
         haxe.Log.trace = function(v,?pos) { untyped __global__["trace"](pos.className+"#"+pos.methodName+"("+pos.lineNumber+"):",Std.string(v)); }
         #elseif flash
        	haxe.Log.trace = function(v,?pos) { flash.Lib.trace(pos.className+"#"+pos.methodName+"("+pos.lineNumber+"): "+Std.string(v)); }
         #end
+		#end
 		
 		Lib.current.addChild(new Main());
 	}
