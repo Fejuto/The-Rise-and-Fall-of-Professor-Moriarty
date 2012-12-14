@@ -1,0 +1,97 @@
+{
+	"machineMass": 1,
+	"dynamos": [
+		{
+			"name": "block",
+			"type": "TYPE_DEFAULT",
+			"params": {}
+		}, {
+			"name": "weak thruster",
+			"type": "TYPE_THRUSTER",
+			"params": {
+				"mass": 1,
+				"strength": 1000,
+				"maxFuel": 100,
+				"regeneration":0.1
+			}
+		}, {
+			"name": "strong thruster",
+			"type": "TYPE_THRUSTER",
+			"params": {
+				"mass": 1,
+				"strength": 3500,
+				"maxFuel": 10,
+				"regeneration": 0.1
+			}
+		}, {
+			"name": "wheel",
+			"type": "TYPE_WHEEL",
+			"params": {
+				"mass": 1,
+				"strength": 3500,
+				"maxFuel": 10,
+				"regeneration": 0.1
+			}
+		}
+	],
+	"level_editor": [
+		{
+			"name": "simple block",
+			"type": "TYPE_GROUND",
+			"params": {
+				"mass": 1
+			}
+		}, {
+			"name": "heavy block",
+			"type": "TYPE_GROUND",
+			"params": {
+				"mass": 10
+			}
+		}, {
+			"name": "dirt",
+			"type": "TYPE_DIRT",
+			"params": {
+				"mass": 0
+			}
+		}
+	],
+	"world_generation": {
+				"seed": 4567,
+				"worldSizeX":[-100, 100],
+				"worldSizeY":[-100, 16],
+				"layers":[{"name":"bigblocks",
+						   "sparseness": 25,
+						   "placeOnFloor":true,
+						   "mustBeOnBottom":true,
+						   "width":[10, 20],
+						   "height": [10, 20]},
+						  {"name":"detritus",
+						   "sparseness": 5,
+						   "placeOnFloor":true,
+						   "width":[1, 5],
+						   "height": [1, 5]},
+						  {"name":"left_tris",
+						   "shape":"SHAPE_TRI_LEFT",
+						   "sparseness": 15,
+						   "placeOnFloor":true,
+						   "width":[1, 5],
+						   "height": [1, 5]},
+						  {"name":"right_tris",
+						   "shape":"SHAPE_TRI_RIGHT",
+						   "sparseness": 15,
+						   "placeOnFloor":true,
+						   "width":[1, 5],
+						   "height": [1, 5]}, 
+						  {"name":"cover",
+						   "type":"TYPE_GROUND",
+						   "sparseness": 1,
+						   "placeOnFloor":true,
+						   "width":[1, 2],
+						   "height": [1, 2]},
+						  {"name":"sky",
+						   "sparseness": 3,
+						   "width":[5,10],
+						   "height":[1,3]}
+						 ]
+			    }
+}

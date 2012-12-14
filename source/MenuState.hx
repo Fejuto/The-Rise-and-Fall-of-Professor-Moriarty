@@ -24,7 +24,7 @@ class MenuState extends FlxState
 	var e:E;
 	
 	override public function create():Void{
-		FlxG.bgColor = 0xffffffff;
+		FlxG.bgColor = 0xfff1eae3;
 		init();
 	}
 	
