@@ -4,9 +4,10 @@ import engine.entities.E;
 import nme.events.Event;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
 
 class NodeFactoryS extends C{
-	@inject public var updateS:UpdateS;
+	@inject var updateS:UpdateS;
 	
 	public function init():Void{
 		createNode(100, 100);
@@ -30,7 +31,7 @@ class NodeFactoryS extends C{
 		
 		node.getC(SpriteC).scaleX = 0;
 		node.getC(SpriteC).scaleY = 0;
-		Actuate.tween(node.getC(SpriteC), 1, {scaleX:1, scaleY:1}).ease(new CustomElasticTween(0.1, 0.2));
+		Actuate.tween(node.getC(SpriteC), 1, {scaleX:1, scaleY:1}).ease(new ElasticEaseOut(0.1, 0.2));
 		
 	}
 }

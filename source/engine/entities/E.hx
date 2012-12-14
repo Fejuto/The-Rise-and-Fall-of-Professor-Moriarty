@@ -8,7 +8,7 @@ import flash.events.Event;
 class E extends EventDispatcher, implements Infos{
 	public static inline var DESTROY = "DESTROY";
 	
-	public var m:EventMap;
+	var m:EventMap;
 	var parent:E;
 	var children:Array<E>;
 	var map:Hash<Dynamic>;
@@ -58,10 +58,6 @@ class E extends EventDispatcher, implements Infos{
 		var mapping = getMapping(type, name);
 		if(mapping == null) throw "could not find mapping for " + getName(type, name);
 		return mapping;
-	}
-	
-	public function broadcast(e:Event):Void{
-		
 	}
 	
 	function addChild(e:E):Void{

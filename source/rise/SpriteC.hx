@@ -6,8 +6,8 @@ import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
 
 class SpriteC extends C{
-	@inject public var renderS:RenderS;
-	@inject public var updateS:UpdateS;
+	@inject var renderS:RenderS;
+	@inject var updateS:UpdateS;
 	var flxSprite:FlxSprite;
 	
 	public var x(getX, setX):Float;
