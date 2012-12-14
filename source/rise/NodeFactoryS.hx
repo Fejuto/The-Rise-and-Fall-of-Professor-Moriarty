@@ -10,8 +10,6 @@ class NodeFactoryS extends C{
 	@inject var updateS:UpdateS;
 	
 	public function init():Void{
-		createNode(100, 100);
-		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
@@ -32,7 +30,7 @@ class NodeFactoryS extends C{
 		node.getC(SpriteC).scaleX = 0;
 		node.getC(SpriteC).scaleY = 0;
 		Actuate.tween(node.getC(SpriteC), 1, {scaleX:1, scaleY:1}).ease(new ElasticEaseOut(0.1, 0.2));
-		
+		FlxG.play("assets/pop.wav", 0.5);
 	}
 }
 
