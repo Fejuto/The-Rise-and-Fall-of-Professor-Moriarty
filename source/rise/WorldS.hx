@@ -1,5 +1,6 @@
 package rise;
 import engine.entities.C;
+import engine.entities.E;
 
 class WorldS extends C{
 	
@@ -10,6 +11,15 @@ class WorldS extends C{
 	
 	override public function destroy():Void{
 		super.destroy();
+	}
+	
+	public function addNode(e:E):Void{
+		if(!e.hasC(NodeC)) throw "must have NodeC";
+		nodes.push(e);
+	}
+	
+	public function removeNode(e:E):Void{
+		nodes.remove(e);
 	}
 }
 
