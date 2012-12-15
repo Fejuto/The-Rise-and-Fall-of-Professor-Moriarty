@@ -8,6 +8,7 @@ import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
 
 class WorldS extends C{
 	@inject var updateS:UpdateS;
+	@inject var renderS:RenderS;
 	
 	public function init():Void{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
@@ -61,7 +62,7 @@ class WorldS extends C{
 		var e = new E(e);
 		var bmd = FlxG.createBitmap(1, 1, 0xffffffff, false, "WorldS.createEdge");
 		
-		e.addC(SpriteC).init(bmd, node1.getC(NodeC).x, node1.getC(NodeC).y, false, false, 0, 0, false, "WorldS.createEdge");
+		e.addC(SpriteC).init(bmd, renderS.edgeLayer, node1.getC(NodeC).x, node1.getC(NodeC).y, false, false, 0, 0, false, "WorldS.createEdge");
 		e.addC(EdgeC).init(node1, node2);
 		return e;
 	}

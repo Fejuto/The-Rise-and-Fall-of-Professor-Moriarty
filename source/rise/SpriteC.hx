@@ -5,6 +5,8 @@ import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
 import org.flixel.FlxU;
+import org.flixel.FlxLayer;
+import org.flixel.FlxGroup;
 
 class SpriteC extends C{
 	@inject var renderS:RenderS;
@@ -51,13 +53,13 @@ class SpriteC extends C{
 		return flxSprite.color = FlxU.makeColor(red, green, blue, alpha);
 	}
 	
-	public function init(graphic:Dynamic, x:Float = 0, y:Float = 0, animate:Bool = false, reverse:Bool = false, width:Int = 0, height:Int = 0, unique:Bool = false, key:String = null):Void{
+	public function init(graphic:Dynamic, ?layer:FlxGroup, x:Float = 0, y:Float = 0, animate:Bool = false, reverse:Bool = false, width:Int = 0, height:Int = 0, unique:Bool = false, key:String = null):Void{
 		flxSprite = new FlxSprite();
 		flxSprite.loadGraphic(graphic, animate, reverse, width, height, unique, key);
 		flxSprite.offset.x = flxSprite.width / 2;
 		flxSprite.offset.y = flxSprite.height / 2;
 		flxSprite.antialiasing = true;
-		renderS.add(flxSprite);
+		renderS.add(flxSprite, layer);
 
 		this.x = x;
 		this.y = y;		

@@ -11,4 +11,11 @@ class U {
 		var sqdist = Math.pow(cx - x, 2) + Math.pow(cy - y, 2);
 		return sqdist <= Math.pow(radius, 2);
 	}
+	
+	public static function toDegrees(radians:Float):Float{
+		return radians * 180 / Math.PI;
+	}
+	public static function toRadians(degrees:Float):Float{
+		return degrees / 180 * Math.PI;
+	}
 }

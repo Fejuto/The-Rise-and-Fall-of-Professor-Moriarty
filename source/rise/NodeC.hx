@@ -6,6 +6,7 @@ import flash.events.Event;
 class NodeC extends C{
 	public static inline var MOVED = "MOVED";
 	@inject var worldS:WorldS;
+	@inject var renderS:RenderS;
 	
 	var circle:E;
 	var graphic:E;
