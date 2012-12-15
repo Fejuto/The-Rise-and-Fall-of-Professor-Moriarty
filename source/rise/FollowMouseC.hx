@@ -6,14 +6,19 @@ class FollowMouseC extends C{
 	@inject var updateS:UpdateS;
 	@inject var nodeC:NodeC;
 	
-	public function init():Void{
+	public var enabled:Bool = true;
+	
+	public function init(enabled = false):Void{
+		this.enabled = enabled;
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
 	function onUpdate():Void{
-		var pos = FlxG.mouse.getWorldPosition();
-		nodeC.x = pos.x;
-		nodeC.y = pos.y;
+		if(enabled){
+			var pos = FlxG.mouse.getWorldPosition();
+			nodeC.x = pos.x;
+			nodeC.y = pos.y;
+		}
 	}
 	
 	override public function destroy():Void{

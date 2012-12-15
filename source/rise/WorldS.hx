@@ -11,9 +11,29 @@ class WorldS extends C{
 	
 	public function init():Void{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
-		var c2 = createCastle(FlxG.width/2 + 200, FlxG.height/2 + 100);
-		c2.addC(FollowMouseC).init();
-		createEdge(c1, c2);
+		//createNext(FlxG.width/2, FlxG.height/2);
+		
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
+	}
+	
+	var last:E;
+	function onUpdate():Void{
+		if(FlxG.mouse.justPressed()){
+			var pos = FlxG.mouse.getWorldPosition();
+			createNext(pos.x, pos.y);
+		}
+	}
+	
+	function createNext(x:Float, y:Float):Void{
+		var newC = createCastle(x,y);
+		newC.addC(FollowMouseC).init();
+		if(last != null){
+			createEdge(last, newC);
+			if(last.hasC(FollowMouseC)){
+				last.getC(FollowMouseC).enabled = false;
+			}
+		}
+		last = newC;
 	}
 	
 	override public function destroy():Void{
@@ -39,7 +59,7 @@ class WorldS extends C{
 	
 	public function createEdge(node1:E, node2:E):E{
 		var e = new E(e);
-		var bmd = FlxG.createBitmap(100, 100, 0xffffffff, false, "WorldS.createEdge");
+		var bmd = FlxG.createBitmap(1, 1, 0xffffffff, false, "WorldS.createEdge");
 		
 		e.addC(SpriteC).init(bmd, node1.getC(NodeC).x, node1.getC(NodeC).y, false, false, 0, 0, false, "WorldS.createEdge");
 		e.addC(EdgeC).init(node1, node2);
