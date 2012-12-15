@@ -1,8 +1,10 @@
 package rise;
 import engine.entities.C;
 import engine.entities.E;
+import flash.events.Event;
 
 class NodeC extends C{
+	public static inline var MOVED = "MOVED";
 	@inject var worldS:WorldS;
 	
 	var circle:E;
@@ -15,7 +17,9 @@ class NodeC extends C{
 	}
 	function setX(v:Float):Float{
 		graphic.getC(SpriteC).x = v;
-		return circle.getC(SpriteC).x = v;
+		var r = circle.getC(SpriteC).x = v;
+		dispatchEvent(new Event(MOVED));
+		return r;
 	}
 	
 	public var y(getY, setY):Float;
@@ -24,7 +28,9 @@ class NodeC extends C{
 	}
 	function setY(v:Float):Float{
 		graphic.getC(SpriteC).y = v;
-		return circle.getC(SpriteC).y = v;
+		var r = circle.getC(SpriteC).y = v;
+		dispatchEvent(new Event(MOVED));
+		return r;
 	}
 	
 	// prolly do something with the radius itself

@@ -8,7 +8,7 @@ import com.eclecticdesignstudio.motion.easing.Elastic;
 class SpriteC extends C{
 	@inject var renderS:RenderS;
 	@inject var updateS:UpdateS;
-	var flxSprite:FlxSprite;
+	public var flxSprite:FlxSprite;//should be private. But it's a jam!
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
