@@ -14,6 +14,11 @@ class ScrollS extends C{
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
+	public function modifyCameraScroll(x:Float, y:Float) {
+		FlxG.camera.scroll.x += x;
+		FlxG.camera.scroll.y += y;
+	}
+	
 	var lastMousePoint:FlxPoint;
 	function onUpdate():Void{
 		if (!enabled)
@@ -28,8 +33,7 @@ class ScrollS extends C{
     	}	
  
  	   if (FlxG.mouse.pressed()) {
-    	    FlxG.camera.scroll.x -= FlxG.mouse.screenX - lastMousePoint.x;
-        	FlxG.camera.scroll.y -= FlxG.mouse.screenY - lastMousePoint.y;
+			modifyCameraScroll(-(FlxG.mouse.screenX - lastMousePoint.x), -(FlxG.mouse.screenY - lastMousePoint.y));
        		lastMousePoint.x = FlxG.mouse.screenX;
        	 	lastMousePoint.y = FlxG.mouse.screenY;
 	   }
