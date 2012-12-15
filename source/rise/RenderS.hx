@@ -31,6 +31,12 @@ class RenderS extends C{
 			layer = defaultLayer;
 		}
 		layer.add(flxBasic);
-		//flxState.add(flxBasic);
+	}
+	
+	public function remove(flxBasic:FlxBasic, layer:FlxGroup = null):Void{
+		if(layer == null){
+			layer = defaultLayer;
+		}
+		layer.remove(flxBasic);
 	}
 }

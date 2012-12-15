@@ -34,11 +34,15 @@ class NodeC extends C{
 		return _gold;
 	}
 	function setGold(v:Int):Int{
-		setRadius(v / 100.0 * Config.NodeCircleImageSize / 4);
+		var area = v / 100.0;
+		if(area <= 0.5){
+			updateS.kill(e);
+		}
+		setRadius(Math.sqrt(area / Math.PI) * Config.NodeCircleImageSize / 2);
 		return _gold = v;
 	}
 	
-	public var decayRate:Float = 3;
+	public var decayRate:Float = 0.5;
 	var decayCounter:Float = 0;
 	
 	public var state(default, default):NodeState;
@@ -147,7 +151,6 @@ class NodeC extends C{
 		super.destroy();
 		//worldS.removeNode(e);
 	}
-	
 }
 
 
