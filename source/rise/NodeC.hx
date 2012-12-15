@@ -7,6 +7,7 @@ class NodeC extends C{
 	
 	var circle:E;
 	var graphic:E;
+	var edges:Array<E>;
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -35,9 +36,10 @@ class NodeC extends C{
 	
 	override public function destroy():Void{
 		super.destroy();
+		worldS.removeNode(e);
 	}
 	
-	function createCircle():E{
+	function createCircle(x:Float, y:Float):E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_light.png');
 		return e;
