@@ -12,7 +12,7 @@ class WorldS extends C{
 	
 	public function init():Void{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
-		//createNext(FlxG.width/2, FlxG.height/2);
+		last = c1;
 		for (i in 0...10){
 			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
 		}
@@ -20,7 +20,6 @@ class WorldS extends C{
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
-	var last:E;
 	function onUpdate():Void{
 		if(FlxG.mouse.justPressed()){
 			var pos = FlxG.mouse.getWorldPosition();
@@ -28,6 +27,7 @@ class WorldS extends C{
 		}
 	}
 	
+	var last:E;
 	function createNext(x:Float, y:Float):Void{
 		var newC = createGoldMine(x,y);
 		newC.addC(FollowMouseC).init();
