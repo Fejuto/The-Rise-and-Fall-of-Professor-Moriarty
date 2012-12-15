@@ -33,6 +33,12 @@ class MenuState extends FlxState
 		e.addC(UpdateS).init();
 		e.addC(RenderS).init(this);
 		e.addC(NodeFactoryS).init();
+		
+		
+		var barracks:E = new E(e);
+		barracks.addC(SpriteC).init("asdfas");
+		barracks.addC(NodeC).init();
+		barracks.addC(NodeBarracksC).init();
 	}
 
 	override public function update():Void{

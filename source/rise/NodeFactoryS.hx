@@ -19,11 +19,11 @@ class NodeFactoryS extends C{
 	
 	function onUpdate():Void{
 		if(FlxG.mouse.justPressed()){
-			createNode(FlxG.mouse.getWorldPosition().x, FlxG.mouse.getWorldPosition().y);
+			//createNode(FlxG.mouse.getWorldPosition().x, FlxG.mouse.getWorldPosition().y);
 		}
 	}
 	
-	public function createNode(x:Float, y:Float):Void{
+	/*public function createNode(x:Float, y:Float):Void{
 		var node:E = new E(e);
 		node.addC(SpriteC).init("assets/data/stick.png", x, y);
 		
@@ -31,6 +31,23 @@ class NodeFactoryS extends C{
 		node.getC(SpriteC).scaleY = 0;
 		Actuate.tween(node.getC(SpriteC), 1, {scaleX:1, scaleY:1}).ease(new ElasticEaseOut(0.1, 0.2));
 		FlxG.play("assets/pop.wav", 0.5);
+	}*/
+	
+	function createNode(graphic:Dynamic, x:Float, y:Float):E{
+		var e = new E(e);
+		//e.addC(SpriteC).init(graphic);
+		e.addC(NodeC).init();
+		return e;
+	}
+	
+	public function createCastle(x:Float, y:Float):E{
+		var e = createNode("assets/castle.png", x, y);
+		e.addC(NodeCastleC).init();
+		return e;
+	}
+	
+	public function createGoldMine(x:Float, y:Float):E{
+		return null;
 	}
 }
 
