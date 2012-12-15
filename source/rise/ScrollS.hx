@@ -10,7 +10,7 @@ class ScrollS extends C{
 	var screenWidth:Float;
 	var screenHeight:Float;
 	var scrollSpeed = 5;
-	var scrollThreshold = 80;
+	var scrollThreshold = 40;
 	
 	public function init(enabled:Bool):Void{
 		this.enabled = enabled;
@@ -42,6 +42,7 @@ class ScrollS extends C{
        		lastMousePoint.x = FlxG.mouse.screenX;
        	 	lastMousePoint.y = FlxG.mouse.screenY;
 	   } else {
+		return;
 			var screenPos = FlxG.mouse.getScreenPosition();
 			var rs = screenWidth - screenPos.x < scrollThreshold;
 			var ls = screenPos.x < scrollThreshold;

@@ -5,6 +5,8 @@ import org.flixel.FlxGroup;
 
 class CircleC extends C{
 	
+	@inject var renderS:RenderS;
+	
 	public var x(getX, setX):Float;
 	function getX():Float{
 		return e.getC(SpriteC).x; 
@@ -32,10 +34,13 @@ class CircleC extends C{
 		return (e.getC(SpriteC).scaleX * Config.NodeCircleImageSize) / 2;
 	}
 	
-	public function init(x:Float, y:Float, layer:FlxGroup):Void{
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);
-		e.getC(SpriteC).x = x;
-		e.getC(SpriteC).y = y;	
+	public function init(x:Float, y:Float, ?layer:FlxGroup, ?color:Array<Int>):Void{
+		if (layer == null)
+			layer = renderS.defaultLayer;
+		
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer, x, y);
+		if (color != null)
+			e.getC(SpriteC).setColor(color[0], color[1], color[2], color[3]);
 		this.radius = Config.NodeStartRadius;
 	}
 	
