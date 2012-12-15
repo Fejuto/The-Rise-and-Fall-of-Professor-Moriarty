@@ -2,3 +2,5 @@
 /export
 .DS_Store
 /.hxtypes/
+.build
+*.swf
