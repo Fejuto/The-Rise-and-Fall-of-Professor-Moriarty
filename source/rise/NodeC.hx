@@ -27,13 +27,24 @@ class NodeC extends C{
 		return circle.getC(SpriteC).y = v;
 	}
 	
-	public function init(g : Dynamic, x : Float, y : Float):Void{
+	// prolly do something with the radius itself
+	public var radius(getRadius, setRadius):Float;
+	function setRadius(v:Float):Float {
+		circle.getC(SpriteC).scaleY = v / Config.NodeRadiusImageSize;
+		return circle.getC(SpriteC).scaleX = v / Config.NodeRadiusImageSize;
+	}
+	function getRadius():Float {
+		return circle.getC(SpriteC).scaleX * Config.NodeRadiusImageSize;
+	}
+	
+	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius):Void{
 		this.circle = createCircle();
 		this.graphic = createGraphic(g);
 		//worldS.addNode(e);
 		
 		this.x = x;
 		this.y = y;
+		this.radius = radius;
 	}
 	
 	override public function destroy():Void{
