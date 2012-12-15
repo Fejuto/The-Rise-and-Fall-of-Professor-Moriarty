@@ -50,7 +50,7 @@ class SpriteC extends C{
 		return FlxU.getRGBA(flxSprite.color);
 	}
 	
-	public function setColor(red:Int, green:Int, blue:Int, alpha:Int):UInt {
+	public function setColor(red:Int, green:Int, blue:Int, alpha:Int):Int {
 		return flxSprite.color = FlxU.makeColor(red, green, blue, alpha);
 	}
 	
