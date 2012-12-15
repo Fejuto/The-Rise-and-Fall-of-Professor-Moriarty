@@ -36,7 +36,8 @@ class NodeC extends C{
 	function setGold(v:Int):Int{
 		var area = v / 100.0;
 		if(area <= 0.5){
-			updateS.kill(e);
+			e.destroy();
+			//updateS.kill(e);
 		}
 		setRadius(Math.sqrt(area / Math.PI) * Config.NodeCircleImageSize / 2);
 		return _gold = v;
