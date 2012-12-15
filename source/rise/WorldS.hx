@@ -48,6 +48,8 @@ class WorldS extends C{
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
 		scrollS.enabled = false;
 		
+		fromE.getC(NodeC).gold -= 20;
+		
 		var newE;
 		
 		switch(type) {
