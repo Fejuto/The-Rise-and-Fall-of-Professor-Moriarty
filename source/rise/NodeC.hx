@@ -11,7 +11,6 @@ class NodeC extends C{
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
-		FlxG.Log(circle);
 		return circle.getC(SpriteC).x; 
 	}
 	function setX(v:Float):Float{
@@ -28,18 +27,18 @@ class NodeC extends C{
 		return circle.getC(SpriteC).y = v;
 	}
 	
-	public function init(graphic : Dynamic):Void{
+	public function init(g : Dynamic):Void{
 		circle = createCircle();
-		graphic = createGraphic(graphic);
-		worldS.addNode(e);
+		graphic = createGraphic(g);
+		//worldS.addNode(e);
 	}
 	
 	override public function destroy():Void{
 		super.destroy();
-		worldS.removeNode(e);
+		//worldS.removeNode(e);
 	}
 	
-	function createCircle(x:Float, y:Float):E{
+	function createCircle():E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_light.png');
 		return e;

@@ -18,7 +18,6 @@ import rise.UpdateS;
 import rise.SpriteC;
 import rise.RenderS;
 import rise.WorldS;
-import rise.NodeFactoryS;
 
 class MenuState extends FlxState
 {
@@ -34,7 +33,6 @@ class MenuState extends FlxState
 		e.addC(UpdateS).init();
 		e.addC(RenderS).init(this);
 		e.addC(WorldS).init();
-		e.addC(NodeFactoryS).init();
 	}
 
 	override public function update():Void{
