@@ -12,6 +12,7 @@ class SpriteC extends C{
 	@inject var renderS:RenderS;
 	@inject var updateS:UpdateS;
 	public var flxSprite:FlxSprite;//should be private. But it's a jam!
+	var layer:FlxGroup;
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -60,6 +61,7 @@ class SpriteC extends C{
 		flxSprite.offset.y = flxSprite.height / 2;
 		flxSprite.antialiasing = true;
 		renderS.add(flxSprite, layer);
+		this.layer = layer;
 
 		this.x = x;
 		this.y = y;		
@@ -69,6 +71,8 @@ class SpriteC extends C{
 	
 	override public function destroy():Void{
 		super.destroy();
+		
+		renderS.remove(flxSprite, layer);
 	}
 	
 	function onUpdate():Void{

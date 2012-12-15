@@ -18,6 +18,7 @@ class C extends EventDispatcher, implements haxe.rtti.Infos{
 	}
 	
 	function onDestroy():Void{
+		trace('asdfasdfsadfasdf');
 		destroy();
 	}
 	
