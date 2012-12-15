@@ -1,7 +1,7 @@
 package rise;
 import engine.entities.C;
 
-class WorldC extends C{
+class WorldS extends C{
 	
 	public var nodes:Array<E>;
 	
