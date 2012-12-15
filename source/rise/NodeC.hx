@@ -2,6 +2,7 @@ package rise;
 import engine.entities.C;
 import engine.entities.E;
 import flash.events.Event;
+import org.flixel.FlxG;
 
 enum NodeState {
 	inactive;
@@ -18,7 +19,7 @@ enum NodeType {
 class NodeC extends C{
 	public static inline var MOVED = "MOVED";
 	@inject var worldS:WorldS;
-	//@inject var worldS:WorldS;
+	@inject var updateS:UpdateS;
 	
 	var circle:E;
 	var graphic:E;
@@ -76,11 +77,19 @@ class NodeC extends C{
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
+		
+		m.add(updateS, UpdateS.UPDATE, onUpdate);		
 	}
 	
-	override public function destroy():Void{
-		super.destroy();
-		//worldS.removeNode(e);
+	function onUpdate():Void {
+		if (this.state == NodeState.dragging) {
+			if (FlxG.mouse.justReleased()) {
+				this.state = NodeState.active;
+				if (e.hasC(FollowMouseC)) {
+					e.getC(FollowMouseC).enabled = false;
+				}
+			}
+		}
 	}
 	
 	function createCircle():E{
@@ -103,6 +112,13 @@ class NodeC extends C{
 	public function removeEdge(e:E):Void{
 		edges.remove(e);
 	}
+	
+	
+	override public function destroy():Void{
+		super.destroy();
+		//worldS.removeNode(e);
+	}
+	
 }
 
 

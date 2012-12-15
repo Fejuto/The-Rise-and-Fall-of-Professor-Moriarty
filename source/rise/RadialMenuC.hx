@@ -38,10 +38,6 @@ class RadialMenuC extends C{
 	function onUpdate():Void{
 		if (e.getC(NodeC).state != NodeState.active) 
 			return;
-			
-		if (FlxG.mouse.pressed())
-			return;
-			
 		
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
@@ -58,7 +54,7 @@ class RadialMenuC extends C{
 		}
 	}
 	
-	function animateMenu(show : Bool):Void {
+	public function animateMenu(show : Bool):Void {
 		Actuate.stop(e.getC(NodeC));
 		Actuate.tween(e.getC(NodeC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 		

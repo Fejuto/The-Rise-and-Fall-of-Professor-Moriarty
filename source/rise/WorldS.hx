@@ -57,6 +57,7 @@ class WorldS extends C{
 		}
 		
 		newE.addC(FollowMouseC).init(true);
+		newE.getC(NodeC).state = NodeState.dragging;
 		if(fromE != null && newE != null){
 			createEdge(fromE, newE);
 		}
