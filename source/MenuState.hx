@@ -17,6 +17,7 @@ import flash.display.Sprite;
 import rise.UpdateS;
 import rise.SpriteC;
 import rise.RenderS;
+import rise.WorldS;
 import rise.NodeFactoryS;
 
 class MenuState extends FlxState
@@ -32,13 +33,8 @@ class MenuState extends FlxState
 		e = new E();
 		e.addC(UpdateS).init();
 		e.addC(RenderS).init(this);
+		e.addC(WorldS).init();
 		e.addC(NodeFactoryS).init();
-		
-		
-		var barracks:E = new E(e);
-		barracks.addC(SpriteC).init("asdfas");
-		barracks.addC(NodeC).init();
-		barracks.addC(NodeBarracksC).init();
 	}
 
 	override public function update():Void{
