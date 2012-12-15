@@ -48,7 +48,7 @@ class E extends EventDispatcher, implements Infos{
 	}
 	
 	public function broadcastDepthFirst(e:Event):Void{
-		for (child in children){
+		for (child in children.copy()){
 			child.broadcastDepthFirst(e);
 		}
 		dispatchEvent(e);
@@ -62,7 +62,7 @@ class E extends EventDispatcher, implements Infos{
 		return instance;
 	}
 	
-	public function hasC<T:(Infos)>(type:Class<T>, name:String = ""):Bool{
+	public function hasC<T>(type:Class<T>, name:String = ""):Bool{
 		return getMapping(type, name) != null;
 	}
 	
@@ -80,7 +80,7 @@ class E extends EventDispatcher, implements Infos{
 		children.remove(e);
 	}
 	
-	inline function getName<T:(Infos)>(type:Class<T>, name:String):String{
+	inline function getName<T>(type:Class<T>, name:String):String{
 		return Type.getClassName(type) + "|" + name;
 	}
 	
@@ -113,7 +113,7 @@ class E extends EventDispatcher, implements Infos{
 		}
 	}
 	
-	function getMapping<T:(Infos)>(type:Class<T>, name:String = ""):T{
+	function getMapping<T>(type:Class<T>, name:String = ""):T{
 		if(map.exists(getName(type, name))){
 			return map.get(getName(type, name));
 		}else{

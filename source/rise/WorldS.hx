@@ -15,7 +15,11 @@ class WorldS extends C{
 	@inject var renderS:RenderS;
 	@inject var scrollS:ScrollS;
 	
+	public var nodes:Array<E>;
+	
 	public function init():Void{
+		nodes = new Array<E>();
+		
 		for (i in 0...1){
 			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
 		}
@@ -30,6 +34,15 @@ class WorldS extends C{
 
 	override public function destroy():Void{
 		super.destroy();
+	}
+	
+	public function addNode(e:E):Void{
+		if(!e.hasC(NodeC)) throw "must have NodeC";
+		nodes.push(e);
+	}
+	
+	public function getNodesWith<T>(type:Class<T>):Array<E>{
+		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
 	
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{

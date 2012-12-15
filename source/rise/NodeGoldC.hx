@@ -2,7 +2,6 @@ package rise;
 import engine.entities.C;
 
 class NodeGoldC extends C{
-	
 	public function init():Void{
 	}
 	
