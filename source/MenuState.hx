@@ -24,7 +24,7 @@ class MenuState extends FlxState
 	var e:E;
 	
 	override public function create():Void{
-		FlxG.bgColor = 0xfff1eae3;
+		FlxG.bgColor = 0xff63554A;
 		init();
 	}
 	
@@ -33,12 +33,6 @@ class MenuState extends FlxState
 		e.addC(UpdateS).init();
 		e.addC(RenderS).init(this);
 		e.addC(NodeFactoryS).init();
-		
-		
-		var barracks:E = new E(e);
-		barracks.addC(SpriteC).init("asdfas");
-		barracks.addC(NodeC).init();
-		barracks.addC(NodeBarracksC).init();
 	}
 
 	override public function update():Void{
