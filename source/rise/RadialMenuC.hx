@@ -13,26 +13,47 @@ class RadialMenuC extends C{
 	
 	var mouseOver = false;
 	var buttonEntities : Array<E>;
+	var degreesMargin = Config.NodeHoverButtonDegreesMargin;
+	var buttonDegrees : Array<Int>;
+	
+	var circle:E;
 	
 	public function init():Void{
-		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		
+		// setup circle
+		e.addC(CircleC).init(e.getC(NodeC).x, e.getC(NodeC).y);
+		
+		// create buttons
 		buttonEntities = new Array();
-		
 		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine]];
-		var degreesMargin = Config.NodeHoverButtonDegreesMargin;
-		var buttonDegrees = [360-degreesMargin, 0, degreesMargin];
-		
+		buttonDegrees = [360-degreesMargin, 0, degreesMargin];
 		var i = 0;
 		while (i < 3) {
 			var button = new E(e);	
 			button.addC(ButtonC).init('assets/'+buttonImageNames[i][0]+'.png', buttonImageNames[i][1]);
-			var pointOnEdge = U.pointOnEdgeOfCircle(e.getC(NodeC).x, e.getC(NodeC).y, e.getC(NodeC).radius*2, buttonDegrees[i]);
-			button.getC(ButtonC).x = pointOnEdge[0];
-			button.getC(ButtonC).y = pointOnEdge[1];
 			buttonEntities[i] = button;
 			i++;
 		}
+		layoutButtons();
+		
+		// event listeners
+		m.add(e.getC(NodeC), NodeC.MOVED, onMoved);
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
+	}
+	
+	function layoutButtons():Void {
+		
+		for (i in  0...buttonEntities.length) {
+			var e = buttonEntities[i]; 
+			var pointOnEdge = U.pointOnEdgeOfCircle(e.getC(NodeC).x, e.getC(NodeC).y, e.getC(NodeC).radius*2, buttonDegrees[i]);
+			e.getC(ButtonC).x = pointOnEdge[0];
+			e.getC(ButtonC).y = pointOnEdge[1];	
+		}
+			
+	}
+	
+	function onMoved():Void {
+		layoutButtons();
 	}
 	
 	function onUpdate():Void{
@@ -46,7 +67,7 @@ class RadialMenuC extends C{
 		var nodeY = e.getC(NodeC).y;
 		var nodeRadius = e.getC(NodeC).radius;
 	
-		var newMouseOver = U.inCircle(nodeX, nodeY, nodeRadius, mouseX, mouseY);
+		var newMouseOver = U.inCircle(nodeX, nodeY, mouseOver?Config.NodeHoverRadius:nodeRadius, mouseX, mouseY);
 		
 		if (newMouseOver != mouseOver) {
 			mouseOver = newMouseOver;
@@ -55,8 +76,7 @@ class RadialMenuC extends C{
 	}
 	
 	public function animateMenu(show : Bool):Void {
-		Actuate.stop(e.getC(NodeC));
-		Actuate.tween(e.getC(NodeC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
+		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 		
 		var colors = e.getC(NodeC).circleSprite.getColor();
 		if (show) {

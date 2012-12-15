@@ -95,6 +95,7 @@ class NodeC extends C{
 	function createCircle():E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_highlight.png');
+		e.getC(SpriteC).setColor(209, 214, 223, 225);
 		return e;
 	}
 	
