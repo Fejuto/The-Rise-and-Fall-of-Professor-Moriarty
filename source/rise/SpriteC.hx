@@ -9,7 +9,7 @@ import org.flixel.FlxU;
 class SpriteC extends C{
 	@inject var renderS:RenderS;
 	@inject var updateS:UpdateS;
-	var flxSprite:FlxSprite;
+	public var flxSprite:FlxSprite;//should be private. But it's a jam!
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -56,6 +56,7 @@ class SpriteC extends C{
 		flxSprite.loadGraphic(graphic, animate, reverse, width, height, unique, key);
 		flxSprite.offset.x = flxSprite.width / 2;
 		flxSprite.offset.y = flxSprite.height / 2;
+		flxSprite.antialiasing = true;
 		renderS.add(flxSprite);
 
 		this.x = x;

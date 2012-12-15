@@ -11,7 +11,8 @@ class WorldS extends C{
 	
 	public function init():Void{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
-		var c2 = createCastle(FlxG.width/2 + 200, FlxG.height/2);
+		var c2 = createCastle(FlxG.width/2 + 200, FlxG.height/2 + 100);
+		c2.addC(FollowMouseC).init();
 		createEdge(c1, c2);
 	}
 	
