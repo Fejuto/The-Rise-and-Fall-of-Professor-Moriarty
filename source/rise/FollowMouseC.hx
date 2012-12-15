@@ -9,6 +9,8 @@ class FollowMouseC extends C{
 	
 	var screenWidth:Float;
 	var screenHeight:Float;
+	var scrollSpeed = 5;
+	var scrollThreshold = 80;
 	public var enabled:Bool = true;
 	
 	public function init(enabled = false):Void{
@@ -22,10 +24,27 @@ class FollowMouseC extends C{
 	function onUpdate():Void{
 		if(enabled){
 			var screenPos = FlxG.mouse.getScreenPosition();
-			//if (Math.abs(screenWidth - screenPos.x) < 20) {
-			//	scrollS.modifyCameraScroll((screenWidth - screenPos.x)/(screenWidth - screenPos.x), 0);
-			//}
+			var rs = screenWidth - screenPos.x < scrollThreshold;
+			var ls = screenPos.x < scrollThreshold;
 			
+			var ts = screenPos.y < scrollThreshold;
+			var bs = screenHeight - screenPos.y < scrollThreshold;
+			
+			var x = 0;
+			var y = 0;
+			
+			if (rs)
+				x = scrollSpeed;
+			else if (ls)
+				x = -scrollSpeed;		
+				
+			if (ts)
+				y = -scrollSpeed;
+			else if (bs)
+				y = scrollSpeed;
+				
+			scrollS.modifyCameraScroll(x,y);
+						
 			var pos = FlxG.mouse.getWorldPosition();
 			nodeC.x = pos.x;
 			nodeC.y = pos.y;
