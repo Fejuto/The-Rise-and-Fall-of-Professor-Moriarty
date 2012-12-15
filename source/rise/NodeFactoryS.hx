@@ -11,6 +11,13 @@ class NodeFactoryS extends C{
 	
 	public function init():Void{
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
+		
+		
+		//createNode('', FlxG.mouse.getWorldPosition().x, FlxG.mouse.getWorldPosition().y);
+		createCastle(FlxG.width/2, FlxG.height/2);
+		//createCastle(0,0);
+		
+		FlxG.log(FlxG.width);
 	}
 	
 	override public function destroy():Void{
@@ -34,15 +41,18 @@ class NodeFactoryS extends C{
 	}*/
 	
 	function createNode(graphic:Dynamic, x:Float, y:Float):E{
-		var e = new E(e);
-		//e.addC(SpriteC).init(graphic);
-		e.addC(NodeC).init();
+		var node = new E(e);
+		node.addC(NodeC).init(graphic);
+		node.getC(NodeC).x = x;
+		node.getC(NodeC).y = y;
+
 		return e;
 	}
 	
 	public function createCastle(x:Float, y:Float):E{
-		var e = createNode("assets/castle.png", x, y);
+		var e = createNode("assets/rise_icon_home_blue.png", x, y);
 		e.addC(NodeCastleC).init();
+		
 		return e;
 	}
 	

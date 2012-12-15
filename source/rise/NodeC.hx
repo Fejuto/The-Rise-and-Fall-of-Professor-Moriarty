@@ -9,11 +9,27 @@ class NodeC extends C{
 	var graphic:E;
 	var edges:Array<E>;
 	
-	public function init(x:Float, y:Float):Void{
-		edges = new Array<E>();
-		circle = createCircle(x,y);
-		graphic = createGraphic(x,y);
-		
+	public var x(getX, setX):Float;
+	function getX():Float{
+		return circle.getC(SpriteC).x; 
+	}
+	function setX(v:Float):Float{
+		graphic.getC(SpriteC).x = v;
+		return circle.getC(SpriteC).x = v;
+	}
+	
+	public var y(getY, setY):Float;
+	function getY():Float{
+		return circle.getC(SpriteC).y;
+	}
+	function setY(v:Float):Float{
+		graphic.getC(SpriteC).y = v;
+		return circle.getC(SpriteC).y = v;
+	}
+	
+	public function init(graphic : Dynamic):Void{
+		circle = createCircle();
+		graphic = createGraphic(graphic);
 		worldS.addNode(e);
 	}
 	
@@ -24,13 +40,13 @@ class NodeC extends C{
 	
 	function createCircle(x:Float, y:Float):E{
 		var e = new E(e);
-		e.addC(SpriteC).init("", x, y);
+		e.addC(SpriteC).init('assets/rise_circle_light.png');
 		return e;
 	}
 	
-	function createGraphic(x:Float, y:Float):E{
+	function createGraphic(graphic):E{
 		var e = new E(e);
-		e.addC(SpriteC).init("", x, y);
+		e.addC(SpriteC).init(graphic);
 		return e;
 	}
 }
