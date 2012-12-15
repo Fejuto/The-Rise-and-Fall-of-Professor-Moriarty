@@ -5,12 +5,12 @@ import engine.entities.E;
 class NodeC extends C{
 	@inject var worldS:WorldS;
 	
-	
 	var circle:E;
 	var graphic:E;
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
+		FlxG.Log(circle);
 		return circle.getC(SpriteC).x; 
 	}
 	function setX(v:Float):Float{
