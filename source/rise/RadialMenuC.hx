@@ -23,6 +23,7 @@ class RadialMenuC extends C{
 		
 		// setup circle
 		e.addC(CircleC).init(e.getC(NodeC).x, e.getC(NodeC).y, renderS.backgroundMenuLayer);
+		e.getC(CircleC).radius = 0;
 		
 		// create buttons
 		buttonEntities = new Array();
@@ -35,30 +36,32 @@ class RadialMenuC extends C{
 			buttonEntities[i] = button;
 			i++;
 		}
-		layoutButtons();
+		layout();
 		
 		// event listeners
-		m.add(e.getC(NodeC), NodeC.MOVED, onMoved);
+		m.add(e.getC(NodeC), NodeC.MOVED, layout);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
-	function layoutButtons():Void {
+	function layout():Void {
 		
 		for (i in  0...buttonEntities.length) {
 			var e = buttonEntities[i]; 
-			var pointOnEdge = U.pointOnEdgeOfCircle(e.getC(NodeC).x, e.getC(NodeC).y, e.getC(NodeC).radius*2, buttonDegrees[i]);
+			var pointOnEdge = U.pointOnEdgeOfCircle(e.getC(NodeC).x, e.getC(NodeC).y, Config.NodeHoverRadius, buttonDegrees[i]);
 			e.getC(ButtonC).x = pointOnEdge[0];
 			e.getC(ButtonC).y = pointOnEdge[1];	
 		}
+		
+		e.getC(CircleC).x = e.getC(NodeC).x;
+		e.getC(CircleC).y = e.getC(NodeC).y;
 			
-	}
-	
-	function onMoved():Void {
-		layoutButtons();
 	}
 	
 	function onUpdate():Void{
 		if (e.getC(NodeC).state != NodeState.active) 
+			return;
+		
+		if (FlxG.mouse.pressed())
 			return;
 		
 		var mouseX = FlxG.mouse.getWorldPosition().x;
@@ -68,7 +71,7 @@ class RadialMenuC extends C{
 		var nodeY = e.getC(NodeC).y;
 		var nodeRadius = e.getC(NodeC).radius;
 	
-		var newMouseOver = U.inCircle(nodeX, nodeY, mouseOver?Config.NodeHoverRadius:nodeRadius, mouseX, mouseY);
+		var newMouseOver = U.inCircle(nodeX, nodeY, mouseOver?Config.NodeHoverRadius+30:Config.NodeStartRadius, mouseX, mouseY);
 		
 		if (newMouseOver != mouseOver) {
 			mouseOver = newMouseOver;
@@ -77,7 +80,9 @@ class RadialMenuC extends C{
 	}
 	
 	public function animateMenu(show : Bool):Void {
-		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
+		if (show)
+			e.getC(CircleC).radius = e.getC(NodeC).radius;
+		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:0}).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 		
 		/*
 		var colors = e.getC(NodeC).circleSprite.getColor();
