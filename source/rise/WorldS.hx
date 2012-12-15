@@ -5,12 +5,15 @@ import nme.events.Event;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
+import rise.NodeC.NodeState;
+import rise.NodeC.NodeType;
 
 class WorldS extends C{
 	@inject var updateS:UpdateS;
 	
 	public function init():Void{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
+		c1.getC(NodeC).state = NodeState.active;
 		//createNext(FlxG.width/2, FlxG.height/2);
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
@@ -18,6 +21,7 @@ class WorldS extends C{
 	
 	var last:E;
 	function onUpdate():Void{
+		return;
 		if(FlxG.mouse.justPressed()){
 			var pos = FlxG.mouse.getWorldPosition();
 			createNext(pos.x, pos.y);
@@ -40,6 +44,24 @@ class WorldS extends C{
 		super.destroy();
 	}
 	
+	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
+		var newE;
+		
+		switch(type) {
+			case NodeType.barracks:
+				newE = createBarracks(x,y);
+			case NodeType.castle:
+				newE = createCastle(x,y);
+			case NodeType.mine:
+				newE = createGoldMine(x,y);
+		}
+		
+		newE.addC(FollowMouseC).init(true);
+		if(fromE != null && newE != null){
+			createEdge(fromE, newE);
+		}
+	}
+	
 	function createNode(graphic:Dynamic, x:Float, y:Float):E{
 		var e = new E(e);
 		e.addC(NodeC).init(graphic, x, y);
@@ -50,6 +72,12 @@ class WorldS extends C{
 		var e = createNode("assets/rise_icon_home_blue.png", x, y);
 		e.addC(NodeCastleC).init();
 		e.addC(RadialMenuC).init();
+		return e;
+	}
+	
+	public function createBarracks(x:Float, y:Float):E{
+		var e = createNode("assets/rise_icon_monster_blue.png", x, y);
+		e.addC(NodeBarracksC).init();
 		return e;
 	}
 	

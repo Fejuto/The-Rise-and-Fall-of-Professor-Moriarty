@@ -4,11 +4,14 @@ import engine.entities.E;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
+import rise.NodeC.NodeState;
+import rise.NodeC.NodeType;
+
 
 class RadialMenuC extends C{
 	@inject var updateS:UpdateS;
 	
-	var mouseDown = false;
+	var mouseOver = false;
 	var buttonEntities : Array<E>;
 	
 	public function init():Void{
@@ -16,26 +19,30 @@ class RadialMenuC extends C{
 		
 		buttonEntities = new Array();
 		
-		var denButton = new E(e);
-		denButton.addC(ButtonC).init('assets/rise_icon_monster_gray.png');
-		denButton.getC(ButtonC).x = e.getC(NodeC).x - e.getC(NodeC).radius * 2;
-		denButton.getC(ButtonC).y = e.getC(NodeC).y - e.getC(NodeC).radius;				
-		buttonEntities[0] = denButton;
+		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine]];
+		var degreesMargin = Config.NodeHoverButtonDegreesMargin;
+		var buttonDegrees = [360-degreesMargin, 0, degreesMargin];
 		
-		var castleButton = new E(e);
-		castleButton.addC(ButtonC).init('assets/rise_icon_fort_gray.png');
-		castleButton.getC(ButtonC).x = e.getC(NodeC).x;
-		castleButton.getC(ButtonC).y = e.getC(NodeC).y - e.getC(NodeC).radius*2;				
-		buttonEntities[1] = castleButton;		
-		
-		var mineButton = new E(e);
-		mineButton.addC(ButtonC).init('assets/rise_icon_miner_gray.png');
-		mineButton.getC(ButtonC).x = e.getC(NodeC).x + e.getC(NodeC).radius * 2;
-		mineButton.getC(ButtonC).y = e.getC(NodeC).y - e.getC(NodeC).radius;				
-		buttonEntities[2] = mineButton;
+		var i = 0;
+		while (i < 3) {
+			var button = new E(e);	
+			button.addC(ButtonC).init('assets/'+buttonImageNames[i][0]+'.png', buttonImageNames[i][1]);
+			var pointOnEdge = U.pointOnEdgeOfCircle(e.getC(NodeC).x, e.getC(NodeC).y, e.getC(NodeC).radius*2, buttonDegrees[i]);
+			button.getC(ButtonC).x = pointOnEdge[0];
+			button.getC(ButtonC).y = pointOnEdge[1];
+			buttonEntities[i] = button;
+			i++;
+		}
 	}
 	
 	function onUpdate():Void{
+		if (e.getC(NodeC).state != NodeState.active) 
+			return;
+			
+		if (FlxG.mouse.pressed())
+			return;
+			
+		
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
 		
@@ -43,15 +50,16 @@ class RadialMenuC extends C{
 		var nodeY = e.getC(NodeC).y;
 		var nodeRadius = e.getC(NodeC).radius;
 	
-		var newMouseDown = U.inCircle(nodeX, nodeY, nodeRadius, mouseX, mouseY);
+		var newMouseOver = U.inCircle(nodeX, nodeY, nodeRadius, mouseX, mouseY);
 		
-		if (newMouseDown != mouseDown) {
-			mouseDown = newMouseDown;
-			animateMenu(mouseDown);
+		if (newMouseOver != mouseOver) {
+			mouseOver = newMouseOver;
+			animateMenu(mouseOver);
 		}
 	}
 	
 	function animateMenu(show : Bool):Void {
+		Actuate.stop(e.getC(NodeC));
 		Actuate.tween(e.getC(NodeC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 		
 		var colors = e.getC(NodeC).circleSprite.getColor();
@@ -63,7 +71,6 @@ class RadialMenuC extends C{
 		
 		for (e in buttonEntities) {
 			Actuate.tween(e.getC(ButtonC), 0.1, { scale: show?1:0 }).delay(show?0.2:0);
-			
 		}
 		
 	}

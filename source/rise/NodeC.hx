@@ -3,13 +3,28 @@ import engine.entities.C;
 import engine.entities.E;
 import flash.events.Event;
 
+enum NodeState {
+	inactive;
+	active;
+	dragging;
+}
+
+enum NodeType {
+	barracks;
+	mine;
+	castle;
+}
+
 class NodeC extends C{
 	public static inline var MOVED = "MOVED";
 	@inject var worldS:WorldS;
+	//@inject var worldS:WorldS;
 	
 	var circle:E;
 	var graphic:E;
 	var edges:Array<E>;
+	
+	public var state(default, default):NodeState;
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -36,12 +51,12 @@ class NodeC extends C{
 	// prolly do something with the radius itself
 	public var radius(getRadius, setRadius):Float;
 	function setRadius(v:Float):Float {
-		var targetScale = (v / Config.NodeRadiusImageSize) * 2;
+		var targetScale = (v / Config.NodeCircleImageSize ) * 2;
 		circle.getC(SpriteC).scaleY = targetScale;
 		return circle.getC(SpriteC).scaleX = targetScale;
 	}
 	function getRadius():Float {
-		return (circle.getC(SpriteC).scaleX * Config.NodeRadiusImageSize) / 2;
+		return (circle.getC(SpriteC).scaleX * Config.NodeCircleImageSize) / 2;
 	}
 	
 	public var circleSprite(getCircleSprite, null):SpriteC;
@@ -49,7 +64,10 @@ class NodeC extends C{
 		return circle.getC(SpriteC);
 	}
 	
-	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius):Void{
+	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius, state : NodeState = null):Void{
+		if (state == null)
+			this.state = NodeState.inactive;
+		
 		edges = new Array<E>();
 		this.circle = createCircle();
 		this.graphic = createGraphic(g);
