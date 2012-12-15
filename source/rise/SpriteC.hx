@@ -47,6 +47,7 @@ class SpriteC extends C{
 		flxSprite.loadGraphic(graphic, animate, reverse, width, height, unique, key);
 		flxSprite.offset.x = flxSprite.width / 2;
 		flxSprite.offset.y = flxSprite.height / 2;
+		flxSprite.antialiasing = true;
 		renderS.add(flxSprite);
 
 		this.x = x;
