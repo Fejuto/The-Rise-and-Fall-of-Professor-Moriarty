@@ -5,4 +5,5 @@ class Config {
 	public static inline var NodeStartRadius = 64;
 	public static inline var NodeHoverRadius = 128;
 	public static inline var NodeRadiusImageSize = 256;
+	public static inline var NodeHoverButtonRadius = 40;
 }
