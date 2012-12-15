@@ -4,7 +4,7 @@
 	
 	<window width="800" height="600" fps="60" orientation="portrait" resizable="true" if="flash" />
 	<window width="800" height="600" fps="60" orientation="landscape" fullscreen="false" unless="flash" />
-	<haxedef name="fdb" if="flash && debug"/>
+	<haxedef name="fdb" if="flash"/>
  	<ios compiler="gcc" />
  	
 	<set name="BUILD_DIR" value="export" />
