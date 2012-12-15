@@ -48,7 +48,7 @@ class E extends EventDispatcher, implements Infos{
 	}
 	
 	public function broadcastDepthFirst(e:Event):Void{
-		for (child in children){
+		for (child in children.copy()){
 			child.broadcastDepthFirst(e);
 		}
 		dispatchEvent(e);
