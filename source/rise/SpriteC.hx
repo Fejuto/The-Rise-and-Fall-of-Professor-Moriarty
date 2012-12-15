@@ -4,6 +4,7 @@ import org.flixel.FlxSprite;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
+import org.flixel.FlxU;
 
 class SpriteC extends C{
 	@inject var renderS:RenderS;
@@ -40,6 +41,14 @@ class SpriteC extends C{
 	}
 	function setScaleY(v:Float):Float{
 		return flxSprite.scale.y = v;
+	}
+
+	public function getColor():Array<Float> {
+		return FlxU.getRGBA(flxSprite.color);
+	}
+	
+	public function setColor(red:Int, green:Int, blue:Int, alpha:Int):UInt {
+		return flxSprite.color = FlxU.makeColor(red, green, blue, alpha);
 	}
 	
 	public function init(graphic:Dynamic, x:Float = 0, y:Float = 0, animate:Bool = false, reverse:Bool = false, width:Int = 0, height:Int = 0, unique:Bool = false, key:String = null):Void{

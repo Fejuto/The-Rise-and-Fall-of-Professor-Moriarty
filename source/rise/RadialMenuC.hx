@@ -2,11 +2,12 @@ package rise;
 import engine.entities.C;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.easing.ExpoEaseInOut;
 
 class RadialMenuC extends C{
 	@inject var updateS:UpdateS;
 	
-	var mouseOver = false;
+	var mouseDown = false;
 	
 	public function init():Void{
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
@@ -19,15 +20,28 @@ class RadialMenuC extends C{
 		var nodeX = e.getC(NodeC).x;
 		var nodeY = e.getC(NodeC).y;
 		var nodeRadius = e.getC(NodeC).radius;
-		FlxG.log(nodeRadius);
 	
-		mouseOver = inCircle(nodeX, nodeY, nodeRadius, mouseX, mouseY); 
-		Actuate.tween(e.getC(NodeC), 1, { radius: mouseOver?Config.NodeHoverRadius:100 });
+		var newMouseDown = U.inCircle(nodeX, nodeY, nodeRadius, mouseX, mouseY);
+		
+		if (newMouseDown != mouseDown) {
+			mouseDown = newMouseDown;
+			animateMenu(mouseDown);	
+		}
 	}
 	
-	function inCircle(cx : Float, cy : Float, radius : Float, x : Float, y : Float):Bool {
-		var sqdist = Math.pow(cx - x, 2) + Math.pow(cy - y, 2);
-		return sqdist <= Math.pow(radius, 2);
+	function animateMenu(show : Bool):Void {
+		Actuate.tween(e.getC(NodeC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ExpoEaseInOut());
+		
+		var colors = e.getC(NodeC).circleSprite.getColor();
+		if (show)
+			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [255, 255, 255, 255]);
+		else
+			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [209, 214, 223, 255]);
+		
+	}
+	
+	function setColor(red : Int, green : Int, blue : Int, alpha : Int) {
+		e.getC(NodeC).circleSprite.setColor(red, green, blue, alpha);
 	}
 	
 	override public function destroy():Void{
