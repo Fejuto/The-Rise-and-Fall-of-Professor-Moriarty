@@ -107,6 +107,8 @@ class NodeC extends C{
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		
 		gold = 100;
+		
+		worldS.addNode(e);
 	}
 	
 	function onUpdate():Void {
