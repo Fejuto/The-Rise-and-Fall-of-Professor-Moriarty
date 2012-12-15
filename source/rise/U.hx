@@ -12,6 +12,14 @@ class U {
 		return sqdist <= Math.pow(radius, 2);
 	}
 	
+	public static function pointOnEdgeOfCircle(ix:Float, iy:Float, radius:Float, degrees:Float):Array<Float> {
+		var tdegrees = degrees - 90;
+		var x = ix + radius * Math.cos(tdegrees * Math.PI / 180);
+		var y = iy + radius * Math.sin(tdegrees * Math.PI / 180);
+		
+		return [x,y];
+	}
+	
 	public static function toDegrees(radians:Float):Float{
 		return radians * 180 / Math.PI;
 	}

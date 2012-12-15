@@ -6,6 +6,18 @@ import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
 
+enum NodeState {
+	inactive;
+	active;
+	dragging;
+}
+
+enum NodeType {
+	barracks;
+	mine;
+	castle;
+}
+
 class NodeC extends C{
 	public static inline var MOVED = "MOVED";
 	@inject var worldS:WorldS;
@@ -28,6 +40,8 @@ class NodeC extends C{
 	
 	public var decayRate:Float = 3;
 	var decayCounter:Float = 0;
+	
+	public var state(default, default):NodeState;
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -69,7 +83,10 @@ class NodeC extends C{
 		return circle.getC(SpriteC);
 	}
 	
-	public function init(g : Dynamic, x : Float, y : Float):Void{
+	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius, state : NodeState = null):Void{
+		if (state == null)
+			this.state = NodeState.inactive;
+		
 		edges = new Array<E>();
 		this.circle = createCircle();
 		this.graphic = createGraphic(g);
@@ -83,9 +100,15 @@ class NodeC extends C{
 		gold = 100;
 	}
 	
-	override public function destroy():Void{
-		super.destroy();
-		//worldS.removeNode(e);
+	function onUpdate():Void {
+		if (this.state == NodeState.dragging) {
+			if (FlxG.mouse.justReleased()) {
+				this.state = NodeState.active;
+				if (e.hasC(FollowMouseC)) {
+					e.getC(FollowMouseC).enabled = false;
+				}
+			}
+		}
 	}
 	
 	function onUpdate():Void{
@@ -103,6 +126,7 @@ class NodeC extends C{
 	function createCircle():E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_highlight.png');
+		e.getC(SpriteC).setColor(209, 214, 223, 225);
 		return e;
 	}
 	
@@ -120,6 +144,13 @@ class NodeC extends C{
 	public function removeEdge(e:E):Void{
 		edges.remove(e);
 	}
+	
+	
+	override public function destroy():Void{
+		super.destroy();
+		//worldS.removeNode(e);
+	}
+	
 }
 
 

@@ -1,13 +1,19 @@
 package rise;
 import engine.entities.C;
 import engine.entities.E;
+import org.flixel.FlxG;
+import rise.NodeC.NodeType;
 
 class ButtonC extends C{
 	
+	@inject var updateS:UpdateS;
+	@inject var worldS:WorldS;
+	
 	var circle:E;
 	var graphic:E;
-	var initialCircleScale:Float = (Config.NodeHoverButtonRadius / Config.NodeRadiusImageSize) * 2;
-	
+	var initialCircleScale:Float = (Config.NodeHoverButtonRadius / Config.NodeCircleImageSize ) * 2;
+	var type:NodeType;
+		
 	public var x(getX, setX):Float;
 	function getX():Float{
 		return circle.getC(SpriteC).x; 
@@ -37,11 +43,31 @@ class ButtonC extends C{
 		return circle.getC(SpriteC).scaleY = v * initialCircleScale;
 	}
 	
-	public function init(graphic:Dynamic):Void{
+	public function init(graphic:Dynamic, type:NodeType):Void{
+		this.type = type;
 		this.circle = createCircle();
 		this.graphic = createGraphic(graphic);
 		
 		this.scale = 0;
+		
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
+	}
+	
+	function onUpdate():Void{ 
+	
+		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
+			return;
+	
+		var mouseX = FlxG.mouse.getWorldPosition().x;
+		var mouseY = FlxG.mouse.getWorldPosition().y;
+		
+		var nodeRadius = e.getC(NodeC).radius;
+			
+		if (U.inCircle(x, y, Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX, mouseX, mouseY)) {
+			worldS.createNodeFromEntity(e, mouseX, mouseY, type);
+			e.getC(RadialMenuC).animateMenu(false);
+		}
+
 	}
 		
 	function createCircle():E{
