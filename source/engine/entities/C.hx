@@ -13,12 +13,10 @@ class C extends EventDispatcher, implements haxe.rtti.Infos{
 	}
 	
 	@postInject function postInject():Void{
-		trace('asdfasfd');
 		m.add(e, E.DESTROY, onDestroy, false, e.getNextPriority());
 	}
 	
 	function onDestroy():Void{
-		trace('asdfasdfsadfasdf');
 		destroy();
 	}
 	

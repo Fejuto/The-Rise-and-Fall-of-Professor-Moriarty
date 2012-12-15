@@ -35,9 +35,8 @@ class NodeC extends C{
 	}
 	function setGold(v:Int):Int{
 		var area = v / 100.0;
-		if(area <= 0.5){
-			e.destroy();
-			//updateS.kill(e);
+		if(area <= 0){
+			updateS.kill(e);
 		}
 		setRadius(Math.sqrt(area / Math.PI) * Config.NodeCircleImageSize / 2);
 		return _gold = v;
@@ -132,7 +131,7 @@ class NodeC extends C{
 		return e;
 	}
 	
-	function createGraphic(graphic):E{
+	function createGraphic(graphic:Dynamic):E{
 		var e = new E(e);
 		e.addC(SpriteC).init(graphic);
 		return e;
