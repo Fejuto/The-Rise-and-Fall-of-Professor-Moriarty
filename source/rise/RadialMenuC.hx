@@ -13,7 +13,7 @@ class RadialMenuC extends C{
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
 		
-		e.getC(NodeC).x;
+		//e.getC(NodeC).x;
 	}	
 	
 	override public function destroy():Void{
