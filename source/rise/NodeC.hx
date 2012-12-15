@@ -16,7 +16,16 @@ class NodeC extends C{
 	var graphic:E;
 	var edges:Array<E>;
 	
-	public var gold:Int = 0;
+	var _gold:Int = 100;
+	public var gold(getGold, setGold):Int;
+	function getGold():Int{
+		return _gold;
+	}
+	function setGold(v:Int):Int{
+		setRadius(v / 100.0 * Config.NodeRadiusImageSize / 4);
+		return _gold = v;
+	}
+	
 	public var decayRate:Float = 3;
 	var decayCounter:Float = 0;
 	
@@ -60,7 +69,7 @@ class NodeC extends C{
 		return circle.getC(SpriteC);
 	}
 	
-	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius):Void{
+	public function init(g : Dynamic, x : Float, y : Float):Void{
 		edges = new Array<E>();
 		this.circle = createCircle();
 		this.graphic = createGraphic(g);
@@ -70,6 +79,8 @@ class NodeC extends C{
 		this.radius = radius;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
+		
+		gold = 100;
 	}
 	
 	override public function destroy():Void{
@@ -86,7 +97,7 @@ class NodeC extends C{
 	}
 	
 	function evaporate():Void{
-		radius *= 0.8;
+		gold -= 10;
 	}
 	
 	function createCircle():E{
