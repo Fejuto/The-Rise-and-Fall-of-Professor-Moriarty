@@ -94,6 +94,7 @@ class E extends EventDispatcher, implements Infos{
 			inject(instance, Type.getSuperClass(type));
 		}
 		
+		
 		var metaFields = Meta.getFields(type);
 		for(field in Reflect.fields(metaFields)){
 			var metaField = Reflect.field(metaFields, field);
@@ -105,6 +106,10 @@ class E extends EventDispatcher, implements Infos{
 				if(mapping == null) throw "could not find mapping for " + getName(injectType, injectName);
 				Reflect.setField(instance, field, mapping);
 			}
+		}
+		
+		if(type == C){
+			Reflect.callMethod(instance, Reflect.field(instance, 'postInject'), []);
 		}
 	}
 	
