@@ -54,7 +54,6 @@ class NodeC extends C{
 		edges = new Array<E>();
 		this.circle = createCircle();
 		this.graphic = createGraphic(g);
-		//worldS.addNode(e);
 		
 		this.x = x;
 		this.y = y;

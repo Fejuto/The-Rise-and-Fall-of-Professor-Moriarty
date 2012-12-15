@@ -13,6 +13,9 @@ class WorldS extends C{
 	public function init():Void{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
 		//createNext(FlxG.width/2, FlxG.height/2);
+		for (i in 0...10){
+			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
+		}
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
@@ -26,7 +29,7 @@ class WorldS extends C{
 	}
 	
 	function createNext(x:Float, y:Float):Void{
-		var newC = createCastle(x,y);
+		var newC = createGoldMine(x,y);
 		newC.addC(FollowMouseC).init();
 		if(last != null){
 			createEdge(last, newC);
@@ -55,7 +58,15 @@ class WorldS extends C{
 	}
 	
 	public function createGoldMine(x:Float, y:Float):E{
-		return null;
+		var e = createNode("assets/rise_icon_miner_blue.png", x, y);
+		e.addC(NodeMineC).init();
+		return e;
+	}
+	
+	public function createGold(x:Float, y:Float):E{
+		var e = createNode("assets/rise_icon_gold.png", x,y);
+		e.addC(NodeGoldC).init();
+		return e;
 	}
 	
 	public function createEdge(node1:E, node2:E):E{
