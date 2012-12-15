@@ -8,10 +8,12 @@ import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
 import rise.NodeC.NodeState;
 import rise.NodeC.NodeType;
 import org.flixel.FlxGroup;
+import org.flixel.FlxPoint;
 
 class WorldS extends C{
 	@inject var updateS:UpdateS;
 	@inject var renderS:RenderS;
+	@inject var scrollS:ScrollS;
 	
 	public function init():Void{
 		for (i in 0...10){
@@ -22,15 +24,17 @@ class WorldS extends C{
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
-	
-	function onUpdate():Void{
+
+	function onUpdate():Void {
 	}
-	
+
 	override public function destroy():Void{
 		super.destroy();
 	}
 	
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
+		scrollS.enabled = false;
+		
 		var newE;
 		
 		switch(type) {

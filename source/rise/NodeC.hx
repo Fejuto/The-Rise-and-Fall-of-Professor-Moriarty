@@ -24,6 +24,7 @@ class NodeC extends C{
 	@inject var worldS:WorldS;
 	@inject var renderS:RenderS;
 	@inject var updateS:UpdateS;
+	@inject var scrollS:ScrollS;
 	
 	var circle:E;
 	var graphic:E;
@@ -107,6 +108,7 @@ class NodeC extends C{
 	function onUpdate():Void {
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) {
+				scrollS.enabled = true;				
 				this.state = NodeState.active;
 				if (e.hasC(FollowMouseC)) {
 					e.getC(FollowMouseC).enabled = false;
