@@ -73,7 +73,7 @@ class WorldS extends C{
 	}
 	
 	public function createCastle(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_home_blue.png", x, y);
+		var e = createNode("assets/rise_icon_fort_blue.png", x, y);
 		e.addC(NodeCastleC).init();
 		e.addC(RadialMenuC).init();
 		return e;

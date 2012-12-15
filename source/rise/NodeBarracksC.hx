@@ -23,9 +23,7 @@ class NodeBarracksC extends C{
 	}
 	
 	function onUpdate():Void {
-		if (nodeC.gold > 80 && monsters.length <= 0 && spawnCounter > spawnAttempt) {
-			trace('spawned monster!');
-			
+		if (nodeC.gold > 80 && monsters.length <= 0 && spawnCounter > spawnAttempt) {			
 			nodeC.gold -= 40;
 			spawnMonster();
 		}
@@ -43,7 +41,9 @@ class NodeBarracksC extends C{
 		monster.addC(MonsterC).init(nodeC.x, nodeC.y);
 		monsters.push(monster);
 		
-		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, Math.random() * 360);
+		var degrees = Math.random()*360;
+		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, degrees);
+		monster.getC(MonsterC).lastDegrees = degrees;
 		Actuate.tween(monster.getC(MonsterC), 1, { x: point[0], y:point[1] });		
 		
 		//var path:MotionPath = new MotionPath().bezier(100, 100, 50, 50).line(20, 20);
