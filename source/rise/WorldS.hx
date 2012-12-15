@@ -16,8 +16,8 @@ class WorldS extends C{
 	@inject var scrollS:ScrollS;
 	
 	public function init():Void{
-		for (i in 0...10){
-			//createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
+		for (i in 0...1){
+			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
 		}
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
 		c1.getC(NodeC).state = NodeState.active;

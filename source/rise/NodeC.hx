@@ -44,7 +44,7 @@ class NodeC extends C{
 		return _gold = v;
 	}
 	
-	public var decayRate:Float = 0.5;
+	public var decayRate:Float = 5;
 	var decayCounter:Float = 0;
 	
 	public var state(default, default):NodeState;
@@ -127,7 +127,7 @@ class NodeC extends C{
 	}
 	
 	function evaporate():Void{
-		gold -= 10;
+		gold -= 20;
 	}
 	
 	function createCircle(layer:FlxGroup):E{
