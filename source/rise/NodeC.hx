@@ -27,10 +27,13 @@ class NodeC extends C{
 		return circle.getC(SpriteC).y = v;
 	}
 	
-	public function init(g : Dynamic):Void{
-		circle = createCircle();
-		graphic = createGraphic(g);
+	public function init(g : Dynamic, x : Float, y : Float):Void{
+		this.circle = createCircle();
+		this.graphic = createGraphic(g);
 		//worldS.addNode(e);
+		
+		this.x = x;
+		this.y = y;
 	}
 	
 	override public function destroy():Void{

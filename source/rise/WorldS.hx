@@ -42,9 +42,7 @@ class WorldS extends C{
 	
 	function createNode(graphic:Dynamic, x:Float, y:Float):E{
 		var node = new E(e);
-		node.addC(NodeC).init(graphic);
-		node.getC(NodeC).x = x;
-		node.getC(NodeC).y = y;
+		node.addC(NodeC).init(graphic, x, y);
 
 		return e;
 	}
