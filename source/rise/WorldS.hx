@@ -7,10 +7,13 @@ import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
 import rise.NodeC.NodeState;
 import rise.NodeC.NodeType;
+import org.flixel.FlxGroup;
+import org.flixel.FlxPoint;
 
 class WorldS extends C{
 	@inject var updateS:UpdateS;
 	@inject var renderS:RenderS;
+	@inject var scrollS:ScrollS;
 	
 	public function init():Void{
 		for (i in 0...10){
@@ -21,15 +24,17 @@ class WorldS extends C{
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
-	
-	function onUpdate():Void{
+
+	function onUpdate():Void {
 	}
-	
+
 	override public function destroy():Void{
 		super.destroy();
 	}
 	
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
+		scrollS.enabled = false;
+		
 		var newE;
 		
 		switch(type) {
@@ -48,9 +53,9 @@ class WorldS extends C{
 		}
 	}
 	
-	function createNode(graphic:Dynamic, x:Float, y:Float):E{
+	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float):E{
 		var e = new E(e);
-		e.addC(NodeC).init(graphic, x, y);
+		e.addC(NodeC).init(graphic, layer, x, y);
 		return e;
 	}
 	
@@ -74,7 +79,7 @@ class WorldS extends C{
 	}
 	
 	public function createGold(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_gold.png", x,y);
+		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y);
 		e.addC(NodeGoldC).init();
 		return e;
 	}

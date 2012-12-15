@@ -63,7 +63,7 @@ class ButtonC extends C{
 		
 		var nodeRadius = e.getC(NodeC).radius;
 			
-		if (U.inCircle(x, y, Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX, mouseX, mouseY)) {
+		if (U.inCircle(x, y, (Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX)/2, mouseX, mouseY)) {
 			worldS.createNodeFromEntity(e, mouseX, mouseY, type);
 			e.getC(RadialMenuC).animateMenu(false);
 		}

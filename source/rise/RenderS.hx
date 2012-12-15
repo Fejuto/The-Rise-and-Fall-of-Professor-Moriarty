@@ -6,6 +6,8 @@ import org.flixel.FlxLayer;
 import org.flixel.FlxGroup;
 
 class RenderS extends C{
+	public var gaiaLayer:FlxGroup;
+	public var backgroundMenuLayer:FlxGroup;
 	public var edgeLayer:FlxGroup;
 	public var nodeLayer:FlxGroup;
 	public var defaultLayer:FlxGroup;
@@ -14,6 +16,10 @@ class RenderS extends C{
 	
 	public function init(flxState:FlxState):Void{
 		this.flxState = flxState;
+		gaiaLayer= new FlxGroup();
+		flxState.add(gaiaLayer);
+		backgroundMenuLayer = new FlxGroup();
+		flxState.add(backgroundMenuLayer);
 		edgeLayer = new FlxGroup();
 		flxState.add(edgeLayer);
 		nodeLayer = new FlxGroup();
