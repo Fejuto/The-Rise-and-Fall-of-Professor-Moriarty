@@ -42,9 +42,9 @@ class SpriteC extends C{
 		return flxSprite.scale.y = v;
 	}
 	
-	public function init(graphic:Dynamic, x:Float = 0, y:Float = 0):Void{
+	public function init(graphic:Dynamic, x:Float = 0, y:Float = 0, animate:Bool = false, reverse:Bool = false, width:Int = 0, height:Int = 0, unique:Bool = false, key:String = null):Void{
 		flxSprite = new FlxSprite();
-		flxSprite.loadGraphic(graphic);
+		flxSprite.loadGraphic(graphic, animate, reverse, width, height, unique, key);
 		flxSprite.offset.x = flxSprite.width / 2;
 		flxSprite.offset.y = flxSprite.height / 2;
 		renderS.add(flxSprite);

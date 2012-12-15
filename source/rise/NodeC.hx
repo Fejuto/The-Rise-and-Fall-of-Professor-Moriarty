@@ -28,6 +28,7 @@ class NodeC extends C{
 	}
 	
 	public function init(g : Dynamic, x : Float, y : Float):Void{
+		edges = new Array<E>();
 		this.circle = createCircle();
 		this.graphic = createGraphic(g);
 		//worldS.addNode(e);
@@ -51,6 +52,15 @@ class NodeC extends C{
 		var e = new E(e);
 		e.addC(SpriteC).init(graphic);
 		return e;
+	}
+	
+	public function addEdge(e:E):Void{
+		if(!e.hasC(EdgeC)) throw "no EdgeC";
+		edges.push(e);
+	}
+	
+	public function removeEdge(e:E):Void{
+		edges.remove(e);
 	}
 }
 

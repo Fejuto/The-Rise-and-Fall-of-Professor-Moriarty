@@ -1,5 +1,6 @@
 package rise;
 import engine.entities.C;
+import engine.entities.E;
 
 class EdgeC extends C{
 	
@@ -8,11 +9,16 @@ class EdgeC extends C{
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
+		node1.getC(NodeC).addEdge(e);
 		this.node2 = node2;
+		node2.getC(NodeC).addEdge(e);
 	}
 	
 	override public function destroy():Void{
 		super.destroy();
+		
+		node1.getC(NodeC).removeEdge(e);
+		node2.getC(NodeC).removeEdge(e);
 	}
 
 	public function getEndPoint(beginPoint:E):E{

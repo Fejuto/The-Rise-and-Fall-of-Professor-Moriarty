@@ -10,7 +10,9 @@ class WorldS extends C{
 	@inject var updateS:UpdateS;
 	
 	public function init():Void{
-		createCastle(FlxG.width/2, FlxG.height/2);
+		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
+		var c2 = createCastle(FlxG.width/2 + 200, FlxG.height/2);
+		createEdge(c1, c2);
 	}
 	
 	override public function destroy():Void{
@@ -35,6 +37,10 @@ class WorldS extends C{
 	
 	public function createEdge(node1:E, node2:E):E{
 		var e = new E(e);
+		var bmd = FlxG.createBitmap(100, 100, 0xffffffff, false, "WorldS.createEdge");
+		
+		e.addC(SpriteC).init(bmd, node1.getC(NodeC).x, node1.getC(NodeC).y, false, false, 0, 0, false, "WorldS.createEdge");
+		e.addC(EdgeC).init(node1, node2);
 		return e;
 	}
 }
