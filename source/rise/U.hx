@@ -6,4 +6,9 @@ class U {
 		var dy:Float = y - y2;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
+	
+	public static function inCircle(cx : Float, cy : Float, radius : Float, x : Float, y : Float):Bool {
+		var sqdist = Math.pow(cx - x, 2) + Math.pow(cy - y, 2);
+		return sqdist <= Math.pow(radius, 2);
+	}
 }

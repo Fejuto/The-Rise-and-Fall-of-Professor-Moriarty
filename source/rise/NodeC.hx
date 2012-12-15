@@ -36,11 +36,17 @@ class NodeC extends C{
 	// prolly do something with the radius itself
 	public var radius(getRadius, setRadius):Float;
 	function setRadius(v:Float):Float {
-		circle.getC(SpriteC).scaleY = v / Config.NodeRadiusImageSize;
-		return circle.getC(SpriteC).scaleX = v / Config.NodeRadiusImageSize;
+		var targetScale = (v / Config.NodeRadiusImageSize) * 2;
+		circle.getC(SpriteC).scaleY = targetScale;
+		return circle.getC(SpriteC).scaleX = targetScale;
 	}
 	function getRadius():Float {
-		return circle.getC(SpriteC).scaleX * Config.NodeRadiusImageSize;
+		return (circle.getC(SpriteC).scaleX * Config.NodeRadiusImageSize) / 2;
+	}
+	
+	public var circleSprite(getCircleSprite, null):SpriteC;
+	function getCircleSprite():SpriteC {
+		return circle.getC(SpriteC);
 	}
 	
 	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius):Void{
@@ -61,7 +67,7 @@ class NodeC extends C{
 	
 	function createCircle():E{
 		var e = new E(e);
-		e.addC(SpriteC).init('assets/rise_circle_light.png');
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png');
 		return e;
 	}
 	
