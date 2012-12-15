@@ -5,6 +5,7 @@ import flash.events.Event;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
+import org.flixel.FlxGroup;
 
 enum NodeState {
 	inactive;
@@ -83,13 +84,16 @@ class NodeC extends C{
 		return circle.getC(SpriteC);
 	}
 	
-	public function init(g : Dynamic, x : Float, y : Float, radius : Float = Config.NodeStartRadius, state : NodeState = null):Void{
+	public function init(g : Dynamic, ?layer:FlxGroup, x : Float, y : Float, radius : Float = Config.NodeStartRadius, state : NodeState = null):Void{
 		if (state == null)
 			this.state = NodeState.inactive;
+			
+		if (layer == null)
+			layer = renderS.defaultLayer;
 		
 		edges = new Array<E>();
-		this.circle = createCircle();
-		this.graphic = createGraphic(g);
+		this.circle = createCircle(layer);
+		this.graphic = createGraphic(g, layer);
 		
 		this.x = x;
 		this.y = y;
@@ -120,16 +124,16 @@ class NodeC extends C{
 		gold -= 10;
 	}
 	
-	function createCircle():E{
+	function createCircle(layer:FlxGroup):E{
 		var e = new E(e);
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png');
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);
 		e.getC(SpriteC).setColor(209, 214, 223, 225);
 		return e;
 	}
 	
-	function createGraphic(graphic):E{
+	function createGraphic(graphic, layer:FlxGroup):E{
 		var e = new E(e);
-		e.addC(SpriteC).init(graphic);
+		e.addC(SpriteC).init(graphic, layer);
 		return e;
 	}
 	

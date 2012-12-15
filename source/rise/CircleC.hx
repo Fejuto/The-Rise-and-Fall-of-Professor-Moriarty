@@ -1,5 +1,7 @@
 package rise;
 import engine.entities.C;
+import org.flixel.FlxG;
+import org.flixel.FlxGroup;
 
 class CircleC extends C{
 	
@@ -30,8 +32,8 @@ class CircleC extends C{
 		return (e.getC(SpriteC).scaleX * Config.NodeCircleImageSize) / 2;
 	}
 	
-	public function init(x:Float, y:Float):Void{
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png');
+	public function init(x:Float, y:Float, layer:FlxGroup):Void{
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);
 		e.getC(SpriteC).x = x;
 		e.getC(SpriteC).y = y;	
 		this.radius = Config.NodeStartRadius;

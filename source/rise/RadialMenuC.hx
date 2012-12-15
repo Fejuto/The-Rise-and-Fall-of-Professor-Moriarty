@@ -10,6 +10,7 @@ import rise.NodeC.NodeType;
 
 class RadialMenuC extends C{
 	@inject var updateS:UpdateS;
+	@inject var renderS:RenderS;
 	
 	var mouseOver = false;
 	var buttonEntities : Array<E>;
@@ -21,7 +22,7 @@ class RadialMenuC extends C{
 	public function init():Void{
 		
 		// setup circle
-		e.addC(CircleC).init(e.getC(NodeC).x, e.getC(NodeC).y);
+		e.addC(CircleC).init(e.getC(NodeC).x, e.getC(NodeC).y, renderS.backgroundMenuLayer);
 		
 		// create buttons
 		buttonEntities = new Array();
@@ -78,12 +79,13 @@ class RadialMenuC extends C{
 	public function animateMenu(show : Bool):Void {
 		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:Config.NodeStartRadius }).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 		
+		/*
 		var colors = e.getC(NodeC).circleSprite.getColor();
 		if (show) {
 			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [255, 255, 255, 255]);
 		} else {
 			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [209, 214, 223, 255]);
-		}
+		}*/
 		
 		for (e in buttonEntities) {
 			Actuate.tween(e.getC(ButtonC), 0.1, { scale: show?1:0 }).delay(show?0.2:0);

@@ -7,6 +7,7 @@ import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
 import rise.NodeC.NodeState;
 import rise.NodeC.NodeType;
+import org.flixel.FlxGroup;
 
 class WorldS extends C{
 	@inject var updateS:UpdateS;
@@ -48,9 +49,9 @@ class WorldS extends C{
 		}
 	}
 	
-	function createNode(graphic:Dynamic, x:Float, y:Float):E{
+	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float):E{
 		var e = new E(e);
-		e.addC(NodeC).init(graphic, x, y);
+		e.addC(NodeC).init(graphic, layer, x, y);
 		return e;
 	}
 	
@@ -74,7 +75,7 @@ class WorldS extends C{
 	}
 	
 	public function createGold(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_gold.png", x,y);
+		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y);
 		e.addC(NodeGoldC).init();
 		return e;
 	}
