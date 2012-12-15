@@ -34,7 +34,7 @@ class NodeC extends C{
 		return _gold;
 	}
 	function setGold(v:Int):Int{
-		setRadius(v / 100.0 * Config.NodeRadiusImageSize / 4);
+		setRadius(v / 100.0 * Config.NodeCircleImageSize / 4);
 		return _gold = v;
 	}
 	
@@ -69,7 +69,7 @@ class NodeC extends C{
 	var _radius:Float;
 	public var radius(getRadius, setRadius):Float;
 	function setRadius(v:Float):Float {
-		var targetScale = (v / Config.NodeRadiusImageSize) * 2;
+		var targetScale = (v / Config.NodeCircleImageSize) * 2;
 		Actuate.stop(circle.getC(SpriteC));
 		Actuate.tween(circle.getC(SpriteC), 1, {scaleX:targetScale, scaleY:targetScale}).ease(Elastic.easeOut);
 		return _radius = v;
@@ -109,9 +109,6 @@ class NodeC extends C{
 				}
 			}
 		}
-	}
-	
-	function onUpdate():Void{
 		decayCounter += FlxG.elapsed;
 		while(decayCounter > decayRate){
 			decayCounter -= decayRate;

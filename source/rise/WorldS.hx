@@ -13,36 +13,16 @@ class WorldS extends C{
 	@inject var renderS:RenderS;
 	
 	public function init():Void{
-		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
-		last = c1;
 		for (i in 0...10){
 			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
 		}
+		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
 		c1.getC(NodeC).state = NodeState.active;
-		//createNext(FlxG.width/2, FlxG.height/2);
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
 	function onUpdate():Void{
-		return;
-		if(FlxG.mouse.justPressed()){
-			var pos = FlxG.mouse.getWorldPosition();
-			createNext(pos.x, pos.y);
-		}
-	}
-	
-	var last:E;
-	function createNext(x:Float, y:Float):Void{
-		var newC = createGoldMine(x,y);
-		newC.addC(FollowMouseC).init();
-		if(last != null){
-			createEdge(last, newC);
-			if(last.hasC(FollowMouseC)){
-				last.getC(FollowMouseC).enabled = false;
-			}
-		}
-		last = newC;
 	}
 	
 	override public function destroy():Void{
