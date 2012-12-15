@@ -20,10 +20,10 @@ class WorldS extends C{
 	public function init():Void{
 		nodes = new Array<E>();
 		
-		for (i in 0...1){
-			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height);
+		for (i in 0...10){
+			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height, Std.random(6) * 10 + 50);
 		}
-		var c1 = createCastle(FlxG.width/2, FlxG.height/2);
+		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
 		c1.getC(NodeC).state = NodeState.active;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
@@ -48,15 +48,17 @@ class WorldS extends C{
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
 		scrollS.enabled = false;
 		
+		fromE.getC(NodeC).gold -= 20;
+		
 		var newE;
 		
 		switch(type) {
 			case NodeType.barracks:
-				newE = createBarracks(x,y);
+				newE = createBarracks(x,y,20);
 			case NodeType.castle:
-				newE = createCastle(x,y);
+				newE = createCastle(x,y,20);
 			case NodeType.mine:
-				newE = createGoldMine(x,y);
+				newE = createGoldMine(x,y,20);
 		}
 		
 		newE.addC(FollowMouseC).init(true);
@@ -66,33 +68,33 @@ class WorldS extends C{
 		}
 	}
 	
-	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float):E{
+	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, decayRate:Float):E{
 		var e = new E(e);
-		e.addC(NodeC).init(graphic, layer, x, y);
+		e.addC(NodeC).init(graphic, layer, x, y, gold, decayRate);
 		return e;
 	}
 	
-	public function createCastle(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_fort_blue.png", x, y);
+	public function createCastle(x:Float, y:Float, gold:Int):E{
+		var e = createNode("assets/rise_icon_home_blue.png", x, y, gold, Config.CastleDecayRate);
 		e.addC(NodeCastleC).init();
 		e.addC(RadialMenuC).init();
 		return e;
 	}
 	
-	public function createBarracks(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_monster_blue.png", x, y);
+	public function createBarracks(x:Float, y:Float, gold:Int):E{
+		var e = createNode("assets/rise_icon_monster_blue.png", x, y, gold, Config.BarracksDecayRate);
 		e.addC(NodeBarracksC).init();
 		return e;
 	}
 	
-	public function createGoldMine(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_miner_blue.png", x, y);
+	public function createGoldMine(x:Float, y:Float, gold:Int):E{
+		var e = createNode("assets/rise_icon_miner_blue.png", x, y, gold, Config.GoldMineDecayRate);
 		e.addC(NodeMineC).init();
 		return e;
 	}
 	
-	public function createGold(x:Float, y:Float):E{
-		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y);
+	public function createGold(x:Float, y:Float, gold:Int):E{
+		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0);
 		e.addC(NodeGoldC).init();
 		return e;
 	}

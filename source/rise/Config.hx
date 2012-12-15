@@ -7,4 +7,9 @@ class Config {
 	public static inline var NodeCircleImageSize = 256;
 	public static inline var NodeHoverButtonRadius = 40;
 	public static inline var NodeHoverButtonDegreesMargin = 55;
+	public static inline var MineDistance = 400;
+	
+	public static inline var CastleDecayRate = 5;
+	public static inline var BarracksDecayRate = 5;
+	public static inline var GoldMineDecayRate = 5;
 }

@@ -89,7 +89,7 @@ class NodeC extends C{
 		return circle.getC(SpriteC);
 	}
 	
-	public function init(g : Dynamic, ?layer:FlxGroup, x : Float, y : Float, radius : Float = Config.NodeStartRadius, state : NodeState = null):Void{
+	public function init(g : Dynamic, ?layer:FlxGroup, x : Float, y : Float, gold:Int, decayRate:Float, state : NodeState = null):Void{
 		if (state == null)
 			this.state = NodeState.inactive;
 			
@@ -106,7 +106,8 @@ class NodeC extends C{
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		
-		gold = 100;
+		this.gold = gold;
+		this.decayRate = decayRate;
 		
 		worldS.addNode(e);
 	}
@@ -122,14 +123,14 @@ class NodeC extends C{
 			}
 		}
 		decayCounter += FlxG.elapsed;
-		while(decayCounter > decayRate){
+		while(decayRate > 0 && decayCounter > decayRate){
 			decayCounter -= decayRate;
 			evaporate();
 		}
 	}
 	
 	function evaporate():Void{
-		gold -= 20;
+		gold -= 10;
 	}
 	
 	function createCircle(layer:FlxGroup):E{

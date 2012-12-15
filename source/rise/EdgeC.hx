@@ -21,6 +21,8 @@ class EdgeC extends C{
 		
 		m.add(node1.getC(NodeC), NodeC.MOVED, onMoved);
 		m.add(node2.getC(NodeC), NodeC.MOVED, onMoved);
+		m.add(node1, E.DESTROY, e.destroy);
+		m.add(node2, E.DESTROY, e.destroy);
 	}
 	
 	
@@ -36,6 +38,8 @@ class EdgeC extends C{
 		spriteC.flxSprite.origin.y = spriteC.flxSprite.offset.y;
 		spriteC.flxSprite.scale.x = distance / spriteC.flxSprite.width; 
 		spriteC.flxSprite.scale.y = 10 / spriteC.flxSprite.height;
+		spriteC.flxSprite.x = node1.getC(NodeC).x;
+		spriteC.flxSprite.y = node1.getC(NodeC).y;
 		
 		var dx:Float = node2.getC(NodeC).x - node1.getC(NodeC).x;
 		var dy:Float = node2.getC(NodeC).y - node1.getC(NodeC).y;
@@ -53,6 +57,10 @@ class EdgeC extends C{
 		if(beginPoint == node1) return node2;
 		if(beginPoint == node2) return node1;
 		throw "neither";
+	}
+	
+	public function getLength():Float{
+		return U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
 	}
 }
 
