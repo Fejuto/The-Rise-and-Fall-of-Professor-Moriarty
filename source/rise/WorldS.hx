@@ -48,6 +48,14 @@ class WorldS extends C{
 			enemyNodes.push(e);
 	}
 	
+	public function removeNode(e:E):Void{
+		if(!e.hasC(NodeC)) throw "must have NodeC";
+		if (e.getC(NodeC).mine)
+			nodes.remove(e);
+		else
+			enemyNodes.remove(e);
+	}
+	
 	public function getNodesWith<T>(type:Class<T>):Array<E>{
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
