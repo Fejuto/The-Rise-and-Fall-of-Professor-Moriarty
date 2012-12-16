@@ -19,7 +19,7 @@ class NodeCastleC extends C{
 	}
 	
 	public function init():Void{
-		//nodeC.goldOffset = -10;
+		nodeC.goldOffset = Config.CastleLie;
 		setCanBuildSomething(ableToBuild());
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);		

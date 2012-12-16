@@ -29,7 +29,7 @@ class NodeBarracksC extends C{
 	}
 	
 	function onUpdate():Void {
-		if (nodeC.gold > 40 && monsters.length < maxMonsterCount && spawnCounter > spawnDelay) {			
+		if (nodeC.gold >= 40 && monsters.length < maxMonsterCount && spawnCounter > spawnDelay) {			
 			nodeC.gold -= 20;
 			spawnMonster();
 		}
