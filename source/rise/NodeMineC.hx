@@ -33,6 +33,10 @@ class NodeMineC extends C{
 		if(edges.length < 2){
 			findClosestMine();		
 		}
+		
+		if(edges.length == 0){
+			nodeC.decline = true;
+		}
 	}
 	
 	function findClosestMine():Void{

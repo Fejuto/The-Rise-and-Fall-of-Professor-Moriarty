@@ -50,6 +50,7 @@ class NodeC extends C{
 	public var decayRate:Float = 5;
 	var decayCounter:Float = 0;
 	var sendCounter:Float= 0;
+	public var decline:Bool = false;
 	public var originalGraphicSize:Float;
 	public var targetScaleFactor:Float = 2;
 	
@@ -163,9 +164,12 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
-				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
-					if(edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).state != NodeState.active) // if the most important edge node is inactive dont send any gold 
+				if(edges.length > 0 && decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
+					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
 						break;
+						
+					trace(otherNode.decline);
 					
 					gold -= Config.AgentSize;
 					worldS.createGoldAgent(edges[0], e, Config.AgentSize, mine);
