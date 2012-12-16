@@ -143,6 +143,8 @@ class NodeC extends C{
 	function createGraphic(graphic, layer:FlxGroup):E{
 		var e = new E(e);
 		e.addC(SpriteC).init(graphic, layer);
+		e.getC(SpriteC).scaleX = 0.8;
+		e.getC(SpriteC).scaleY = 0.8;
 		return e;
 	}
 	

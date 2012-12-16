@@ -3,6 +3,7 @@ import engine.entities.C;
 import engine.entities.E;
 import org.flixel.FlxG;
 import rise.NodeC.NodeType;
+import com.eclecticdesignstudio.motion.Actuate;
 
 class ButtonC extends C{
 	
@@ -57,6 +58,12 @@ class ButtonC extends C{
 	
 		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
 			return;
+			
+		var NeG = (e.getC(NodeC).gold <= goldCost());
+		Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha: NeG?0.2:1 });
+		if (NeG) { 
+			return;
+		}
 	
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
@@ -64,10 +71,23 @@ class ButtonC extends C{
 		var nodeRadius = e.getC(NodeC).radius;
 			
 		if (U.inCircle(x, y, (Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX)/2, mouseX, mouseY)) {
+			
+			
 			worldS.createNodeFromEntity(e, mouseX, mouseY, type);
 			e.getC(RadialMenuC).animateMenu(false);
 		}
 
+	}
+	
+	function goldCost():Int {
+		switch(type) {
+			case NodeType.barracks:
+				return Config.NodeBarracksCost;
+			case NodeType.castle:
+				return Config.NodeCastleCost;
+			case NodeType.mine:
+				return Config.NodeMineCost;
+		}
 	}
 		
 	function createCircle():E{

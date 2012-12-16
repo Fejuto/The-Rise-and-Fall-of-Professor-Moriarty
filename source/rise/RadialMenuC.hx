@@ -64,6 +64,7 @@ class RadialMenuC extends C{
 		if (FlxG.mouse.pressed())
 			return;
 		
+		// a wild menu appears!
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
 		
