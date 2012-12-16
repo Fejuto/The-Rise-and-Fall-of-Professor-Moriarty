@@ -41,13 +41,14 @@ class NodeBarracksC extends C{
 		
 		if (targetNode == null) { // only start looking for things to attack when i actually have monsters
 		
-			for(node in worldS.getEnemyNodes()) {
+			var nodes = worldS.getNodesDistanceSorted(nodeC.x, nodeC.y);			
+			for(node in nodes) {
 				
-				if (node == null || node.getC(NodeC).gold <= 0) // it's dead, ignore
+				if (node == null || node.getC(NodeC).mine == nodeC.mine || node.getC(NodeC).gold <= 0) // it's dead, ignore
 					continue;
 								
-				if(U.inCircle(nodeC.x, nodeC.y, Config.BarracksAttackRange, node.getC(NodeC).x, node.getC(NodeC).y)) {
-					targetNode = node;					
+				if(U.distance(nodeC.x, nodeC.y, node.getC(NodeC).x, node.getC(NodeC).y) < Config.BarracksAttackRange) {
+					targetNode = node;
 				}
 			}
 			

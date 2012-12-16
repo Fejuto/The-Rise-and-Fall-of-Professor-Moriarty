@@ -43,7 +43,7 @@ class GenerateNodeC extends C{
 		}
 		
 		for (i in 0...villageCount) {
-			var castleCount = Std.random(3) + 2;
+			var castleCount = Std.random(2) + 1;
 			var barracksCount = Std.random(2) + 1;
 			var minerCount = 1;
 			
@@ -53,7 +53,7 @@ class GenerateNodeC extends C{
 			}
 			
 			point = [400 + 250, 300];
-			var centerCastleE = worldS.createCastle(point[0], point[1], 100, false);
+			var centerCastleE = worldS.createCastle(point[0], point[1], 200, false);
 			centerCastleE.getC(NodeC).state = active;
 			
 			for (z in 0...castleCount) {
@@ -62,8 +62,12 @@ class GenerateNodeC extends C{
 			
 			for (z in 0...minerCount) {
 				var p = createEnemyNodeType(point, NodeType.mine, centerCastleE);
-				worldS.createGold(p[0]+200, p[1], 1000);
+				worldS.createGold(p[0]+100, p[1], 100);
 			}
+			
+			for (z in 0...barracksCount) {
+				createEnemyNodeType(point, NodeType.barracks, centerCastleE);
+			}			
 		}
 	}
 	

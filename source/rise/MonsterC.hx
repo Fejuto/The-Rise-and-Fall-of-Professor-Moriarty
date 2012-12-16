@@ -15,6 +15,7 @@ enum MonsterState {
 class MonsterC extends C{
 	
 	@inject var updateS:UpdateS;
+	@inject var renderS:RenderS;
 	@inject var nodeC:NodeC;
 	@inject var nodeBarracksC:NodeBarracksC;
 	
@@ -75,10 +76,10 @@ class MonsterC extends C{
 	}
 	
 	public function init(x:Float, y:Float):Void{
-		e.addC(CircleC).init(x, y, [209, 214, 223, 225]);
-		e.getC(CircleC).radius = 12;
-		
-		e.addC(SpriteC).init(nodeC.mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', x, y);
+		e.addC(CircleC).init(x, y, renderS.topLayer, nodeC.mine?[209, 214, 223, 225]:[54, 45, 34, 225]);
+		e.getC(CircleC).radius = 12;		
+
+		e.addC(SpriteC).init(nodeC.mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', renderS.topLayer, x, y);
 		e.getC(SpriteC).scaleX = 0.3;
 		e.getC(SpriteC).scaleY = 0.3;
 	
