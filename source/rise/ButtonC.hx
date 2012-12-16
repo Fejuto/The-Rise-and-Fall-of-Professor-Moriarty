@@ -14,6 +14,7 @@ class ButtonC extends C{
 	var graphic:E;
 	var initialCircleScale:Float = (Config.NodeHoverButtonRadius / Config.NodeCircleImageSize ) * 2;
 	var type:NodeType;
+	var disabled = false;
 		
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -55,15 +56,18 @@ class ButtonC extends C{
 	}
 	
 	function onUpdate():Void{ 
-	
-		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
-			return;
-			
-		var NeG = (e.getC(NodeC).gold <= goldCost());
-		Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha: NeG?0.2:1 });
-		if (NeG) { 
-			return;
+
+		var dis = (e.getC(NodeC).gold <= goldCost());
+		if (disabled != dis) {
+			disabled = dis;
+			Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha: disabled?0.2:1 }).onComplete( function () { animating: false } ); 
 		}
+		
+		if (disabled)
+			return;
+		
+		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
+			return;		
 	
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
