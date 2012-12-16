@@ -8,36 +8,39 @@ class GoldAgentC extends C{
 	@inject var updateS:UpdateS;
 	@inject var nodeC:NodeC;
 	
-	var edge:E;
-	public var fromNode:E;
-	var alive:Bool = true;
+	public var targetNode:E;
+	var temp:Float;
 	
-	public function init(edge:E, fromNode:E):Void{
-		this.edge = edge;
-		this.fromNode = fromNode;
-		
-		edge.getC(EdgeC).addAgent(e);
-		var toNode = edge.getC(EdgeC).getEndPoint(fromNode);
-		Actuate.tween(nodeC, 1.0 / Config.AgentSpeed * fromNode.getC(NodeC).getDistance(toNode), {x:toNode.getC(NodeC).x, y:toNode.getC(NodeC).y}).ease(Linear.easeNone).onComplete(onComplete);
-		
-		m.add(edge, E.DESTROY, e.destroy);
+	public function init(targetNode:E):Void{
+		setTarget(targetNode);
+		m.add(targetNode, E.DESTROY, onTargetDestroy);
 	}
 	
 	override public function destroy():Void{
 		super.destroy();
-		alive = false;
-		Actuate.stop(nodeC);
-		edge.getC(EdgeC).removeAgent(e);
-		fromNode.getC(NodeC).gold += nodeC.gold;
+		setTarget(null);
+	}
+	
+	function setTarget(target:E):Void{
+		if(targetNode != null){
+			if(!targetNode.destroyed) targetNode.getC(NodeC).agents.remove(e);
+		}
+		targetNode = target;
+		if(targetNode != null){
+			targetNode.getC(NodeC).agents.push(e);
+			Actuate.tween(nodeC, 1.0 / Config.AgentSpeed * nodeC.getDistance(targetNode), {x:targetNode.getC(NodeC).x, y:targetNode.getC(NodeC).y}).ease(Linear.easeNone).onComplete(onComplete);
+		}
+	}
+	
+	function onTargetDestroy():Void{
+		Actuate.stop(nodeC, null, false, false);
+		updateS.kill(e);
 	}
 	
 	function onComplete():Void{
-		if(alive){
-			edge.getC(EdgeC).removeAgent(e);
-			edge.getC(EdgeC).getEndPoint(fromNode).getC(NodeC).gold += nodeC.gold;
-			nodeC.gold = 0;
-			updateS.kill(e);
-		}
+		targetNode.getC(NodeC).gold += nodeC.gold;
+		nodeC.gold = 0;
+		updateS.kill(e);
 	}
 }
 

@@ -32,6 +32,7 @@ class NodeC extends C{
 	var circle:E;
 	public var graphic:E;
 	var edges:Array<E>;
+	public var agents:Array<E>;
 	
 	var _gold:Int = 100;
 	public var gold(getGold, setGold):Int;
@@ -109,6 +110,7 @@ class NodeC extends C{
 			layer = renderS.defaultLayer;
 		
 		edges = new Array<E>();
+		agents = new Array<E>();
 		
 		// grpahics
 		this.mine = mine;
@@ -168,13 +170,10 @@ class NodeC extends C{
 						break;
 						
 					gold -= Config.AgentSize;
-					worldS.createGoldAgent(edges[0], e, Config.AgentSize, mine);
-					//edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).gold += Config.AgentSize;
+					worldS.createGoldAgent(e, edges[0].getC(EdgeC).getEndPoint(e), Config.AgentSize, mine);
 				}
 			}			
 		}
-		
-		
 	}
 	
 	function evaporate():Void{
@@ -216,10 +215,8 @@ class NodeC extends C{
 	public var goldOffset:Int = 0;
 	public function getEffectiveGold():Int{
 		var total = 0;
-		for(edge in edges){
-			for(agent in edge.getC(EdgeC).getAgentsWithEndPoint(e)){
-				total += agent.getC(NodeC).gold;
-			}
+		for(agent in agents){
+			total += agent.getC(NodeC).gold;
 		}
 		return cast Math.max(total + gold + goldOffset, 0);
 	}

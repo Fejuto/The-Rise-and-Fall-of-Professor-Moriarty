@@ -10,14 +10,12 @@ class EdgeC extends C{
 	
 	public var node1:E;
 	public var node2:E;
-	public var agents:Array<E>;
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
 		node1.getC(NodeC).addEdge(e);
 		this.node2 = node2;
 		node2.getC(NodeC).addEdge(e);
-		agents = new Array<E>();
 		
 		updateEdge();
 		
@@ -59,21 +57,6 @@ class EdgeC extends C{
 		if(beginPoint.getC(NodeC) == node1.getC(NodeC)) return node2;
 		if(beginPoint.getC(NodeC) == node2.getC(NodeC)) return node1;
 		throw "neither";
-	}
-	
-	public function getAgentsWithEndPoint(endPoint:E):Array<E>{
-		return Lambda.array(Lambda.filter(agents, function(agent){
-				return getEndPoint(agent.getC(GoldAgentC).fromNode).getC(NodeC) == endPoint.getC(NodeC);
-			}
-		));
-	}
-	
-	public function addAgent(agent:E):Void{
-		agents.push(agent);
-	}
-	
-	public function removeAgent(agent:E):Void{
-		agents.remove(agent);	
 	}
 	
 	public function getLength():Float{

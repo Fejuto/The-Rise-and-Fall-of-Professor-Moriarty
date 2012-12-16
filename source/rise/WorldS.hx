@@ -131,8 +131,8 @@ class WorldS extends C{
 		return e;
 	}
 	
-	public function createGoldAgent(edge:E, fromNode:E, gold:Int, ?mine:Bool = true):E{
-		if(!edge.hasC(EdgeC)) throw "must have edge";
+	public function createGoldAgent(fromNode:E, toNode:E, gold:Int, ?mine:Bool = true):E{
+		if(!toNode.hasC(NodeC)) throw "must have edge";
 		if(!fromNode.hasC(NodeC)) throw "most have node";
 		
 		var e = createNode("assets/rise_icon_gold.png", fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
@@ -140,7 +140,7 @@ class WorldS extends C{
 		e.getC(NodeC).gold = e.getC(NodeC).gold;
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.25;
-		e.addC(GoldAgentC).init(edge, fromNode);
+		e.addC(GoldAgentC).init(toNode);
 		return e;
 	}
 	
