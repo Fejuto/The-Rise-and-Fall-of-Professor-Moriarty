@@ -8,6 +8,9 @@ import flash.events.Event;
 class E extends EventDispatcher, implements Infos{
 	public static inline var DESTROY = "DESTROY";
 	
+	
+	public var destroyed(default, null):Bool = false;
+
 	var m:EventMap;
 	var parent:E;
 	var children:Array<E>;
@@ -38,6 +41,7 @@ class E extends EventDispatcher, implements Infos{
 	}
 	
 	function onDestroy():Void{
+		destroyed = true;
 		m.removeAll();
 		if(parent != null){
 			parent.removeChild(this);		
