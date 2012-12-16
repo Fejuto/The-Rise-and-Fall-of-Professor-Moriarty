@@ -5,6 +5,7 @@ import flash.events.Event;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
+import rise.MonsterC.MonsterState;
 import org.flixel.FlxGroup;
 import haxe.Json;
 
@@ -31,8 +32,9 @@ class NodeC extends C{
 	
 	var circle:E;
 	public var graphic:E;
-	var edges:Array<E>;
+	public var edges:Array<E>;
 	public var agents:Array<E>;
+	public var attackers:Array<E>;
 	
 	var _gold:Int = 100;
 	public var gold(getGold, setGold):Int;
@@ -111,6 +113,7 @@ class NodeC extends C{
 		
 		edges = new Array<E>();
 		agents = new Array<E>();
+		attackers = new Array<E>();
 		
 		// grpahics
 		this.mine = mine;
@@ -131,6 +134,8 @@ class NodeC extends C{
 	}
 		
 	function onUpdate():Void {
+		decline = decline || isUnderAttack();
+		 
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) { 
 				
@@ -164,6 +169,7 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
+				
 				if((edges.length > 0) && (decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath())){
 					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
 					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
@@ -174,6 +180,14 @@ class NodeC extends C{
 				}
 			}			
 		}
+	}
+	
+	function isUnderAttack():Bool{
+		for(attacker in attackers){
+			if(attacker.getC(MonsterC).state == MonsterState.combat) return true;
+		}
+		
+		return false;
 	}
 	
 	function evaporate():Void{

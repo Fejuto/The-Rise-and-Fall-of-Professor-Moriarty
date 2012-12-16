@@ -53,7 +53,17 @@ class MonsterC extends C{
 		return state = v;
 	}
 	
-	var targetNodeC:NodeC = null;
+	var _targetNode:NodeC = null;
+	var targetNodeC(default, setTargetNode):NodeC = null;
+	function setTargetNode(v:NodeC):NodeC{
+		if(_targetNode != null){
+			_targetNode.attackers.remove(e);
+		}
+		if(v != null){
+			_targetNode.attackers.push(e);
+		}
+		return _targetNode = v;
+	}
 	
 	public var lastDegrees : Float;
 	
@@ -176,6 +186,7 @@ class MonsterC extends C{
 	}
 	
 	override public function destroy():Void{
+		setTargetNode(null);
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
