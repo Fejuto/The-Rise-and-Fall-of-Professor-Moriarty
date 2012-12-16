@@ -30,8 +30,6 @@ class MenuState extends FlxState
 	}
 	
 	function init():Void{
-		trace("!!!!!!!!!");
-		
 		e = new E();
 		e.addC(UpdateS).init();
 		e.addC(RenderS).init(this);

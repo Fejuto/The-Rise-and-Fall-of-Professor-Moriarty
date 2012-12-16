@@ -177,6 +177,7 @@ class MonsterC extends C{
 	override public function destroy():Void{
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
+		Actuate.stop(moveTo);
 		
 		super.destroy();
 	}

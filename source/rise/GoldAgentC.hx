@@ -7,6 +7,7 @@ import com.eclecticdesignstudio.motion.easing.Linear;
 class GoldAgentC extends C{
 	@inject var updateS:UpdateS;
 	@inject var nodeC:NodeC;
+	@inject var worldS:WorldS;
 	
 	public var targetNode:E;
 	var temp:Float;
@@ -34,7 +35,13 @@ class GoldAgentC extends C{
 	
 	function onTargetDestroy():Void{
 		Actuate.stop(nodeC, null, false, false);
-		updateS.kill(e);
+		var targets = worldS.getNodesDistanceSorted(nodeC.x, nodeC.y);
+		targets = Lambda.array(Lambda.filter(targets, function(target){return target.getC(NodeC).mine == nodeC.mine;}));
+		if(targets.length > 0){
+			setTarget(targets[0]);
+		}else{
+			updateS.kill(e);
+		}
 	}
 	
 	function onComplete():Void{

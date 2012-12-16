@@ -74,6 +74,16 @@ class WorldS extends C{
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
 	
+	public function getNodesDistanceSorted(x:Float, y:Float):Array<E>{
+		var r = nodes.copy();
+		r.sort(function(a,b):Int{
+				var b = U.distance(x, y, a.getC(NodeC).x, a.getC(NodeC).y) < U.distance(x, y, b.getC(NodeC).x, b.getC(NodeC).y);
+				return b ? -1 : 1;
+			}
+		);
+		return r;
+	}
+	
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
 		scrollS.enabled = false;
 		
