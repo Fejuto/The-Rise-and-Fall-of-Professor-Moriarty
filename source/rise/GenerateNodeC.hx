@@ -62,7 +62,7 @@ class GenerateNodeC extends C{
 			
 			for (z in 0...minerCount) {
 				var p = createEnemyNodeType(point, NodeType.mine, centerCastleE);
-				worldS.createGold(p[0]+200, p[1], 1000);
+				worldS.createGold(p[0]+200, p[1], 100);
 			}
 		}
 	}
