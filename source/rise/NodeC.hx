@@ -111,6 +111,7 @@ class NodeC extends C{
 		// grpahics
 		this.mine = mine;
 		this.circle = createCircle(layer);
+		circle.getC(SpriteC).scaleX = circle.getC(SpriteC).scaleY = 0;
 		this.graphic = createGraphic(g, layer);
 		
 		// position and size
@@ -161,7 +162,7 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
-				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath() - Config.AgentSize){
+				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
 					if(edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).state != NodeState.active) // if the most important edge node is inactive dont send any gold 
 						break;
 					

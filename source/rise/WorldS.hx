@@ -111,6 +111,8 @@ class WorldS extends C{
 	
 	function createGold(x:Float, y:Float, gold:Int):E{
 		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
+		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
+		flxSprite.scale.x = flxSprite.scale.y = 0.5;
 		e.addC(NodeGoldC).init();
 		return e;
 	}
