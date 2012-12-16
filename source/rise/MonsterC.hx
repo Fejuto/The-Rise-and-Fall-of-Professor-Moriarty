@@ -15,7 +15,7 @@ class MonsterC extends C{
 	
 	var health = 100;
 	var attack = 100;
-	var speed = 50;
+	var speed = 20;
 	
 	public var lastDegrees : Float;
 	
@@ -37,6 +37,8 @@ class MonsterC extends C{
 		return e.getC(SpriteC).y = v;		
 	}
 	
+	var monsterBounceY = 0;
+	
 	public function init(x:Float, y:Float):Void{
 		e.addC(CircleC).init(x, y, [209, 214, 223, 225]);
 		e.getC(CircleC).radius = 12;
@@ -54,6 +56,9 @@ class MonsterC extends C{
 	function onUpdate():Void {
 		
 		if (wanderCounter > wanderDelay && !wandering) {
+			
+			monsterBounceY = 0;
+			
 			wanderDelay = Math.random() * 5 + 4;			
 			wanderCounter = 0;
 			
@@ -63,10 +68,12 @@ class MonsterC extends C{
 			var pn = Math.random() > 0.5;
 			var newdeg = lastDegrees + (pn?distance:-distance);
 			
-			Actuate.update(wander, distance/speed, [lastDegrees], [newdeg], false).onComplete(function () {
+			Actuate.tween(this, 0.1, { monsterBounceY: 5 }, false).repeat().reflect();
+			Actuate.update(wander, distance/speed, [lastDegrees], [newdeg], false).ease(Linear.easeNone).onComplete(function () {
+				Actuate.stop(this);
 				wandering = false;
 			});
-											
+			
 			lastDegrees = newdeg;
 		}
 		
@@ -75,10 +82,11 @@ class MonsterC extends C{
 	}
 	
 	function wander(td:Float):Void {
-		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, Math.random() * 360);
+//		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, Math.random() * 360);
 	  	var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, td);
 	  	x = point[0];
-	  	y = point[1];
+	  	y = point[1] + monsterBounceY;
+//		y = monsterBounceY;
 	}
 	
 	override public function destroy():Void{
