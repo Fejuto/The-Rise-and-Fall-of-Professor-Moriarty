@@ -7,6 +7,8 @@ class ScrollS extends C{
 	@inject var updateS:UpdateS;
 	
 	public var enabled = false;
+	public var edgeScrollEnabled = false;
+	
 	var screenWidth:Float;
 	var screenHeight:Float;
 	var scrollSpeed = 5;
@@ -49,8 +51,8 @@ class ScrollS extends C{
 			modifyCameraScroll(-(FlxG.mouse.screenX - lastMousePoint.x), -(FlxG.mouse.screenY - lastMousePoint.y));
        		lastMousePoint.x = FlxG.mouse.screenX;
        	 	lastMousePoint.y = FlxG.mouse.screenY;
-	   } else {
-			return;
+	   } else if(edgeScrollEnabled) {
+			
 			var screenPos = FlxG.mouse.getScreenPosition();
 			var rs = screenWidth - screenPos.x < scrollThreshold;
 			var ls = screenPos.x < scrollThreshold;
