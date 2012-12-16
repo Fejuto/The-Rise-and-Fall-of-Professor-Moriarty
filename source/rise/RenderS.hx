@@ -13,6 +13,8 @@ class RenderS extends C{
 	public var backgroundMenuLayer:FlxGroup;
 	public var nodeLayer:FlxGroup;
 	public var defaultLayer:FlxGroup;
+	public var topLayer:FlxGroup;
+	public var interfaceLayer:FlxGroup;
 	
 	var flxState:FlxState;
 	
@@ -28,6 +30,10 @@ class RenderS extends C{
 		flxState.add(nodeLayer);
 		defaultLayer = new FlxGroup();
 		flxState.add(defaultLayer);
+		topLayer = new FlxGroup();
+		flxState.add(topLayer);
+		interfaceLayer = new FlxGroup();
+		flxState.add(interfaceLayer);
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}

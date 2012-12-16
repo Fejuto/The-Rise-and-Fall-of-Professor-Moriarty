@@ -58,13 +58,14 @@ class WorldS extends C{
 		return true;
 	}
 	
-	public function getNodesWith<T>(type:Class<T>):Array<E>{
+	public function getNodesWith<T>(type:Class<T>):Array<E>{		
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
 	
-	public function getEnemyNodes():Array<E>{
-		return Lambda.array(Lambda.filter(nodes, function(e){return !e.getC(NodeC).mine; }));
-	}
+	// not working for some reason?!s
+	/*public function getEnemyNodes():Array<E>{
+		return Lambda.array(Lambda.filter(nodes, function(e){return e.getC(NodeC).mine == false; }));
+	}*/
 
 	public function getNodesDistanceSorted(x:Float, y:Float):Array<E>{
 		var r = nodes.copy();
