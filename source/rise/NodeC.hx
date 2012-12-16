@@ -98,6 +98,8 @@ class NodeC extends C{
 		
 		if (state == null)
 			this.state = NodeState.inactive;
+		else 
+			this.state = state;
 			
 		if (layer == null)
 			layer = renderS.defaultLayer;
@@ -131,29 +133,40 @@ class NodeC extends C{
 					e.getC(FollowMouseC).enabled = false;
 				}
 			}
-		}else{
+		} else if (this.state == NodeState.active){
 			decayCounter += FlxG.elapsed;
 			while(decayRate > 0 && decayCounter > decayRate){
 				decayCounter -= decayRate;
 				evaporate();
 			}
+			
+			sendCounter += FlxG.elapsed;
+			while(sendCounter > Config.SendRate){
+				sendCounter -= Config.SendRate;		
+				edges.sort(function(edge1, edge2){
+					var other1 = edge1.getC(EdgeC).getEndPoint(e);
+					var other2 = edge2.getC(EdgeC).getEndPoint(e);
+					
+					if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
+						return -1;
+					if (other2.getC(NodeC).state != NodeState.active)
+						return 1;
+					
+					var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
+					return b?-1:1; 
+				});
+				
+				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+					if(edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).state != NodeState.active) // if the most important edge node is inactive dont send any gold 
+						break;
+					
+					gold -= Config.AgentSize;
+					edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).gold += Config.AgentSize;
+				}
+			}			
 		}
 		
-		sendCounter += FlxG.elapsed;
-		while(sendCounter > Config.SendRate){
-			sendCounter -= Config.SendRate;		
-			edges.sort(function(edge1, edge2){
-				var other1 = edge1.getC(EdgeC).getEndPoint(e);
-				var other2 = edge2.getC(EdgeC).getEndPoint(e);
-				var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
-				return b?-1:1; 
-			});
-			
-			if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
-				gold -= Config.AgentSize;
-				edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).gold += Config.AgentSize;
-			}
-		}
+
 	}
 	
 	function evaporate():Void{

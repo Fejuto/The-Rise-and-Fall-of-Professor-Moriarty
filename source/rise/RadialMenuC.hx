@@ -68,7 +68,6 @@ class RadialMenuC extends C{
 		if ((nodeC.gold <= Config.NodeBarracksCost|Config.NodeCastleCost|Config.NodeMineCost) && !mouseOver)
 			return;
 		
-		
 		// a wild menu appears!
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
