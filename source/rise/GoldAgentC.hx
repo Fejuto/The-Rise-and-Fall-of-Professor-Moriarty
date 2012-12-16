@@ -41,10 +41,9 @@ class GoldAgentC extends C{
 	
 	function findTarget():Void{
 		Actuate.stop(nodeC, null, false, false);
-		var targets = worldS.getNodesDistanceSorted(nodeC.x, nodeC.y);
-		targets = Lambda.array(Lambda.filter(targets, function(target){return target.getC(NodeC).mine == nodeC.mine && target.getC(NodeC).decayRate > 0;}));
-		if(targets.length > 0){
-			setTarget(targets[0]);
+		var closest = worldS.getClosestBuilding(nodeC.x, nodeC.y, nodeC.mine);
+		if(closest != null){
+			setTarget(closest);
 		}else{
 			nodeC.gold = 0;
 			updateS.kill(e);
