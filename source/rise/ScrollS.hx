@@ -50,7 +50,7 @@ class ScrollS extends C{
        		lastMousePoint.x = FlxG.mouse.screenX;
        	 	lastMousePoint.y = FlxG.mouse.screenY;
 	   } else {
-		return;
+		
 			var screenPos = FlxG.mouse.getScreenPosition();
 			var rs = screenWidth - screenPos.x < scrollThreshold;
 			var ls = screenPos.x < scrollThreshold;
