@@ -34,9 +34,7 @@ class NodeMineC extends C{
 			findClosestMine();		
 		}
 		
-		if(edges.length == 0){
-			nodeC.decline = true;
-		}
+		nodeC.decline = edges.length == 0;
 	}
 	
 	function findClosestMine():Void{
