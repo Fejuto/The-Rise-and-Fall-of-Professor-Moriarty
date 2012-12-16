@@ -25,7 +25,7 @@ class WorldS extends C{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
 		c1.getC(NodeC).state = NodeState.active;
 		
-		var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
+		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
 
 		e.addC(GenerateNodeC).init();
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
@@ -91,7 +91,7 @@ class WorldS extends C{
 		}
 		
 		newE.addC(FollowMouseC).init(true);
-		newE.getC(NodeC).state = NodeState.dragging;
+		newE.getC(NodeC).state = dragging;
 		if(fromE != null && newE != null){
 			createEdge(fromE, newE);
 		}

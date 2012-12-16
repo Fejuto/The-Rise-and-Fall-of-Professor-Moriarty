@@ -12,7 +12,7 @@ class GenerateNodeC extends C{
 		// generate nearby content
 		
 		var mineCount = 20;
-		var village = 1;
+		var villageCount = 5;
 		var mountains = 20;
 		
 		
@@ -39,6 +39,15 @@ class GenerateNodeC extends C{
 			}
 			
 			
+		}
+		
+		for (i in 0...villageCount) {
+			var point = randomPointInSquareCoord(0, 0);
+			while (!worldS.isEmptySpot(point[0], point[1])) {
+				point = randomPointInSquareCoord(0, 0);
+			}
+			
+			worldS.createCastle(point[0], point[1], 100, false);		
 		}
 	}
 	

@@ -133,8 +133,6 @@ class NodeC extends C{
 			if (FlxG.mouse.justReleased()) { 
 				
 				// check if able to drop there
-				
-			
 				scrollS.enabled = true;				
 				this.state = NodeState.active;
 				if (e.hasC(FollowMouseC)) {
@@ -164,7 +162,7 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
-				if(edges.length > 0 && decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+				if((edges.length > 0) && (decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath())){
 					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
 					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
 						break;
