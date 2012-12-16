@@ -26,7 +26,7 @@ class NodeCastleC extends C{
 	}
 
 	function ableToBuild():Bool {
-		return (nodeC.gold > Config.NodeBarracksCost|Config.NodeCastleCost|Config.NodeMineCost);
+		return (nodeC.gold > Config.NodeBarracksCost || nodeC.gold > Config.NodeCastleCost || nodeC.gold > Config.NodeMineCost);
 	}
 	
 	override public function destroy():Void{

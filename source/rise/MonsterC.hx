@@ -114,6 +114,7 @@ class MonsterC extends C{
 	}
 	
 	function bounce():Void {
+		monsterBounceY = 0;
 		Actuate.tween(this, 0.1, { monsterBounceY: 5 }, false).ease(Linear.easeNone).repeat().reflect();
 	}
 	
@@ -132,14 +133,15 @@ class MonsterC extends C{
 	
 	public function attackTarget(targetNodeC:NodeC):Void {
 		// stop any running wandering animation
-		Actuate.stop(this);
-		Actuate.stop(wander);
+		//Actuate.stop(this);
+		//Actuate.stop(wander);
+		return;
 		
 		this.targetNodeC = targetNodeC;
 		var distance = U.distance(nodeC.x, nodeC.y, targetNodeC.x, targetNodeC.y);
 		
 		state = approaching;
-		Actuate.update(moveTo, distance/speed, [x, y], [targetNodeC.x, targetNodeC], true).ease(Linear.easeNone).onComplete(function () {
+		Actuate.update(moveTo, distance/speed, [x, y], [targetNodeC.x, targetNodeC], false).ease(Linear.easeNone).onComplete(function () {
 			if (state == approaching) {
 				state = combat;	
 			}
