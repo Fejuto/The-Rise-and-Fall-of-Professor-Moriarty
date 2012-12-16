@@ -41,7 +41,7 @@ class NodeBarracksC extends C{
 		
 		if (targetNode == null) { // only start looking for things to attack when i actually have monsters
 		
-			var nodes = worldS.getNodesDistanceSorted(nodeC.x, nodeC.y);			
+			var nodes = worldS.getOtherNodeBuildings(nodeC.mine);			
 			for(node in nodes) {
 				
 				if (node == null || node.getC(NodeC).mine == nodeC.mine || node.getC(NodeC).gold <= 0) // it's dead, ignore

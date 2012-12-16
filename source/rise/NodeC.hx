@@ -206,6 +206,9 @@ class NodeC extends C{
 		edges.remove(e);
 	}
 	
+	public function isBuilding():Bool {
+		return (e.hasC(NodeBarracksC) || e.hasC(NodeCastleC) || e.hasC(NodeMineC));
+	}
 	
 	override public function destroy():Void{
 		super.destroy();
