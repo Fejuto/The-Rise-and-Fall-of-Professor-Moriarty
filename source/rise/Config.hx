@@ -7,7 +7,7 @@ class Config {
 	public static inline var NodeCircleImageSize = 256;
 	public static inline var NodeHoverButtonRadius = 40;
 	public static inline var NodeHoverButtonDegreesMargin = 55;
-	public static inline var MineDistance = 400;
+	public static inline var MineDistance = 200;
 	
 	public static inline var Evaporation = 10;
 	public static inline var SendRate = 1;
