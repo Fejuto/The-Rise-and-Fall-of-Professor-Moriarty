@@ -19,14 +19,15 @@ class NodeCastleC extends C{
 	}
 	
 	public function init():Void{
-		//nodeC.goldOffset = -10;
-		setCanBuildSomething(ableToBuild());
-		
+		//nodeC.goldOffset = -10;		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);		
 	}
 	
 	function onUpdate():Void {
-		setCanBuildSomething(ableToBuild());
+		if (nodeC.mine)
+			setCanBuildSomething(ableToBuild());
+		else
+			setCanBuildSomething(true);
 	}
 
 	function ableToBuild():Bool {
