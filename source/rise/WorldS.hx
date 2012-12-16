@@ -66,8 +66,18 @@ class WorldS extends C{
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.getC(NodeC).mine == false; }));
 	}
 
-	public function getNodesDistanceSorted(x:Float, y:Float):Array<E>{
-		var r = nodes.copy();
+	public function getClosestBuilding(x:Float, y:Float, mine:Bool):Array<E>{
+		var winner : E = null;
+		var minDist:Float = Math.POSITIVE_INFINITY;
+		for (node in nodes){
+			if(!node.getC(NodeC).isBuilding) continue;
+			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
+			if(dist < minDist){
+				winner = node;
+				minDist = dist;
+			}
+		}
+		
 		r.sort(function(a,b):Int{
 				var b = U.distance(x, y, a.getC(NodeC).x, a.getC(NodeC).y) < U.distance(x, y, b.getC(NodeC).x, b.getC(NodeC).y);
 				return b ? -1 : 1;
