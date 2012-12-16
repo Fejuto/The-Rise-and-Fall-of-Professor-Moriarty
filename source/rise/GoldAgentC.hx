@@ -9,7 +9,7 @@ class GoldAgentC extends C{
 	@inject var nodeC:NodeC;
 	
 	var edge:E;
-	var fromNode:E;
+	public var fromNode:E;
 	var alive:Bool = true;
 	
 	public function init(edge:E, fromNode:E):Void{

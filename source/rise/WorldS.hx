@@ -122,6 +122,8 @@ class WorldS extends C{
 		if(!fromNode.hasC(NodeC)) throw "most have node";
 		
 		var e = createNode("assets/rise_icon_gold.png", fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		e.getC(NodeC).targetScaleFactor *= 0.75;
+		e.getC(NodeC).gold = e.getC(NodeC).gold;
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.25;
 		e.addC(GoldAgentC).init(edge, fromNode);

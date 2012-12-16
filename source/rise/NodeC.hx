@@ -51,6 +51,7 @@ class NodeC extends C{
 	var decayCounter:Float = 0;
 	var sendCounter:Float= 0;
 	public var originalGraphicSize:Float;
+	public var targetScaleFactor:Float = 2;
 	
 	public var state(default, default):NodeState;
 	public var mine(default, default):Bool;
@@ -81,7 +82,7 @@ class NodeC extends C{
 	var _radius:Float;
 	public var radius(getRadius, setRadius):Float;
 	function setRadius(v:Float):Float {
-		var targetScale = (v / originalGraphicSize) * 2;
+		var targetScale = (v / originalGraphicSize) * targetScaleFactor;
 		Actuate.stop(circle.getC(SpriteC));
 		Actuate.tween(circle.getC(SpriteC), 1, {scaleX:targetScale, scaleY:targetScale}).ease(Elastic.easeOut);
 		return _radius = v;
@@ -214,7 +215,13 @@ class NodeC extends C{
 	
 	public var goldOffset:Int = 0;
 	public function getEffectiveGold():Int{
-		return cast Math.max(gold + goldOffset, 0);
+		var total = 0;
+		for(edge in edges){
+			for(agent in edge.getC(EdgeC).getAgentsWithEndPoint(e)){
+				total += agent.getC(NodeC).gold;
+			}
+		}
+		return cast Math.max(total + gold + goldOffset, 0);
 	}
 	
 	public function getTimeUntilDeath():Float{

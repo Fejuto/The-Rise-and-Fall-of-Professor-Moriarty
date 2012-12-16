@@ -13,6 +13,7 @@ class NodeMineC extends C{
 	
 	public function init():Void{
 		edges = new Array<E>();
+		nodeC.goldOffset = 10;
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	

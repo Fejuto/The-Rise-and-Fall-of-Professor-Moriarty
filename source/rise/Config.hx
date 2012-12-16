@@ -9,7 +9,7 @@ class Config {
 	public static inline var NodeHoverButtonDegreesMargin = 55;
 	public static inline var MineDistance = 200;
 	
-	public static inline var Evaporation = 10;
+	public static inline var Evaporation = 5;
 	public static inline var SendRate = 1;
 	public static inline var AgentSize = 10;
 	public static inline var AgentSpeed = 100; //pixels per second

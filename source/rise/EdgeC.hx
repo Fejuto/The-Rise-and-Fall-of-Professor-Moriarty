@@ -61,6 +61,13 @@ class EdgeC extends C{
 		throw "neither";
 	}
 	
+	public function getAgentsWithEndPoint(endPoint:E):Array<E>{
+		return Lambda.array(Lambda.filter(agents, function(agent){
+				return getEndPoint(agent.getC(GoldAgentC).fromNode).getC(NodeC) == endPoint.getC(NodeC);
+			}
+		));
+	}
+	
 	public function addAgent(agent:E):Void{
 		agents.push(agent);
 	}
