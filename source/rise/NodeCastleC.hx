@@ -7,9 +7,12 @@ class NodeCastleC extends C{
 	@inject var updateS:UpdateS;
 	@inject var nodeC:NodeC;
 	
+	var initbool = false;
+		
 	public var canBuildSomething(default, setCanBuildSomething):Bool;
 	function setCanBuildSomething(v : Bool):Bool {
-		if (v != canBuildSomething) {
+		if (!initbool || v != canBuildSomething) {
+			initbool = true;
 			Actuate.tween(nodeC.graphic.getC(SpriteC).flxSprite, 1, { alpha:v?1.0:0.2 } );	
 		}
 		return canBuildSomething = v;
