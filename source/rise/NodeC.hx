@@ -160,7 +160,7 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
-				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath() - Config.AgentSize){
 					if(edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).state != NodeState.active) // if the most important edge node is inactive dont send any gold 
 						break;
 					
