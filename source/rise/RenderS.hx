@@ -8,9 +8,9 @@ import org.flixel.FlxGroup;
 class RenderS extends C{
 	@inject var updateS:UpdateS;
 	
+	public var edgeLayer:FlxGroup;
 	public var gaiaLayer:FlxGroup;
 	public var backgroundMenuLayer:FlxGroup;
-	public var edgeLayer:FlxGroup;
 	public var nodeLayer:FlxGroup;
 	public var defaultLayer:FlxGroup;
 	

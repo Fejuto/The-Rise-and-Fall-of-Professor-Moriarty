@@ -152,9 +152,9 @@ class NodeC extends C{
 					var other2 = edge2.getC(EdgeC).getEndPoint(e);
 					
 					if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
-						return -1;
-					if (other2.getC(NodeC).state != NodeState.active)
 						return 1;
+					if (other2.getC(NodeC).state != NodeState.active)
+						return -1;
 					
 					var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
 					return b?-1:1; 
@@ -165,7 +165,8 @@ class NodeC extends C{
 						break;
 					
 					gold -= Config.AgentSize;
-					edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).gold += Config.AgentSize;
+					worldS.createGoldAgent(edges[0], e, Config.AgentSize, mine);
+					//edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).gold += Config.AgentSize;
 				}
 			}			
 		}
@@ -218,6 +219,10 @@ class NodeC extends C{
 	public function getTimeUntilDeath():Float{
 		if(decayRate == 0) return Math.POSITIVE_INFINITY;
 		return getEffectiveGold() / Config.Evaporation * decayRate;
+	}
+	
+	public function getDistance(other:E):Float{
+		return U.distance(x, y, other.getC(NodeC).x, other.getC(NodeC).y);
 	}
 }
 

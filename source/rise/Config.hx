@@ -12,6 +12,7 @@ class Config {
 	public static inline var Evaporation = 10;
 	public static inline var SendRate = 1;
 	public static inline var AgentSize = 10;
+	public static inline var AgentSpeed = 100; //pixels per second
 	
 	public static inline var CastleDecayRate = 5;
 	public static inline var BarracksDecayRate = 5;

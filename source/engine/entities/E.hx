@@ -25,7 +25,7 @@ class E extends EventDispatcher, implements Infos{
 			parent.addChild(this);
 		}
 		
-		m.add(this, DESTROY, onDestroy);
+		m.add(this, DESTROY, onDestroy, false, -1);
 	}
 	
 	public function destroy():Void{
