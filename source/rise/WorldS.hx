@@ -151,7 +151,7 @@ class WorldS extends C{
 	}
 	
 	public function createRoad(x:Float, y:Float, gold:Int):E {
-		var e = createNode("assets/rise_icon_road_blue.png", renderS.topLayer, x, y, gold);
+		var e = createNode("assets/rise_icon_road_red.png", renderS.topLayer, x, y, gold);
 		e.addC(NodeRoadC).init();		
 		return e;
 	}
