@@ -113,6 +113,8 @@ class WorldS extends C{
 	
 	public function createGold(x:Float, y:Float, gold:Int):E{
 		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
+		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
+		flxSprite.scale.x = flxSprite.scale.y = 0.5;
 		e.addC(NodeGoldC).init();
 		return e;
 	}
@@ -121,8 +123,9 @@ class WorldS extends C{
 		if(!edge.hasC(EdgeC)) throw "must have edge";
 		if(!fromNode.hasC(NodeC)) throw "most have node";
 		
-		
 		var e = createNode("assets/rise_icon_gold.png", fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
+		flxSprite.scale.x = flxSprite.scale.y = 0.25;
 		e.addC(GoldAgentC).init(edge, fromNode);
 		return e;
 	}

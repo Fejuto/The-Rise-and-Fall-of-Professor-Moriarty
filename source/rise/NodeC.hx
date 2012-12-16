@@ -43,13 +43,14 @@ class NodeC extends C{
 		if(area <= 0){
 			updateS.kill(e);
 		}		
-		setRadius(Math.sqrt(area / Math.PI) * Config.NodeCircleImageSize / 2);
+		setRadius(Math.sqrt(area / Math.PI) * originalGraphicSize / 2);
 		return _gold = v;
 	}
 		
 	public var decayRate:Float = 5;
 	var decayCounter:Float = 0;
 	var sendCounter:Float= 0;
+	public var originalGraphicSize:Float;
 	
 	public var state(default, default):NodeState;
 	public var mine(default, default):Bool;
@@ -80,7 +81,7 @@ class NodeC extends C{
 	var _radius:Float;
 	public var radius(getRadius, setRadius):Float;
 	function setRadius(v:Float):Float {
-		var targetScale = (v / Config.NodeCircleImageSize) * 2;
+		var targetScale = (v / originalGraphicSize) * 2;
 		Actuate.stop(circle.getC(SpriteC));
 		Actuate.tween(circle.getC(SpriteC), 1, {scaleX:targetScale, scaleY:targetScale}).ease(Elastic.easeOut);
 		return _radius = v;
@@ -110,6 +111,7 @@ class NodeC extends C{
 		// grpahics
 		this.mine = mine;
 		this.circle = createCircle(layer);
+		circle.getC(SpriteC).scaleX = circle.getC(SpriteC).scaleY = 0;
 		this.graphic = createGraphic(g, layer);
 		
 		// position and size
@@ -160,7 +162,7 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
-				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath() - Config.AgentSize){
+				if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
 					if(edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).state != NodeState.active) // if the most important edge node is inactive dont send any gold 
 						break;
 					
@@ -185,14 +187,13 @@ class NodeC extends C{
 			e.getC(SpriteC).setColor(209, 214, 223, 225);
 		else
 			e.getC(SpriteC).setColor(54, 45, 34, 225);
+		originalGraphicSize = e.getC(SpriteC).flxSprite.width;
 		return e;
 	}
 	
 	function createGraphic(graphic, layer:FlxGroup):E{
 		var e = new E(e);
 		e.addC(SpriteC).init(graphic, layer);
-		//e.getC(SpriteC).scaleX = 0.6;
-		//e.getC(SpriteC).scaleY = 0.6;
 		return e;
 	}
 	
