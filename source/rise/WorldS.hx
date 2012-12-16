@@ -68,32 +68,32 @@ class WorldS extends C{
 		}
 	}
 	
-	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, decayRate:Float, ?state:NodeState):E{
+	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, decayRate:Float, ?state:NodeState, ?mine:Bool):E{
 		var e = new E(e);
-		e.addC(NodeC).init(graphic, layer, x, y, gold, decayRate, state);
+		e.addC(NodeC).init(graphic, layer, x, y, gold, decayRate, state, mine);
 		return e;
 	}
 	
-	public function createCastle(x:Float, y:Float, gold:Int):E{
-		var e = createNode("assets/rise_icon_home_blue.png", x, y, gold, Config.CastleDecayRate);
+	function createCastle(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
+		var e = createNode(mine?"assets/rise_icon_home_red.png":'assets/rise_icon_home_blue.png', x, y, gold, Config.CastleDecayRate);
 		e.addC(NodeCastleC).init();
 		e.addC(RadialMenuC).init();
 		return e;
 	}
 	
-	public function createBarracks(x:Float, y:Float, gold:Int):E{
-		var e = createNode("assets/rise_icon_monster_blue.png", x, y, gold, Config.BarracksDecayRate);
-		e.addC(NodeBarracksC).init();
+	function createBarracks(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
+		var e = createNode(mine?"assets/rise_icon_monster_red.png":"assets/rise_icon_monster_blue.png", x, y, gold, Config.BarracksDecayRate);
+		e.addC(NodeBarracksC).init();		
 		return e;
 	}
 	
-	public function createGoldMine(x:Float, y:Float, gold:Int):E{
-		var e = createNode("assets/rise_icon_miner_blue.png", x, y, gold, Config.GoldMineDecayRate);
+	function createGoldMine(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
+		var e = createNode(mine?"assets/rise_icon_miner_red.png":"assets/rise_icon_miner_blue.png", x, y, gold, Config.GoldMineDecayRate);
 		e.addC(NodeMineC).init();
 		return e;
 	}
 	
-	public function createGold(x:Float, y:Float, gold:Int):E{
+	function createGold(x:Float, y:Float, gold:Int):E{
 		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
 		e.addC(NodeGoldC).init();
 		return e;

@@ -43,7 +43,7 @@ class MonsterC extends C{
 		e.addC(CircleC).init(x, y, [209, 214, 223, 225]);
 		e.getC(CircleC).radius = 12;
 		
-		e.addC(SpriteC).init('assets/rise_icon_monster_blue.png', x, y);
+		e.addC(SpriteC).init(nodeC.mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', x, y);
 		e.getC(SpriteC).scaleX = 0.3;
 		e.getC(SpriteC).scaleY = 0.3;
 	

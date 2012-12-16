@@ -52,6 +52,7 @@ class NodeC extends C{
 	var sendCounter:Float= 0;
 	
 	public var state(default, default):NodeState;
+	public var mine(default, default):Bool;
 	
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -93,7 +94,7 @@ class NodeC extends C{
 		return circle.getC(SpriteC);
 	}
 	
-	public function init(g : Dynamic, ?layer:FlxGroup, x : Float, y : Float, gold:Int, decayRate:Float, state : NodeState = null):Void{
+	public function init(g : Dynamic, ?layer:FlxGroup, x : Float, y : Float, gold:Int, decayRate:Float, ?state : NodeState = null, ?mine:Bool = true):Void{
 		name = Math.random() + "";
 		
 		if (state == null)
@@ -105,20 +106,22 @@ class NodeC extends C{
 			layer = renderS.defaultLayer;
 		
 		edges = new Array<E>();
+		
+		// grpahics
+		this.mine = mine;
 		this.circle = createCircle(layer);
 		this.graphic = createGraphic(g, layer);
 		
+		// position and size
 		this.x = x;
 		this.y = y;
 		this.radius = radius;
 		
-		m.add(updateS, UpdateS.UPDATE, onUpdate);
-		
 		this.gold = gold;
 		this.decayRate = decayRate;
-	
-				
+					
 		worldS.addNode(e);
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 		
 	function onUpdate():Void {
