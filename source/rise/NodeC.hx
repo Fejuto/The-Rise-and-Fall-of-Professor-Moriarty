@@ -119,7 +119,7 @@ class NodeC extends C{
 		
 		this.gold = gold;
 		this.decayRate = decayRate;
-					
+		
 		worldS.addNode(e);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
@@ -179,16 +179,19 @@ class NodeC extends C{
 	
 	function createCircle(layer:FlxGroup):E{
 		var e = new E(e);
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);
-		e.getC(SpriteC).setColor(209, 214, 223, 225);
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);		
+		if (mine)
+			e.getC(SpriteC).setColor(209, 214, 223, 225);
+		else
+			e.getC(SpriteC).setColor(54, 45, 34, 225);
 		return e;
 	}
 	
 	function createGraphic(graphic, layer:FlxGroup):E{
 		var e = new E(e);
 		e.addC(SpriteC).init(graphic, layer);
-		e.getC(SpriteC).scaleX = 0.8;
-		e.getC(SpriteC).scaleY = 0.8;
+		//e.getC(SpriteC).scaleX = 0.6;
+		//e.getC(SpriteC).scaleY = 0.6;
 		return e;
 	}
 	

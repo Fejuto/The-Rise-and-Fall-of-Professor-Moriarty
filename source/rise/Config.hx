@@ -21,4 +21,6 @@ class Config {
 	public static inline var NodeBarracksCost = 20;
 	public static inline var NodeMineCost = 20;
 	
+	public static inline var BarracksAttackRange = 300;
+	
 }

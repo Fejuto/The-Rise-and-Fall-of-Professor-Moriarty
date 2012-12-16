@@ -16,9 +16,11 @@ class WorldS extends C{
 	@inject var scrollS:ScrollS;
 	
 	public var nodes:Array<E>;
+	public var enemyNodes:Array<E>;
 	
 	public function init():Void{
 		nodes = new Array<E>();
+		enemyNodes = new Array<E>();
 		
 		for (i in 0...5){
 			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height, Std.random(6) * 10 + 50);
@@ -26,6 +28,8 @@ class WorldS extends C{
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
 		c1.getC(NodeC).state = NodeState.active;
 		
+		var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
+
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 
@@ -38,7 +42,10 @@ class WorldS extends C{
 	
 	public function addNode(e:E):Void{
 		if(!e.hasC(NodeC)) throw "must have NodeC";
-		nodes.push(e);
+		if (e.getC(NodeC).mine)
+			nodes.push(e);
+		else
+			enemyNodes.push(e);
 	}
 	
 	public function getNodesWith<T>(type:Class<T>):Array<E>{
@@ -75,20 +82,21 @@ class WorldS extends C{
 	}
 	
 	function createCastle(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
-		var e = createNode(mine?"assets/rise_icon_home_red.png":'assets/rise_icon_home_blue.png', x, y, gold, Config.CastleDecayRate);
+		var e = createNode(mine?"assets/rise_icon_home_red.png":'assets/rise_icon_home_blue.png', x, y, gold, Config.CastleDecayRate, mine);		
 		e.addC(NodeCastleC).init();
-		e.addC(RadialMenuC).init();
+		if (mine) 
+			e.addC(RadialMenuC).init();
 		return e;
 	}
 	
 	function createBarracks(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
-		var e = createNode(mine?"assets/rise_icon_monster_red.png":"assets/rise_icon_monster_blue.png", x, y, gold, Config.BarracksDecayRate);
+		var e = createNode(mine?"assets/rise_icon_monster_red.png":"assets/rise_icon_monster_blue.png", x, y, gold, Config.BarracksDecayRate, mine);
 		e.addC(NodeBarracksC).init();		
 		return e;
 	}
 	
 	function createGoldMine(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
-		var e = createNode(mine?"assets/rise_icon_miner_red.png":"assets/rise_icon_miner_blue.png", x, y, gold, Config.GoldMineDecayRate);
+		var e = createNode(mine?"assets/rise_icon_miner_red.png":"assets/rise_icon_miner_blue.png", x, y, gold, Config.GoldMineDecayRate, mine);
 		e.addC(NodeMineC).init();
 		return e;
 	}
