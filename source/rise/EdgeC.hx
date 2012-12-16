@@ -25,6 +25,10 @@ class EdgeC extends C{
 		m.add(node2.getC(NodeC), NodeC.MOVED, onMoved);
 		m.add(node1, E.DESTROY, e.destroy);
 		m.add(node2, E.DESTROY, e.destroy);
+		
+		if (!node1.getC(NodeC).mine || !node1.getC(NodeC).mine) {
+			
+		}
 	}
 	
 	

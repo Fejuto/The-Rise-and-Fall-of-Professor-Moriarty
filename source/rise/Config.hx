@@ -24,8 +24,8 @@ class Config {
 	
 	public static inline var BarracksAttackRange = 300;
 	
-	
 	public static inline var RandomizerPlacementRadius = 200;
 	public static inline var RandomizerGoldClusterRadius = 50;
+	public static inline var RandomizerVillageClusterRadius = 180;
 	
 }

@@ -38,9 +38,3 @@ class NodeCastleC extends C{
 		super.destroy();
 	}
 }
-
-
-
-
-
-
