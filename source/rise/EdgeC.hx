@@ -19,9 +19,6 @@ class EdgeC extends C{
 		this.node2 = node2;
 		node2.getC(NodeC).addEdge(e);
 		
-		this.goldAgentsNode1 = new Array<E>();
-		this.goldAgentsNode2 = new Array<E>();
-		
 		updateEdge();
 		
 		m.add(node1.getC(NodeC), NodeC.MOVED, onMoved);
@@ -59,8 +56,8 @@ class EdgeC extends C{
 	}
 
 	public function getEndPoint(beginPoint:E):E{
-		if(beginPoint == node1) return node2;
-		if(beginPoint == node2) return node1;
+		if(beginPoint.getC(NodeC) == node1.getC(NodeC)) return node2;
+		if(beginPoint.getC(NodeC) == node2.getC(NodeC)) return node1;
 		throw "neither";
 	}
 	

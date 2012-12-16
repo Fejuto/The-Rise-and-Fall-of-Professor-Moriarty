@@ -20,7 +20,7 @@ class WorldS extends C{
 	public function init():Void{
 		nodes = new Array<E>();
 		
-		for (i in 0...10){
+		for (i in 0...5){
 			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height, Std.random(6) * 10 + 50);
 		}
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);

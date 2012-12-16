@@ -46,7 +46,6 @@ class NodeMineC extends C{
 		golds.sort(f);
 		
 		if(golds.length > 0){
-			trace(U.distance(nodeC.x, nodeC.y, golds[0].getC(NodeC).x, golds[0].getC(NodeC).y));
 			var edge = worldS.createEdge(e, golds[0]);
 			edges.push(edge);
 			m.add(edge, E.DESTROY, onEdgeDestroy);

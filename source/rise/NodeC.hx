@@ -6,6 +6,7 @@ import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Elastic;
 import org.flixel.FlxGroup;
+import haxe.Json;
 
 enum NodeState {
 	inactive;
@@ -20,6 +21,8 @@ enum NodeType {
 }
 
 class NodeC extends C{
+	public var name:String;
+	
 	public static inline var MOVED = "MOVED";
 	@inject var worldS:WorldS;
 	@inject var renderS:RenderS;
@@ -46,6 +49,7 @@ class NodeC extends C{
 	
 	public var decayRate:Float = 5;
 	var decayCounter:Float = 0;
+	var sendCounter:Float= 0;
 	
 	public var state(default, default):NodeState;
 	
@@ -90,6 +94,8 @@ class NodeC extends C{
 	}
 	
 	public function init(g : Dynamic, ?layer:FlxGroup, x : Float, y : Float, gold:Int, decayRate:Float, state : NodeState = null):Void{
+		name = Math.random() + "";
+		
 		if (state == null)
 			this.state = NodeState.inactive;
 			
@@ -133,14 +139,20 @@ class NodeC extends C{
 			}
 		}
 		
-		edges.sort(function(edge1, edge2){
-			var other1 = edge1.getC(EdgeC).getEndPoint(e);
-			var other2 = edge2.getC(EdgeC).getEndPoint(e);
-			var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
-			return b?-1:1; 
-		});
-		if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+		sendCounter += FlxG.elapsed;
+		while(sendCounter > Config.SendRate){
+			sendCounter -= Config.SendRate;		
+			edges.sort(function(edge1, edge2){
+				var other1 = edge1.getC(EdgeC).getEndPoint(e);
+				var other2 = edge2.getC(EdgeC).getEndPoint(e);
+				var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
+				return b?-1:1; 
+			});
 			
+			if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+				gold -= Config.AgentSize;
+				edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).gold += Config.AgentSize;
+			}
 		}
 	}
 	
@@ -183,6 +195,7 @@ class NodeC extends C{
 	}
 	
 	public function getTimeUntilDeath():Float{
+		if(decayRate == 0) return Math.POSITIVE_INFINITY;
 		return getEffectiveGold() / Config.Evaporation * decayRate;
 	}
 }
