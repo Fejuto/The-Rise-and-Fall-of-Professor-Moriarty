@@ -127,11 +127,13 @@ class MonsterC extends C{
 				
 				var newY = y - 30;
 				Actuate.tween(this, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
-					targetNodeC.gold -= 10;
 					if (targetNodeC.gold <= 0) {
 						nodeBarracksC.targetDestroyed(targetNodeC, this);
 						returnToBase();
+						return;
 					}
+					
+					targetNodeC.gold -= 10;
 				});
 			}
 			

@@ -52,17 +52,21 @@ class NodeBarracksC extends C{
 				}
 			}
 			
-		} else {			
-			// dispatch monsters
-			for (monster in monsters) {
-				if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering) {				
-					monster.getC(MonsterC).attackTarget(targetNode.getC(NodeC));
-				}
-			}		
+		} else {
+			if (targetNode.destroyed)
+				targetNode = null;
+			else {
+				// dispatch monsters
+				for (monster in monsters) {
+					if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering) {				
+						monster.getC(MonsterC).attackTarget(targetNode.getC(NodeC));
+					}
+				}		
+				
+			}
 		}
 		
 		nodeC.decline = targetNode == null;
-		
 	}
 	
 	function spawnMonster():Void {		
