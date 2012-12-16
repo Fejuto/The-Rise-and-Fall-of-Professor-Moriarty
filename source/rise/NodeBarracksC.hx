@@ -5,6 +5,7 @@ import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.MotionPath;
 import com.eclecticdesignstudio.motion.Actuate;
 import rise.MonsterC.MonsterState;
+import rise.NodeC.NodeState;
 
 class NodeBarracksC extends C{
 	
@@ -29,6 +30,9 @@ class NodeBarracksC extends C{
 	}
 	
 	function onUpdate():Void {
+		if (nodeC.state != active)
+			return;
+		
 		if (nodeC.gold >= 40 && monsters.length < maxMonsterCount && spawnCounter > spawnDelay) {			
 			nodeC.gold -= 20;
 			spawnMonster();
@@ -42,15 +46,13 @@ class NodeBarracksC extends C{
 		if (targetNode == null) { // only start looking for things to attack when i actually have monsters
 		
 			var node = worldS.getClosestBuilding(nodeC.x, nodeC.y, !nodeC.mine);			
-				
-			if (node != null && node.getC(NodeC).gold > 0){						
+			if (node != null && node.getC(NodeC).gold > 0){										
 				if(U.distance(nodeC.x, nodeC.y, node.getC(NodeC).x, node.getC(NodeC).y) < Config.BarracksAttackRange) {
 					targetNode = node;
 				}
 			}
-		}
-		
-		if (targetNode != null) {			
+			
+		} else {			
 			// dispatch monsters
 			for (monster in monsters) {
 				if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering) {				

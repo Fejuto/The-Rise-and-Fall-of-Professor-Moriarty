@@ -30,6 +30,9 @@ class WorldS extends C{
 	}
 
 	function onUpdate():Void {
+		/*if (FlxG.mouse.justReleased()) {
+			trace(FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
+		}*/
 	}
 
 	override public function destroy():Void{
