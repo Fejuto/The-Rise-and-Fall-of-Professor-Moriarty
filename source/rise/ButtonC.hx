@@ -57,7 +57,6 @@ class ButtonC extends C{
 	}
 	
 	function onUpdate():Void{ 
-
 		var dis = (e.getC(NodeC).gold <= goldCost());
 		if (disabled != dis) {
 			disabled = dis;

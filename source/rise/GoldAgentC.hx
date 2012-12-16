@@ -14,7 +14,7 @@ class GoldAgentC extends C{
 	
 	public function init(targetNode:E):Void{
 		setTarget(targetNode);
-		m.add(targetNode, E.DESTROY, onTargetDestroy);
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
 	override public function destroy():Void{
@@ -33,21 +33,32 @@ class GoldAgentC extends C{
 		}
 	}
 	
-	function onTargetDestroy():Void{
+	function onUpdate():Void{
+		if(targetNode.destroyed){
+			findTarget();
+		}
+	}
+	
+	function findTarget():Void{
 		Actuate.stop(nodeC, null, false, false);
 		var targets = worldS.getNodesDistanceSorted(nodeC.x, nodeC.y);
-		targets = Lambda.array(Lambda.filter(targets, function(target){return target.getC(NodeC).mine == nodeC.mine;}));
+		targets = Lambda.array(Lambda.filter(targets, function(target){return target.getC(NodeC).mine == nodeC.mine && target.getC(NodeC).decayRate > 0;}));
 		if(targets.length > 0){
 			setTarget(targets[0]);
 		}else{
+			nodeC.gold = 0;
 			updateS.kill(e);
 		}
 	}
 	
 	function onComplete():Void{
-		targetNode.getC(NodeC).gold += nodeC.gold;
-		nodeC.gold = 0;
-		updateS.kill(e);
+		if(targetNode.destroyed){
+			findTarget();
+		}else{
+			targetNode.getC(NodeC).gold += nodeC.gold;
+			nodeC.gold = 0;
+			updateS.kill(e);
+		}
 	}
 }
 

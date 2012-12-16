@@ -25,7 +25,7 @@ class WorldS extends C{
 		c1.getC(NodeC).state = NodeState.active;
 		
 		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
-
+		return;
 		e.addC(GenerateNodeC).init();
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
