@@ -28,10 +28,10 @@ class RadialMenuC extends C{
 		
 		// create buttons
 		buttonEntities = new Array();
-		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine]];
-		buttonDegrees = [360-degreesMargin, 0, degreesMargin];
+		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine], ['rise_icon_road_blue', NodeType.road]];
+		buttonDegrees = [360-degreesMargin, 0, degreesMargin, degreesMargin*2];
 		var i = 0;
-		while (i < 3) {
+		while (i < buttonImageNames.length) {
 			var button = new E(e);	
 			button.addC(ButtonC).init('assets/'+buttonImageNames[i][0]+'.png', buttonImageNames[i][1]);
 			buttonEntities[i] = button;
@@ -88,23 +88,11 @@ class RadialMenuC extends C{
 		if (show)
 			e.getC(CircleC).radius = nodeC.radius;
 		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:0}).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
-		
-		/*
-		var colors = nodeC.circleSprite.getColor();
-		if (show) {
-			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [255, 255, 255, 255]);
-		} else {
-			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [209, 214, 223, 255]);
-		}*/
-		
+	
 		for (e in buttonEntities) {
 			Actuate.tween(e.getC(ButtonC), 0.1, { scale: show?1:0 }).delay(show?0.2:0);
 		}
 		
-	}
-	
-	function setColor(red : Int, green : Int, blue : Int, alpha : Int) {
-		nodeC.circleSprite.setColor(red, green, blue, alpha);
 	}
 	
 	override public function destroy():Void{

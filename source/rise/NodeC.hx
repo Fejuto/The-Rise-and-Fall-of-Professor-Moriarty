@@ -19,6 +19,7 @@ enum NodeType {
 	barracks;
 	mine;
 	castle;
+	road;
 }
 
 class NodeC extends C{
@@ -137,14 +138,28 @@ class NodeC extends C{
 		decline = decline || isUnderAttack();
 		 
 		if (this.state == NodeState.dragging) {
-			if (FlxG.mouse.justReleased()) { 
-				
+			if (FlxG.mouse.justReleased()) {
 				// check if able to drop there
-				scrollS.enabled = true;				
-				this.state = NodeState.active;
+				scrollS.enabled = true;
 				if (e.hasC(FollowMouseC)) {
 					e.getC(FollowMouseC).enabled = false;
+				} 
+				
+				if (e.hasC(NodeRoadC)) { // vanish road and create new edge
+					
+					var closestNode = worldS.getClosestBuilding(x, y, mine);
+					if (U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y) > Config.NodeStartRadius) {
+						// refund
+					} else {
+						// reconnect 
+						worldS.createEdge(closestNode, edges[0].getC(EdgeC).getEndPoint(e));
+					}
+						
+					updateS.kill(e);
+				} else {									
+					this.state = NodeState.active;
 				}
+				
 			}
 		} else if (this.state == NodeState.active){
 			decayCounter += FlxG.elapsed;
