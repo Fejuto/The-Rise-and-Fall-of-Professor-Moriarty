@@ -63,9 +63,9 @@ class WorldS extends C{
 	}
 	
 	// not working for some reason?!s
-	/*public function getEnemyNodes():Array<E>{
+	public function getEnemyNodes():Array<E>{
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.getC(NodeC).mine == false; }));
-	}*/
+	}
 
 	public function getNodesDistanceSorted(x:Float, y:Float):Array<E>{
 		var r = nodes.copy();
