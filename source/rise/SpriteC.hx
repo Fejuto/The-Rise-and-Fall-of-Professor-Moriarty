@@ -45,6 +45,8 @@ class SpriteC extends C{
 	function setScaleY(v:Float):Float{
 		return flxSprite.scale.y = v;
 	}
+	
+	public var z(default, default):Int = 0;
 
 	public function getColor():Array<Float> {
 		return FlxU.getRGBA(flxSprite.color);
