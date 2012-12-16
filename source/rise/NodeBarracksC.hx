@@ -18,13 +18,14 @@ class NodeBarracksC extends C{
 	var spawnCounter : Float = 0;
 	var spawnDelay = 1;
 	
-	public var targetNodeC:NodeC = null;
+	public var targetNode:E = null;
 
 	public function init():Void{
 		monsters = new Array<E>();
 		nodeC.goldOffset = -20;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
+		//spawnMonster();
 	}
 	
 	function onUpdate():Void {
@@ -38,23 +39,27 @@ class NodeBarracksC extends C{
 			
 		spawnCounter += FlxG.elapsed;
 		
-		if (monsters.length > 0 && targetNodeC == null) { // only start looking for things to attack when i actually have monsters
+		if (monsters.length > 0 && targetNode == null) { // only start looking for things to attack when i actually have monsters
 		
+		//	trace(worldS.enemyNodes);
 			for(node in worldS.enemyNodes) {
 				
+				if (node == null || node.getC(NodeC).gold <= 0) // it's dead, ignore
+					continue;
+								
 				if(U.inCircle(nodeC.x, nodeC.y, Config.BarracksAttackRange, node.getC(NodeC).x, node.getC(NodeC).y)) {
-					targetNodeC = node.getC(NodeC);					
+					targetNode = node;					
 				}
 			}
-						
+			
 		}
 		
-		
-		if (targetNodeC != null) {
+		if (targetNode != null) {			
 			// dispatch monsters
 			for (monster in monsters) {
-				if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering)				
-					monster.getC(MonsterC).attackTarget(targetNodeC);
+				if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering) {				
+					monster.getC(MonsterC).attackTarget(targetNode.getC(NodeC));
+				}
 			}		
 		}
 	}
@@ -74,6 +79,12 @@ class NodeBarracksC extends C{
 			monster.getC(MonsterC).state = MonsterState.idle;
 		});		
 		
+	}
+	
+	// monster 'delegation'
+	
+	public function targetDestroyed(targetNodeC:NodeC, monster:MonsterC):Void {
+		targetNode = null;
 	}
 	
 	override public function destroy():Void{

@@ -16,29 +16,36 @@ class MonsterC extends C{
 	
 	@inject var updateS:UpdateS;
 	@inject var nodeC:NodeC;
+	@inject var nodeBarracksC:NodeBarracksC;
 	
-	var wanderCounter : Float = 4;
-	var wanderDelay : Float = 0;
+	var monsterBounceY = 0;
+	
+	var wanderCounter : Float = 0;
+	var wanderDelay : Float = 0; // at first 0, will be randomly set later
+	
+	var attackCounter : Float = 0;
+	var attackDelay : Float = 1;
 	
 	var health = 100;
 	var attack = 100;
-	var speed = 20;
+	var speed = 40;
 	
 	public var state (default, setState): MonsterState;
 	function setState(v : MonsterState):MonsterState {
 		if (v != state) {
 			switch (v) {
 				case MonsterState.combat:
-					//bounce();
-				case MonsterState.idle:
-					monsterBounceY = 0;
-					Actuate.stop(this);				
+					
+				case MonsterState.idle:					
+					Actuate.stop(this);
+					wanderDelay = Math.random() * 5 + 4;
+					wanderCounter = 0;				
 				case MonsterState.inactive:
-					monsterBounceY = 0;
 					Actuate.stop(this);				
-				case MonsterState.wandering:
+				case MonsterState.wandering:					
 					bounce();
 				case MonsterState.approaching:
+					Actuate.stop(this);
 					bounce();
 			}
 		}
@@ -67,8 +74,6 @@ class MonsterC extends C{
 		return e.getC(SpriteC).y = v;		
 	}
 	
-	var monsterBounceY = 0;
-	
 	public function init(x:Float, y:Float):Void{
 		e.addC(CircleC).init(x, y, [209, 214, 223, 225]);
 		e.getC(CircleC).radius = 12;
@@ -76,9 +81,6 @@ class MonsterC extends C{
 		e.addC(SpriteC).init(nodeC.mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', x, y);
 		e.getC(SpriteC).scaleX = 0.3;
 		e.getC(SpriteC).scaleY = 0.3;
-	
-		//wanderDelay = 5;
-		wanderDelay = Math.random() * 5 + 4;
 	
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		
@@ -103,10 +105,23 @@ class MonsterC extends C{
 			
 			lastDegrees = newdeg;
 		} else if (state == MonsterState.approaching) {
-			if (targetNodeC == null) {
-				// return to base thing if target is gone and i'm still alive	
-				state = MonsterState.idle; 
+			
+		} else if (state == combat) {
+			// mosnter standing on top of building
+			if (attackCounter > attackDelay) {
+				attackCounter = 0;
+				
+				var newY = y - 30;
+				Actuate.tween(this, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
+					targetNodeC.gold -= 50;
+					if (targetNodeC.gold <= 0) {
+						nodeBarracksC.targetDestroyed(targetNodeC, this);
+						returnToBase();
+					}
+				});
 			}
+			
+			attackCounter += FlxG.elapsed;
 		}
 		
 		if (state == MonsterState.idle)		
@@ -126,22 +141,33 @@ class MonsterC extends C{
 
 	}
 	
-	function moveTo(x:Float, y:Float):Void {
-		this.x = x;
-		this.y = y + monsterBounceY;
+	function moveTo(nx:Int, ny:Int):Void {		
+		x = nx;
+		y = ny + monsterBounceY;
+	}
+	
+	function returnToBase():Void {
+		targetNodeC = null;
+		
+		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, lastDegrees);
+		var distance = U.distance(x, y, point[0], point[1]);
+				
+		state = approaching;
+		Actuate.update(moveTo, distance/(speed * 2), [x,y], [point[0], point[1]], false).ease(Linear.easeNone).onComplete(function () {			
+			state = idle;
+		});
 	}
 	
 	public function attackTarget(targetNodeC:NodeC):Void {
 		// stop any running wandering animation
 		//Actuate.stop(this);
 		//Actuate.stop(wander);
-		return;
 		
 		this.targetNodeC = targetNodeC;
-		var distance = U.distance(nodeC.x, nodeC.y, targetNodeC.x, targetNodeC.y);
+		var distance = U.distance(x, y, targetNodeC.x, targetNodeC.y);
 		
 		state = approaching;
-		Actuate.update(moveTo, distance/speed, [x, y], [targetNodeC.x, targetNodeC], false).ease(Linear.easeNone).onComplete(function () {
+		Actuate.update(moveTo, distance/(speed * 2), [x, y], [targetNodeC.x, targetNodeC.y], false).ease(Linear.easeNone).onComplete(function () {
 			if (state == approaching) {
 				state = combat;	
 			}

@@ -208,7 +208,7 @@ class NodeC extends C{
 	
 	override public function destroy():Void{
 		super.destroy();
-		//worldS.removeNode(e);
+		worldS.removeNode(e);
 	}
 	
 	public var goldOffset:Int = 0;
