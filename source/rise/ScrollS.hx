@@ -24,7 +24,7 @@ class ScrollS extends C{
 	public function modifyCameraScroll(x:Float, y:Float) {
 		FlxG.camera.scroll.x += x;
 		FlxG.camera.scroll.y += y;
-	}
+	} 
 	
 	var lastMousePoint:FlxPoint;
 	function onUpdate():Void{
@@ -35,14 +35,22 @@ class ScrollS extends C{
 	    if (FlxG.mouse.justPressed()) {
     	    lastMousePoint.x = FlxG.mouse.screenX;
        		lastMousePoint.y = FlxG.mouse.screenY;
-    	}	
- 
+    	}
+		
+		/*if (FlxG.keys.justPressed('NUMPADMINUS')) {
+			FlxG.camera.zoom -= 0.1;
+		} else if  (FlxG.keys.justPressed('NUMPADPLUS')) {
+			FlxG.camera.zoom += 0.1;						
+		}*/
+		//FlxG.log(FlxG.mouse.wheel);
+		//FlxG.mouse.handleMouseWheel();
+
  	   if (FlxG.mouse.pressed() && enabled) {
 			modifyCameraScroll(-(FlxG.mouse.screenX - lastMousePoint.x), -(FlxG.mouse.screenY - lastMousePoint.y));
        		lastMousePoint.x = FlxG.mouse.screenX;
        	 	lastMousePoint.y = FlxG.mouse.screenY;
 	   } else {
-		return;
+		
 			var screenPos = FlxG.mouse.getScreenPosition();
 			var rs = screenWidth - screenPos.x < scrollThreshold;
 			var ls = screenPos.x < scrollThreshold;

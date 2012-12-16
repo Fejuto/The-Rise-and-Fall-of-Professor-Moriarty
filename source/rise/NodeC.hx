@@ -114,7 +114,11 @@ class NodeC extends C{
 	
 	function onUpdate():Void {
 		if (this.state == NodeState.dragging) {
-			if (FlxG.mouse.justReleased()) {
+			if (FlxG.mouse.justReleased()) { 
+				
+				// check if able to drop there
+				
+			
 				scrollS.enabled = true;				
 				this.state = NodeState.active;
 				if (e.hasC(FollowMouseC)) {
@@ -154,6 +158,8 @@ class NodeC extends C{
 	function createGraphic(graphic, layer:FlxGroup):E{
 		var e = new E(e);
 		e.addC(SpriteC).init(graphic, layer);
+		e.getC(SpriteC).scaleX = 0.8;
+		e.getC(SpriteC).scaleY = 0.8;
 		return e;
 	}
 	

@@ -14,4 +14,8 @@ class Config {
 	public static inline var CastleDecayRate = 5;
 	public static inline var BarracksDecayRate = 5;
 	public static inline var GoldMineDecayRate = 5;
+	
+	public static inline var NodeCastleCost = 20;
+	public static inline var NodeBarracksCost = 20;
+	public static inline var NodeMineCost = 20;
 }

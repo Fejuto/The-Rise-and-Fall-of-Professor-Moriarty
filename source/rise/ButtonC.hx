@@ -3,6 +3,7 @@ import engine.entities.C;
 import engine.entities.E;
 import org.flixel.FlxG;
 import rise.NodeC.NodeType;
+import com.eclecticdesignstudio.motion.Actuate;
 
 class ButtonC extends C{
 	
@@ -13,6 +14,7 @@ class ButtonC extends C{
 	var graphic:E;
 	var initialCircleScale:Float = (Config.NodeHoverButtonRadius / Config.NodeCircleImageSize ) * 2;
 	var type:NodeType;
+	var disabled = false;
 		
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -54,9 +56,18 @@ class ButtonC extends C{
 	}
 	
 	function onUpdate():Void{ 
-	
-		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
+
+		var dis = (e.getC(NodeC).gold <= goldCost());
+		if (disabled != dis) {
+			disabled = dis;
+			Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha: disabled?0.2:1 }).onComplete( function () { animating: false } ); 
+		}
+		
+		if (disabled)
 			return;
+		
+		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
+			return;		
 	
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
@@ -64,10 +75,23 @@ class ButtonC extends C{
 		var nodeRadius = e.getC(NodeC).radius;
 			
 		if (U.inCircle(x, y, (Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX)/2, mouseX, mouseY)) {
+			
+			
 			worldS.createNodeFromEntity(e, mouseX, mouseY, type);
 			e.getC(RadialMenuC).animateMenu(false);
 		}
 
+	}
+	
+	function goldCost():Int {
+		switch(type) {
+			case NodeType.barracks:
+				return Config.NodeBarracksCost;
+			case NodeType.castle:
+				return Config.NodeCastleCost;
+			case NodeType.mine:
+				return Config.NodeMineCost;
+		}
 	}
 		
 	function createCircle():E{
