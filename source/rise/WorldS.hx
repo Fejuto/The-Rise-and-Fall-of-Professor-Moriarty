@@ -97,6 +97,8 @@ class WorldS extends C{
 				newE = createCastle(x,y,20, mine);
 			case NodeType.mine:
 				newE = createGoldMine(x,y,20, mine);
+			case NodeType.road:
+				newE = createRoad(x,y,10);
 		}
 		
 		if (mine) {
@@ -114,7 +116,7 @@ class WorldS extends C{
 		}
 	}
 	
-	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, decayRate:Float, ?state:NodeState, ?mine:Bool):E{
+	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, ?decayRate:Float, ?state:NodeState, ?mine:Bool):E{
 		var e = new E(e);
 		e.addC(NodeC).init(graphic, layer, x, y, gold, decayRate, state, mine);
 		return e;
@@ -145,6 +147,12 @@ class WorldS extends C{
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.5;
 		e.addC(NodeGoldC).init();
+		return e;
+	}
+	
+	public function createRoad(x:Float, y:Float, gold:Int):E {
+		var e = createNode("assets/rise_icon_road_blue.png", renderS.topLayer, x, y, gold);
+		e.addC(NodeRoadC).init();		
 		return e;
 	}
 	

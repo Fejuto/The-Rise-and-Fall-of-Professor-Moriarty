@@ -89,6 +89,8 @@ class ButtonC extends C{
 				return Config.NodeCastleCost;
 			case NodeType.mine:
 				return Config.NodeMineCost;
+			case NodeType.road:
+				return Config.NodeRoadCost;
 		}
 	}
 		

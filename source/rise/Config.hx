@@ -21,6 +21,7 @@ class Config {
 	public static inline var NodeCastleCost = 20;
 	public static inline var NodeBarracksCost = 20;
 	public static inline var NodeMineCost = 20;
+	public static inline var NodeRoadCost = 10;
 	
 	public static inline var CastleLie = -10;
 	public static inline var BarracksLie = -20;
