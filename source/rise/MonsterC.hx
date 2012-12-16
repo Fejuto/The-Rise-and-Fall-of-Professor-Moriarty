@@ -38,7 +38,7 @@ class MonsterC extends C{
 					
 				case MonsterState.idle:					
 					Actuate.stop(this);
-					wanderDelay = Math.random() * 5 + 4;
+					wanderDelay = Math.random() * 2 + 1;
 					wanderCounter = 0;				
 				case MonsterState.inactive:
 					Actuate.stop(this);				
@@ -90,7 +90,7 @@ class MonsterC extends C{
 		
 		if (wanderCounter > wanderDelay && state == MonsterState.idle) {
 			
-			wanderDelay = Math.random() * 5 + 4;			
+			wanderDelay = Math.random() * 2 + 1;			
 			wanderCounter = 0;
 			
 			var distance = Math.random() * 40 + 20;
@@ -113,7 +113,7 @@ class MonsterC extends C{
 				
 				var newY = y - 30;
 				Actuate.tween(this, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
-					targetNodeC.gold -= 50;
+					targetNodeC.gold -= 10;
 					if (targetNodeC.gold <= 0) {
 						nodeBarracksC.targetDestroyed(targetNodeC, this);
 						returnToBase();

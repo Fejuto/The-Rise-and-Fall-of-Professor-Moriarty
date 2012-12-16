@@ -22,16 +22,12 @@ class WorldS extends C{
 		nodes = new Array<E>();
 		enemyNodes = new Array<E>();
 		
-		e.addC(GenerateNodeC).init();
-		
-		for (i in 0...5){
-			createGold(Math.random() * FlxG.width, Math.random() * FlxG.height, Std.random(6) * 10 + 50);
-		}
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
 		c1.getC(NodeC).state = NodeState.active;
 		
 		var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
 
+		e.addC(GenerateNodeC).init();
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 
@@ -56,6 +52,22 @@ class WorldS extends C{
 			nodes.remove(e);
 		else
 			enemyNodes.remove(e);
+	}
+	
+	public function isEmptySpot(x:Int, y:Int, distanceRadius:Int = Config.RandomizerPlacementRadius):Bool {
+		
+		for (node in nodes) {
+			var nodeC = node.getC(NodeC);
+			if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius) 
+				return false;
+		}
+		
+		for (node in enemyNodes) {
+			var nodeC = node.getC(NodeC);
+			if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius)
+				return false;
+		}		
+		return true;
 	}
 	
 	public function getNodesWith<T>(type:Class<T>):Array<E>{
