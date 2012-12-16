@@ -10,6 +10,8 @@ class EdgeC extends C{
 	
 	public var node1:E;
 	public var node2:E;
+	public var goldAgentsNode1:Array<E>;
+	public var goldAgentsNode2:Array<E>;
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
@@ -17,12 +19,15 @@ class EdgeC extends C{
 		this.node2 = node2;
 		node2.getC(NodeC).addEdge(e);
 		
+		this.goldAgentsNode1 = new Array<E>();
+		this.goldAgentsNode2 = new Array<E>();
+		
 		updateEdge();
 		
 		m.add(node1.getC(NodeC), NodeC.MOVED, onMoved);
 		m.add(node2.getC(NodeC), NodeC.MOVED, onMoved);
-		m.add(node1, E.DESTROY, e.destroy);
-		m.add(node2, E.DESTROY, e.destroy);
+		m.add(node1, E.DESTROY, e.destroy, false, 1);
+		m.add(node2, E.DESTROY, e.destroy, false, 1);
 	}
 	
 	

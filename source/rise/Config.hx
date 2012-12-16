@@ -9,6 +9,8 @@ class Config {
 	public static inline var NodeHoverButtonDegreesMargin = 55;
 	public static inline var MineDistance = 400;
 	
+	public static inline var Evaporation = 10;
+	
 	public static inline var CastleDecayRate = 5;
 	public static inline var BarracksDecayRate = 5;
 	public static inline var GoldMineDecayRate = 5;

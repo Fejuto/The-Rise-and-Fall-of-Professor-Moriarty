@@ -121,16 +121,27 @@ class NodeC extends C{
 					e.getC(FollowMouseC).enabled = false;
 				}
 			}
+		}else{
+			decayCounter += FlxG.elapsed;
+			while(decayRate > 0 && decayCounter > decayRate){
+				decayCounter -= decayRate;
+				evaporate();
+			}
 		}
-		decayCounter += FlxG.elapsed;
-		while(decayRate > 0 && decayCounter > decayRate){
-			decayCounter -= decayRate;
-			evaporate();
+		
+		edges.sort(function(edge1, edge2){
+			var other1 = edge1.getC(EdgeC).getEndPoint(e);
+			var other2 = edge2.getC(EdgeC).getEndPoint(e);
+			var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
+			return b?-1:1; 
+		});
+		if(edges.length > 0 && edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
+			
 		}
 	}
 	
 	function evaporate():Void{
-		gold -= 10;
+		gold -= Config.Evaporation;
 	}
 	
 	function createCircle(layer:FlxGroup):E{
@@ -159,6 +170,14 @@ class NodeC extends C{
 	override public function destroy():Void{
 		super.destroy();
 		//worldS.removeNode(e);
+	}
+	
+	public function getEffectiveGold():Int{
+		return gold;
+	}
+	
+	public function getTimeUntilDeath():Float{
+		return getEffectiveGold() / Config.Evaporation * decayRate;
 	}
 }
 
