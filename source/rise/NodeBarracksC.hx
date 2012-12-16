@@ -25,7 +25,7 @@ class NodeBarracksC extends C{
 		nodeC.goldOffset = -20;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
-		spawnMonster();
+		//spawnMonster();
 	}
 	
 	function onUpdate():Void {
