@@ -7,9 +7,12 @@ class NodeCastleC extends C{
 	@inject var updateS:UpdateS;
 	@inject var nodeC:NodeC;
 	
+	var initbool = false;
+		
 	public var canBuildSomething(default, setCanBuildSomething):Bool;
 	function setCanBuildSomething(v : Bool):Bool {
-		if (v != canBuildSomething) {
+		if (!initbool || v != canBuildSomething) {
+			initbool = true;
 			Actuate.tween(nodeC.graphic.getC(SpriteC).flxSprite, 1, { alpha:v?1.0:0.2 } );	
 		}
 		return canBuildSomething = v;
@@ -27,7 +30,7 @@ class NodeCastleC extends C{
 	}
 
 	function ableToBuild():Bool {
-		return (nodeC.gold > Config.NodeBarracksCost|Config.NodeCastleCost|Config.NodeMineCost);
+		return (nodeC.gold > Config.NodeBarracksCost || nodeC.gold > Config.NodeCastleCost || nodeC.gold > Config.NodeMineCost);
 	}
 	
 	override public function destroy():Void{

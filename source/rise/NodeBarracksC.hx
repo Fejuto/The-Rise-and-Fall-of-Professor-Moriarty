@@ -43,16 +43,19 @@ class NodeBarracksC extends C{
 			for(node in worldS.enemyNodes) {
 				
 				if(U.inCircle(nodeC.x, nodeC.y, Config.BarracksAttackRange, node.getC(NodeC).x, node.getC(NodeC).y)) {
-					targetNodeC = node.getC(NodeC);
-					
-					// dispatch monsters
-					for (monster in monsters) {
-						trace('dispatching monster to attack ' + targetNodeC);
-						monster.getC(MonsterC).attackTarget(targetNodeC);						
-					}
+					targetNodeC = node.getC(NodeC);					
 				}
 			}
-			
+						
+		}
+		
+		
+		if (targetNodeC != null) {
+			// dispatch monsters
+			for (monster in monsters) {
+				if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering)				
+					monster.getC(MonsterC).attackTarget(targetNodeC);
+			}		
 		}
 	}
 	
