@@ -54,7 +54,10 @@ class MonsterC extends C{
 	}
 	
 	var _targetNode:NodeC = null;
-	var targetNodeC(default, setTargetNode):NodeC = null;
+	var targetNodeC(getTargetNode, setTargetNode):NodeC = null;
+	function getTargetNode():NodeC{
+		return _targetNode;
+	}
 	function setTargetNode(v:NodeC):NodeC{
 		if(_targetNode != null){
 			_targetNode.attackers.remove(e);
