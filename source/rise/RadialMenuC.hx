@@ -65,7 +65,7 @@ class RadialMenuC extends C{
 		if (FlxG.mouse.pressed())
 			return;
 		
-		if ((nodeC.gold <= Config.NodeBarracksCost|Config.NodeCastleCost|Config.NodeMineCost) && !mouseOver)
+		if (!e.getC(NodeCastleC).canBuildSomething && !mouseOver)
 			return;
 		
 		// a wild menu appears!

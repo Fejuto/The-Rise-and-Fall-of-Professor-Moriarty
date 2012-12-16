@@ -30,7 +30,7 @@ class NodeC extends C{
 	@inject var scrollS:ScrollS;
 	
 	var circle:E;
-	var graphic:E;
+	public var graphic:E;
 	var edges:Array<E>;
 	
 	var _gold:Int = 100;
@@ -42,11 +42,11 @@ class NodeC extends C{
 		var area = v / 100.0;
 		if(area <= 0){
 			updateS.kill(e);
-		}
+		}		
 		setRadius(Math.sqrt(area / Math.PI) * Config.NodeCircleImageSize / 2);
 		return _gold = v;
 	}
-	
+		
 	public var decayRate:Float = 5;
 	var decayCounter:Float = 0;
 	var sendCounter:Float= 0;
@@ -116,10 +116,11 @@ class NodeC extends C{
 		
 		this.gold = gold;
 		this.decayRate = decayRate;
-		
+	
+				
 		worldS.addNode(e);
 	}
-	
+		
 	function onUpdate():Void {
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) { 
@@ -166,7 +167,7 @@ class NodeC extends C{
 			}			
 		}
 		
-
+		
 	}
 	
 	function evaporate():Void{
