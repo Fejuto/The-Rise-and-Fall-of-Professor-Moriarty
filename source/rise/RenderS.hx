@@ -6,6 +6,8 @@ import org.flixel.FlxLayer;
 import org.flixel.FlxGroup;
 
 class RenderS extends C{
+	@inject var updateS:UpdateS;
+	
 	public var gaiaLayer:FlxGroup;
 	public var backgroundMenuLayer:FlxGroup;
 	public var edgeLayer:FlxGroup;
@@ -16,16 +18,24 @@ class RenderS extends C{
 	
 	public function init(flxState:FlxState):Void{
 		this.flxState = flxState;
+		edgeLayer = new FlxGroup();
+		flxState.add(edgeLayer);
 		gaiaLayer= new FlxGroup();
 		flxState.add(gaiaLayer);
 		backgroundMenuLayer = new FlxGroup();
 		flxState.add(backgroundMenuLayer);
-		edgeLayer = new FlxGroup();
-		flxState.add(edgeLayer);
 		nodeLayer = new FlxGroup();
 		flxState.add(nodeLayer);
 		defaultLayer = new FlxGroup();
 		flxState.add(defaultLayer);
+		
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
+	}
+	
+	function onUpdate():Void {
+		// would require extending FlxSprite and adding a z 'value', why it doens't have it by default is beyond me?1
+		//nodeLayer.sort('z', 1);
+		
 	}
 	
 	override public function destroy():Void{

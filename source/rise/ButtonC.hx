@@ -9,6 +9,7 @@ class ButtonC extends C{
 	
 	@inject var updateS:UpdateS;
 	@inject var worldS:WorldS;
+	@inject var renderS:RenderS;
 	
 	var circle:E;
 	var graphic:E;
@@ -96,7 +97,7 @@ class ButtonC extends C{
 		
 	function createCircle():E{
 		var e = new E(e);
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png');
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png', renderS.nodeLayer);
 		return e;
 	}
 	

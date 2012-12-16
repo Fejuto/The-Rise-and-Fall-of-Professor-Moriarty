@@ -68,9 +68,9 @@ class WorldS extends C{
 		}
 	}
 	
-	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, decayRate:Float):E{
+	function createNode(graphic:Dynamic, ?layer:FlxGroup, x:Float, y:Float, gold:Int, decayRate:Float, ?state:NodeState):E{
 		var e = new E(e);
-		e.addC(NodeC).init(graphic, layer, x, y, gold, decayRate);
+		e.addC(NodeC).init(graphic, layer, x, y, gold, decayRate, state);
 		return e;
 	}
 	
@@ -94,7 +94,7 @@ class WorldS extends C{
 	}
 	
 	public function createGold(x:Float, y:Float, gold:Int):E{
-		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0);
+		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
 		e.addC(NodeGoldC).init();
 		return e;
 	}

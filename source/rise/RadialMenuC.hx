@@ -11,6 +11,7 @@ import rise.NodeC.NodeType;
 class RadialMenuC extends C{
 	@inject var updateS:UpdateS;
 	@inject var renderS:RenderS;
+	@inject var nodeC:NodeC;
 	
 	var mouseOver = false;
 	var buttonEntities : Array<E>;
@@ -22,7 +23,7 @@ class RadialMenuC extends C{
 	public function init():Void{
 		
 		// setup circle
-		e.addC(CircleC).init(e.getC(NodeC).x, e.getC(NodeC).y, renderS.backgroundMenuLayer);
+		e.addC(CircleC).init(nodeC.x, nodeC.y, renderS.backgroundMenuLayer);
 		e.getC(CircleC).radius = 0;
 		
 		// create buttons
@@ -39,7 +40,7 @@ class RadialMenuC extends C{
 		layout();
 		
 		// event listeners
-		m.add(e.getC(NodeC), NodeC.MOVED, layout);
+		m.add(nodeC, NodeC.MOVED, layout);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
@@ -47,30 +48,33 @@ class RadialMenuC extends C{
 		
 		for (i in  0...buttonEntities.length) {
 			var e = buttonEntities[i]; 
-			var pointOnEdge = U.pointOnEdgeOfCircle(e.getC(NodeC).x, e.getC(NodeC).y, Config.NodeHoverRadius, buttonDegrees[i]);
+			var pointOnEdge = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeHoverRadius, buttonDegrees[i]);
 			e.getC(ButtonC).x = pointOnEdge[0];
 			e.getC(ButtonC).y = pointOnEdge[1];	
 		}
 		
-		e.getC(CircleC).x = e.getC(NodeC).x;
-		e.getC(CircleC).y = e.getC(NodeC).y;
+		e.getC(CircleC).x = nodeC.x;
+		e.getC(CircleC).y = nodeC.y;
 			
 	}
 	
 	function onUpdate():Void{
-		if (e.getC(NodeC).state != NodeState.active) 
+		if (nodeC.state != NodeState.active) 
 			return;
 		
 		if (FlxG.mouse.pressed())
+			return;
+		
+		if ((nodeC.gold <= Config.NodeBarracksCost|Config.NodeCastleCost|Config.NodeMineCost) && !mouseOver)
 			return;
 		
 		// a wild menu appears!
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
 		
-		var nodeX = e.getC(NodeC).x;
-		var nodeY = e.getC(NodeC).y;
-		var nodeRadius = e.getC(NodeC).radius;
+		var nodeX = nodeC.x;
+		var nodeY = nodeC.y;
+		var nodeRadius = nodeC.radius;
 	
 		var newMouseOver = U.inCircle(nodeX, nodeY, mouseOver?Config.NodeHoverRadius+30:Config.NodeStartRadius, mouseX, mouseY);
 		
@@ -82,11 +86,11 @@ class RadialMenuC extends C{
 	
 	public function animateMenu(show : Bool):Void {
 		if (show)
-			e.getC(CircleC).radius = e.getC(NodeC).radius;
+			e.getC(CircleC).radius = nodeC.radius;
 		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:0}).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 		
 		/*
-		var colors = e.getC(NodeC).circleSprite.getColor();
+		var colors = nodeC.circleSprite.getColor();
 		if (show) {
 			Actuate.update(setColor, 1, [colors[0], colors[1], colors[2], colors[3]], [255, 255, 255, 255]);
 		} else {
@@ -100,7 +104,7 @@ class RadialMenuC extends C{
 	}
 	
 	function setColor(red : Int, green : Int, blue : Int, alpha : Int) {
-		e.getC(NodeC).circleSprite.setColor(red, green, blue, alpha);
+		nodeC.circleSprite.setColor(red, green, blue, alpha);
 	}
 	
 	override public function destroy():Void{
