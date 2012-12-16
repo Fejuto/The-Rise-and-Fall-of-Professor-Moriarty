@@ -17,8 +17,7 @@ class GenerateNodeC extends C{
 		
 		
 		for (i in 0...mineCount){
-			var point = randomPointInSquareCoord(0, 0);
-			// test location			
+			var point = randomPointInSquareCoord(0, 0);						
 			worldS.createGold(point[0], point[1], Std.random(6) * 10 + 50);
 		}
 	}
