@@ -10,9 +10,3 @@ class __ extends C{
 		super.destroy();
 	}
 }
-
-
-
-
-
-
