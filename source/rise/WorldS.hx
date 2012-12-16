@@ -9,6 +9,7 @@ import rise.NodeC.NodeState;
 import rise.NodeC.NodeType;
 import org.flixel.FlxGroup;
 import org.flixel.FlxPoint;
+import org.flixel.FlxU;
 
 class WorldS extends C{
 	@inject var updateS:UpdateS;
@@ -16,11 +17,9 @@ class WorldS extends C{
 	@inject var scrollS:ScrollS;
 	
 	public var nodes:Array<E>;
-	public var enemyNodes:Array<E>;
-	
+		
 	public function init():Void{
 		nodes = new Array<E>();
-		enemyNodes = new Array<E>();
 		
 		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
 		c1.getC(NodeC).state = NodeState.active;
@@ -40,18 +39,12 @@ class WorldS extends C{
 	
 	public function addNode(e:E):Void{
 		if(!e.hasC(NodeC)) throw "must have NodeC";
-		if (e.getC(NodeC).mine)
-			nodes.push(e);
-		else
-			enemyNodes.push(e);
+		nodes.push(e);
 	}
 	
 	public function removeNode(e:E):Void{
 		if(!e.hasC(NodeC)) throw "must have NodeC";
-		if (e.getC(NodeC).mine)
-			nodes.remove(e);
-		else
-			enemyNodes.remove(e);
+		nodes.remove(e);
 	}
 	
 	public function isEmptySpot(x:Int, y:Int, distanceRadius:Int = Config.RandomizerPlacementRadius):Bool {
@@ -61,12 +54,7 @@ class WorldS extends C{
 			if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius) 
 				return false;
 		}
-		
-		for (node in enemyNodes) {
-			var nodeC = node.getC(NodeC);
-			if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius)
-				return false;
-		}		
+			
 		return true;
 	}
 	
@@ -74,6 +62,10 @@ class WorldS extends C{
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
 	
+	public function getEnemyNodes():Array<E>{
+		return Lambda.array(Lambda.filter(nodes, function(e){return !e.getC(NodeC).mine; }));
+	}
+
 	public function getNodesDistanceSorted(x:Float, y:Float):Array<E>{
 		var r = nodes.copy();
 		r.sort(function(a,b):Int{
@@ -84,8 +76,7 @@ class WorldS extends C{
 		return r;
 	}
 	
-	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType):Void{
-		scrollS.enabled = false;
+	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType, ?mine:Bool = true):Void{
 		
 		fromE.getC(NodeC).gold -= 20;
 		
@@ -93,17 +84,25 @@ class WorldS extends C{
 		
 		switch(type) {
 			case NodeType.barracks:
-				newE = createBarracks(x,y,20);
+				newE = createBarracks(x,y,20, mine);
 			case NodeType.castle:
-				newE = createCastle(x,y,20);
+				newE = createCastle(x,y,20, mine);
 			case NodeType.mine:
-				newE = createGoldMine(x,y,20);
+				newE = createGoldMine(x,y,20, mine);
 		}
 		
-		newE.addC(FollowMouseC).init(true);
-		newE.getC(NodeC).state = dragging;
+		if (mine) {
+			scrollS.enabled = false;
+			newE.addC(FollowMouseC).init(true);
+			newE.getC(NodeC).state = dragging;	
+		} else {
+			newE.getC(NodeC).state = active;
+		}
+		
 		if(fromE != null && newE != null){
 			createEdge(fromE, newE);
+		} else {
+			trace('INVALID EDGE');
 		}
 	}
 	

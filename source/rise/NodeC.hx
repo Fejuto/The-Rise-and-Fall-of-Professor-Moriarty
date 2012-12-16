@@ -168,7 +168,7 @@ class NodeC extends C{
 					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
 					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
 						break;
-						
+					
 					gold -= Config.AgentSize;
 					worldS.createGoldAgent(e, edges[0].getC(EdgeC).getEndPoint(e), Config.AgentSize, mine);
 				}

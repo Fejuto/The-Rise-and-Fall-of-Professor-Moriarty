@@ -41,8 +41,7 @@ class NodeBarracksC extends C{
 		
 		if (targetNode == null) { // only start looking for things to attack when i actually have monsters
 		
-		//	trace(worldS.enemyNodes);
-			for(node in worldS.enemyNodes) {
+			for(node in worldS.getEnemyNodes()) {
 				
 				if (node == null || node.getC(NodeC).gold <= 0) // it's dead, ignore
 					continue;

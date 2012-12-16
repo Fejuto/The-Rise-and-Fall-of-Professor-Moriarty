@@ -26,7 +26,10 @@ class NodeCastleC extends C{
 	}
 	
 	function onUpdate():Void {
-		setCanBuildSomething(ableToBuild());
+		if (nodeC.mine)
+			setCanBuildSomething(ableToBuild());
+		else
+			setCanBuildSomething(true);
 	}
 
 	function ableToBuild():Bool {
@@ -37,9 +40,3 @@ class NodeCastleC extends C{
 		super.destroy();
 	}
 }
-
-
-
-
-
-
