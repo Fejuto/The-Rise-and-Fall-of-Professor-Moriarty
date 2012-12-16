@@ -68,7 +68,7 @@ class MonsterC extends C{
 			var pn = Math.random() > 0.5;
 			var newdeg = lastDegrees + (pn?distance:-distance);
 			
-			Actuate.tween(this, 0.1, { monsterBounceY: 5 }, false).repeat().reflect();
+			Actuate.tween(this, 0.1, { monsterBounceY: 5 }, false).ease(Linear.easeNone).repeat().reflect();
 			Actuate.update(wander, distance/speed, [lastDegrees], [newdeg], false).ease(Linear.easeNone).onComplete(function () {
 				Actuate.stop(this);
 				wandering = false;
