@@ -184,13 +184,17 @@ class NodeC extends C{
 					return b?-1:1; 
 				});
 				
+				//var targets = Lambda.array(Lambda.filter(edges, function(edge){}));
+				
 				
 				if((edges.length > 0) && (decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath())){
 					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
 					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
 						break;
 					
-					if(e.hasC(NodeGoldC) && otherNode.mine){
+					//if(e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC) && otherNode.mine){
+					if(!otherNode.mine && otherNode.e.hasC(NodeMineC)){
+					}else{
 						gold -= Config.AgentSize;
 					}
 					
