@@ -60,7 +60,7 @@ class MonsterC extends C{
 			_targetNode.attackers.remove(e);
 		}
 		if(v != null){
-			_targetNode.attackers.push(e);
+			v.attackers.push(e);
 		}
 		return _targetNode = v;
 	}
