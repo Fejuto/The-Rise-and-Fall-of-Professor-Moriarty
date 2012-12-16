@@ -14,7 +14,7 @@ class NodeBarracksC extends C{
 	var maxMonsterCount = 1;
 	
 	var spawnCounter : Float = 0;
-	var spawnAttempt = 1;
+	var spawnDelay = 1;
 
 	public function init():Void{
 		monsters = new Array();
@@ -23,12 +23,12 @@ class NodeBarracksC extends C{
 	}
 	
 	function onUpdate():Void {
-		if (nodeC.gold > 80 && monsters.length <= 0 && spawnCounter > spawnAttempt) {			
+		if (nodeC.gold > 80 && monsters.length <= maxMonsterCount && spawnCounter > spawnDelay) {			
 			nodeC.gold -= 40;
 			spawnMonster();
 		}
 		
-		if (spawnCounter > spawnAttempt)
+		if (spawnCounter > spawnDelay)
 			spawnCounter = 0;
 			
 		spawnCounter += FlxG.elapsed;

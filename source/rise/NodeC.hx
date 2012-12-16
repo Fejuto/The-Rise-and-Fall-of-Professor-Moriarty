@@ -114,7 +114,11 @@ class NodeC extends C{
 	
 	function onUpdate():Void {
 		if (this.state == NodeState.dragging) {
-			if (FlxG.mouse.justReleased()) {
+			if (FlxG.mouse.justReleased()) { 
+				
+				// check if able to drop there
+				
+			
 				scrollS.enabled = true;				
 				this.state = NodeState.active;
 				if (e.hasC(FollowMouseC)) {
