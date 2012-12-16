@@ -18,13 +18,14 @@ class NodeBarracksC extends C{
 
 	public function init():Void{
 		monsters = new Array();
+		nodeC.goldOffset = -20;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
 	function onUpdate():Void {
-		if (nodeC.gold > 80 && monsters.length <= maxMonsterCount && spawnCounter > spawnDelay) {			
-			nodeC.gold -= 40;
+		if (nodeC.gold > 40 && monsters.length <= maxMonsterCount && spawnCounter > spawnDelay) {			
+			nodeC.gold -= 20;
 			spawnMonster();
 		}
 		

@@ -190,8 +190,9 @@ class NodeC extends C{
 		//worldS.removeNode(e);
 	}
 	
+	public var goldOffset:Int = 0;
 	public function getEffectiveGold():Int{
-		return gold;
+		return cast Math.max(gold + goldOffset, 0);
 	}
 	
 	public function getTimeUntilDeath():Float{
