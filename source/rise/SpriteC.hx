@@ -12,6 +12,8 @@ class SpriteC extends C{
 	@inject var renderS:RenderS;
 	@inject var updateS:UpdateS;
 	public var flxSprite:FlxSprite;//should be private. But it's a jam!
+	public var originalWidth:Float;
+	public var originalHeight:Float;
 	var layer:FlxGroup;
 	
 	public var x(getX, setX):Float;
@@ -59,6 +61,8 @@ class SpriteC extends C{
 	public function init(graphic:Dynamic, ?layer:FlxGroup, x:Float = 0, y:Float = 0, animate:Bool = false, reverse:Bool = false, width:Int = 0, height:Int = 0, unique:Bool = false, key:String = null):Void{
 		flxSprite = new FlxSprite();
 		flxSprite.loadGraphic(graphic, animate, reverse, width, height, unique, key);
+		originalWidth = flxSprite.width;
+		originalHeight = flxSprite.height;
 		flxSprite.offset.x = flxSprite.width / 2;
 		flxSprite.offset.y = flxSprite.height / 2;
 		flxSprite.antialiasing = true;
@@ -69,6 +73,32 @@ class SpriteC extends C{
 		this.y = y;		
 
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
+	}
+	
+	public var pixelWidth(getPixelWidth, setPixelWidth):Float;
+	function getPixelWidth():Float{
+		return flxSprite.scale.x  * originalWidth;
+	}
+	function setPixelWidth(width:Float):Float{
+		flxSprite.scale.x =  width / originalWidth;
+		return width;
+	}
+
+	public var pixelHeight(getPixelHeight, setPixelHeight):Float;
+	function getPixelHeight():Float{
+		return flxSprite.scale.y  * originalHeight;
+	}
+	function setPixelHeight(height:Float):Float{
+		flxSprite.scale.y =  height / originalHeight;
+		return height;
+	}
+	
+	public function setWidth(width:Float):Void{
+		flxSprite.scale.x =  width / originalWidth;
+	}
+	
+	public function setHeight(height:Float):Void{
+		flxSprite.scale.y =  height / originalHeight;
 	}
 	
 	override public function destroy():Void{

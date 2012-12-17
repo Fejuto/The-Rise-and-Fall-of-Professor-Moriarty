@@ -51,7 +51,7 @@ class NodeC extends C{
 			visual = 5;
 		}
 		
-		var area = visual / 100.0;
+		var area = visual / 100.0 * Math.PI;
 		if(area <= 0){
 			if(v == 0 && state == building){
 				
@@ -63,11 +63,11 @@ class NodeC extends C{
 			}
 		}
 		
-		if(area > 1){
-			area = Math.pow(area, 0.5);
+		if(area > Math.PI){
+			area = Math.PI;
 		}
 		
-		setRadius(Math.sqrt(area / Math.PI) * originalGraphicSize / 2);
+		setRadius(Math.sqrt(area / Math.PI));
 		return _gold = v;
 	}
 		
@@ -76,8 +76,10 @@ class NodeC extends C{
 	var sendCounter:Float= 0;
 	public var decline:Bool = false;
 	public var originalGraphicSize:Float;
-	public var targetScaleFactor:Float = 2;
+	public var targetScaleFactor:Float = 1;
 	public var maxGold:Int = 99999;
+	public var scaleGraphic:Bool = false;
+	public var scaleGraphicOffset:Float = 6;
 	
 	public var state(default, default):NodeState;
 	public var mine(default, default):Bool;
@@ -112,9 +114,17 @@ class NodeC extends C{
 	var _radius:Float;
 	public var radius(getRadius, setRadius):Float;
 	function setRadius(v:Float):Float {
-		var targetScale = (v / originalGraphicSize) * targetScaleFactor;
+		var targetSize = v * 100 * targetScaleFactor;
+		if(scaleGraphic){
+			Actuate.stop(graphic.getC(SpriteC));
+			Actuate.tween(graphic.getC(SpriteC), 1, {pixelHeight:targetSize, pixelWidth:targetSize}).ease(Elastic.easeOut);
+		}
 		Actuate.stop(circle.getC(SpriteC));
-		Actuate.tween(circle.getC(SpriteC), 1, {scaleX:targetScale, scaleY:targetScale}).ease(Elastic.easeOut);
+		Actuate.tween(circle.getC(SpriteC), 1, {pixelHeight:targetSize + scaleGraphicOffset, pixelWidth:targetSize + scaleGraphicOffset}).ease(Elastic.easeOut);
+		
+		/*var targetScale = (v / originalGraphicSize) * targetScaleFactor;
+		Actuate.stop(circle.getC(SpriteC));
+		Actuate.tween(circle.getC(SpriteC), 1, {scaleX:targetScale, scaleY:targetScale}).ease(Elastic.easeOut);*/
 		return _radius = v;
 	}
 	function getRadius():Float {
