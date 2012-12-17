@@ -177,9 +177,12 @@ class NodeC extends C{
 			
 			if(evt.who.getC(NodeC).getDistance(e) <= Config.MaxEdgeDistance && !hasAlreadyEdge){
 				if(evt.who.getC(NodeC).mine == mine){
-					worldS.createEdge(e, evt.who);
+					var te = worldS.createEdge(e, evt.who);
+					te.getC(EdgeC).split = false;
+					
 				}
 			}else if(evt.who.getC(NodeC).getDistance(e) > Config.MaxEdgeDistance && hasAlreadyEdge){
+				if(evt.who.getC(NodeC).state == dragging) return;
 				updateS.kill(theEdge);
 			}
 		}

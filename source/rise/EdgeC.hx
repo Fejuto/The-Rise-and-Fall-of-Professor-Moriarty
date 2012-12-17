@@ -14,6 +14,7 @@ class EdgeC extends C{
 	public var node1:E;
 	public var node2:E;
 	public var sendCounter:Float;
+	public var split:Bool = true;
 	
 	var tempHouses:Array<E>;
 	
@@ -41,6 +42,10 @@ class EdgeC extends C{
 	
 	function updateEdge():Void{
 		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
+		
+		if(!split && distance > Config.MaxEdgeDistance){
+			updateS.kill(e);
+		}
 		
 		spriteC.flxSprite.offset.x = 0;
 		spriteC.flxSprite.origin.x = spriteC.flxSprite.offset.x;
