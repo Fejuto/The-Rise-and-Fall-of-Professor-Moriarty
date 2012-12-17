@@ -56,7 +56,7 @@ class GenerateNodeC extends C{
 		
 		for (z in 0...minerCount) {
 			var p = createNodeType(point, NodeType.mine, centerCastleE, Config.RandomizerVillageClusterRadius);
-			worldS.createGold(p[0]+100, p[1], 100);
+			worldS.createGold(p[0]+100, p[1], 50);
 		}
 		
 		for (z in 0...barracksCount) {

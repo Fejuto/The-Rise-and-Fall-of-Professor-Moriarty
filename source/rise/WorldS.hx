@@ -45,6 +45,7 @@ class WorldS extends C{
 		var generate = e.addC(GenerateNodeC);
 		
 		generate.createVillageAtPoint([0,0]);
+		generate.createVillageAtPoint([FlxG.width,0]);
 		
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);

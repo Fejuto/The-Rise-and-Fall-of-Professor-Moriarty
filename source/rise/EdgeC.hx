@@ -76,7 +76,12 @@ class EdgeC extends C{
 				var house = tempHouses.shift();
 				worldS.createEdge(lastHouse, house);
 				lastHouse = house;
-				house.getC(NodeC).state = building;				
+				if(house.getC(NodeC).mine){
+					house.getC(NodeC).state = building;				
+				}else{
+					house.getC(NodeC).state = active;
+					house.getC(NodeC).gold = 40;
+				}
 			}
 			worldS.createEdge(lastHouse, node2);
 			updateS.kill(e);

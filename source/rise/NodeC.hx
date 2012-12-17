@@ -218,6 +218,13 @@ class NodeC extends C{
 					if (other2.getC(NodeC).state == NodeState.dragging)
 						return -1;
 						
+					if(other1.hasC(NodeGoldC)){
+						return 1;
+					}
+					if(other2.hasC(NodeGoldC)){
+						return -1;
+					}
+						
 					if(other1.getC(NodeC).mine != other2.getC(NodeC).mine){
 						if(other1.getC(NodeC).mine && !other2.getC(NodeC).mine){
 							return -1;
@@ -235,6 +242,10 @@ class NodeC extends C{
 					otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC);
 				} 
 				if((edges.length > 0) && (decline || gold > maxGold || otherNode.getTimeUntilDeath() < getTimeUntilDeath())){
+					if(otherNode.e.hasC(NodeGoldC)){
+						break;
+					}
+					
 					if(otherNode.state == dragging || otherNode.decline) // if the most important edge node is inactive dont send any gold 
 						break;
 						
@@ -275,7 +286,7 @@ class NodeC extends C{
 		if(mine){
 			gold -= Config.Evaporation;
 		}else{
-			gold -= Math.ceil(Config.Evaporation / 2);
+			gold -= Config.Evaporation * 1;
 		}
 	}
 	

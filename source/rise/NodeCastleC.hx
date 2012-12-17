@@ -21,8 +21,8 @@ class NodeCastleC extends C{
 	
 	public function init():Void{
 		nodeC.goldOffset = Config.CastleLie;
-		//nodeC.maxGold = nodeC.mine ? 9999 : Config.CastleMax;
-		nodeC.maxGold = 9999;
+		nodeC.maxGold = nodeC.mine ? 9999 : Config.CastleMax;
+		//nodeC.maxGold = 9999;
 		setCanBuildSomething(ableToBuild());
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);		
