@@ -2,6 +2,7 @@ package rise;
 import engine.entities.C;
 import org.flixel.FlxText;
 import org.flixel.FlxG;
+import engine.entities.E;
 
 class ScoreS extends C{
 	@inject var renderS:RenderS;
@@ -33,13 +34,42 @@ class ScoreS extends C{
 	}
 	
 	public function init():Void{
-		text = new FlxText(FlxG.width - 100,0,100,"1", true);
+		var e:E = new E(e);
+		e.addC(SpriteC).init("assets/rise_score_background.png", renderS.interfaceLayer, 667, 43);
+		e.getC(SpriteC).flxSprite.scrollFactor.x = 0;
+		e.getC(SpriteC).flxSprite.scrollFactor.y = 0;
+		
+		e = new E(this.e);
+		e.addC(SpriteC).init("assets/rise_icon_fort_white.png", renderS.interfaceLayer, FlxG.width - 34, 29);
+		e.getC(SpriteC).pixelWidth = e.getC(SpriteC).pixelHeight = 30;
+		e.getC(SpriteC).flxSprite.scrollFactor.x = 0;
+		e.getC(SpriteC).flxSprite.scrollFactor.y = 0;
+
+		e = new E(this.e);
+		e.addC(SpriteC).init("assets/rise_icon_fort_white.png", renderS.interfaceLayer, FlxG.width - 34, 59);
+		e.getC(SpriteC).pixelWidth = e.getC(SpriteC).pixelHeight = 30;
+		e.getC(SpriteC).flxSprite.scrollFactor.x = 0;
+		e.getC(SpriteC).flxSprite.scrollFactor.y = 0;
+		
+		var temp = new FlxText(FlxG.width - 250,15,300,"Current score", true);
+		temp.size = 20;
+		temp.alignment = "left";
+		temp.scrollFactor.x = temp.scrollFactor.y = 0;
+		renderS.add(temp, renderS.interfaceLayer);
+
+		temp = new FlxText(FlxG.width - 250,45,300,"High score", true);
+		temp.size = 20;
+		temp.alignment = "left";
+		temp.scrollFactor.x = temp.scrollFactor.y = 0;
+		renderS.add(temp, renderS.interfaceLayer);
+		
+		text = new FlxText(FlxG.width - 150,15,100,"1", true);
 		text.size = 20;
 		text.alignment = "right";
 		text.scrollFactor.x = text.scrollFactor.y = 0;
 		renderS.add(text, renderS.interfaceLayer);
 
-		text2 = new FlxText(FlxG.width - 100,20,100,"1", true);
+		text2 = new FlxText(FlxG.width - 150,45,100,"1", true);
 		text2.size = 20;
 		text2.alignment = "right";
 		text2.scrollFactor.x = text2.scrollFactor.y = 0;
