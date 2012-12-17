@@ -191,8 +191,9 @@ class NodeC extends C{
 			}
 			
 			sendCounter += FlxG.elapsed;
+			sendCounter+=Math.random() / 1000;		
 			while(sendCounter > Config.SendRate){
-				sendCounter -= Config.SendRate;		
+				sendCounter = 0;
 				edges.sort(function(edge1, edge2){
 					var other1 = edge1.getC(EdgeC).getEndPoint(e);
 					var other2 = edge2.getC(EdgeC).getEndPoint(e);

@@ -34,7 +34,7 @@ class NodeBarracksC extends C{
 		if (nodeC.state != active)
 			return;
 		
-		if (nodeC.gold >= 40 && monsters.length < maxMonsterCount && spawnCounter > spawnDelay) {			
+		if (nodeC.gold > 30 && monsters.length < maxMonsterCount && spawnCounter > spawnDelay) {			
 			nodeC.gold -= 20;
 			spawnMonster();
 		}
