@@ -8,6 +8,7 @@ class Config {
 	public static inline var NodeHoverButtonDegreesMargin = 55;
 	
 	public static inline var MineDistance = 200;
+	public static inline var MaxEdgeDistance = 200;
 	
 	public static inline var Evaporation = 5;
 	public static inline var SendRate = 1;
@@ -27,7 +28,7 @@ class Config {
 	public static inline var BarracksLie = -20;
 	public static inline var MineLie = 10;
 	
-	public static inline var CastleMax = 400;
+	public static inline var CastleMax = 100;
 	public static inline var BarracksMax = 50;
 	public static inline var GoldMineMax = 30;
 	

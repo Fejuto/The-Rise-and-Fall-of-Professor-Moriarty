@@ -43,10 +43,20 @@ class NodeC extends C{
 		return _gold;
 	}
 	function setGold(v:Int):Int{
-		var area = v / 100.0;
+		var visual = v;
+		if(v <= 10 && getEffectiveGold() > 0){
+			visual = 10;
+		}
+		
+		var area = visual / 100.0;
 		if(area <= 0){
 			updateS.kill(e);
-		}		
+		}
+		
+		if(area > 1){
+			area = Math.pow(area, 0.5);
+		}
+		
 		setRadius(Math.sqrt(area / Math.PI) * originalGraphicSize / 2);
 		return _gold = v;
 	}
@@ -181,8 +191,9 @@ class NodeC extends C{
 			}
 			
 			sendCounter += FlxG.elapsed;
+			sendCounter+=Math.random() / 1000;		
 			while(sendCounter > Config.SendRate){
-				sendCounter -= Config.SendRate;		
+				sendCounter = 0;
 				edges.sort(function(edge1, edge2){
 					var other1 = edge1.getC(EdgeC).getEndPoint(e);
 					var other2 = edge2.getC(EdgeC).getEndPoint(e);

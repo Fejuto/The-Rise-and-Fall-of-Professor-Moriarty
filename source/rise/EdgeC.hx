@@ -4,20 +4,26 @@ import engine.entities.E;
 import org.flixel.FlxG;
 import org.flixel.FlxU;
 import org.flixel.FlxPoint;
+import rise.NodeC.NodeState;
 
 class EdgeC extends C{
 	@inject var spriteC:SpriteC;
 	@inject var updateS:UpdateS;
+	@inject var worldS:WorldS;
 	
 	public var node1:E;
 	public var node2:E;
 	public var sendCounter:Float;
+	
+	var tempHouses:Array<E>;
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
 		node1.getC(NodeC).addEdge(e);
 		this.node2 = node2;
 		node2.getC(NodeC).addEdge(e);
+		
+		tempHouses = new Array<E>();
 		
 		updateEdge();
 		
@@ -52,11 +58,51 @@ class EdgeC extends C{
 		
 		var dx:Float = node2.getC(NodeC).x - node1.getC(NodeC).x;
 		var dy:Float = node2.getC(NodeC).y - node1.getC(NodeC).y;
-		spriteC.flxSprite.angle = U.toDegrees(Math.atan2(dy, dx));  
+		spriteC.flxSprite.angle = U.toDegrees(Math.atan2(dy, dx));
+		
+		setTempHouses();
 	}
 	
 	function onUpdate():Void{
 		sendCounter += FlxG.elapsed;
+		
+		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
+		
+		if(distance > Config.MaxEdgeDistance && node1.getC(NodeC).state == active && node2.getC(NodeC).state == active){
+			setTempHouses();
+			
+			var lastHouse = node1;
+			while(tempHouses.length > 0){
+				var house = tempHouses.shift();
+				worldS.createEdge(lastHouse, house);
+				lastHouse = house;
+				house.getC(NodeC).state = active;				
+			}
+			worldS.createEdge(lastHouse, node2);
+			updateS.kill(e);
+		}
+	}
+	
+	function setTempHouses():Void{
+		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
+		
+		var numHouses:Int = Math.floor(distance / Config.MaxEdgeDistance);
+		while(tempHouses.length != numHouses){
+			if(tempHouses.length < numHouses){
+				tempHouses.push(worldS.createCastle(0, 0, 20, node1.getC(NodeC).mine));
+			}
+			if(tempHouses.length > numHouses){
+				updateS.kill(tempHouses.pop());
+			}
+		}
+		
+		var lastHouse = node1;
+		for(i in 0...numHouses){
+			var hx = node1.getC(NodeC).x + (node2.getC(NodeC).x - node1.getC(NodeC).x) / (numHouses + 1) * (i + 1);
+			var hy = node1.getC(NodeC).y + (node2.getC(NodeC).y - node1.getC(NodeC).y) / (numHouses + 1) * (i + 1);
+			tempHouses[i].getC(NodeC).x = hx;
+			tempHouses[i].getC(NodeC).y = hy;
+		}
 	}
 	
 	override public function destroy():Void{
@@ -64,6 +110,10 @@ class EdgeC extends C{
 		
 		node1.getC(NodeC).removeEdge(e);
 		node2.getC(NodeC).removeEdge(e);
+		
+		while(tempHouses.length > 0){
+			updateS.kill(tempHouses.pop());
+		}
 	}
 
 	public function getEndPoint(beginPoint:E):E{

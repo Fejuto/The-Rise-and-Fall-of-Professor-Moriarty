@@ -123,14 +123,14 @@ class MonsterC extends C{
 				state = approaching;
 				
 			} else {
-			
+				
 				// mosnter standing on top of building
 				if (attackCounter > attackDelay) {
 					attackCounter = 0;
-
+					
 					var newY = nodeC.y - 30;
 					Actuate.tween(nodeC, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
-						if (targetNodeC.e.destroyed) {						
+						if (targetNodeC.gold <= 0) {						
 							returnToBase();
 							return;
 						}

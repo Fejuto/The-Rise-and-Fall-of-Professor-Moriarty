@@ -187,7 +187,7 @@ class WorldS extends C{
 		if(!toNode.hasC(NodeC)) throw "must have edge";
 		if(!fromNode.hasC(NodeC)) throw "most have node";
 		
-		var e = createNode("assets/rise_icon_gold.png", fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		var e = createNode("assets/rise_icon_gold.png", renderS.agentLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
 		e.getC(NodeC).targetScaleFactor *= 0.75;
 		e.getC(NodeC).gold = e.getC(NodeC).gold;
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
