@@ -59,7 +59,7 @@ class NodeC extends C{
 				updateS.kill(e);
 				if (!mine && !e.hasC(MonsterC) && !e.hasC(NodeGoldC)) // if enemy building dies drop gold
 					//worldS.createGold(x, y, Std.random(6) * 10 + 50 * (e.hasC(NodeCastleC)?3:1));
-					worldS.createGold(x, y, 100);
+					worldS.createGold(x, y, 50);
 			}
 		}
 		
@@ -162,7 +162,7 @@ class NodeC extends C{
 		else
 			setCanBuildSomething(true);
 		
-		decline = decline || isUnderAttack();
+		decline = decline || (isUnderAttack() && !e.hasC(NodeBarracksC));
 		
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) {

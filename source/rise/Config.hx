@@ -32,7 +32,7 @@ class Config {
 	public static inline var BarracksMax = 50;
 	public static inline var GoldMineMax = 30;
 	
-	public static inline var BarracksAttackRange = 300;
+	public static inline var BarracksAttackRange = 200;
 	
 	public static inline var RandomizerPlacementRadius = 300;
 	public static inline var RandomizerGoldClusterRadius = 50;
