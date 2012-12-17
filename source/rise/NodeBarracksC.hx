@@ -72,16 +72,14 @@ class NodeBarracksC extends C{
 	
 	function spawnMonster():Void {		
 		
-		var monster = new E(e);
-		
-		monster.addC(MonsterC).init(nodeC.x, nodeC.y);
+		var monster = worldS.createMonster(e, 20, nodeC.mine);		
 		monster.getC(MonsterC).state = MonsterState.inactive;
 		monsters.push(monster);
 		
 		var degrees = Math.random()*360;
 		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, degrees);
 		monster.getC(MonsterC).lastDegrees = degrees;
-		Actuate.tween(monster.getC(MonsterC), 1, { x: point[0], y:point[1] }).onComplete(function(){
+		Actuate.tween(monster.getC(NodeC), 1, { x: point[0], y:point[1] }).onComplete(function(){
 			monster.getC(MonsterC).state = MonsterState.idle;
 		});		
 		
@@ -94,6 +92,11 @@ class NodeBarracksC extends C{
 	}
 	
 	override public function destroy():Void{
+		// kill my monsters
+		for (monster in monsters) {
+			updateS.kill(monster);
+		}
+		
 		super.destroy();
 	}
 }

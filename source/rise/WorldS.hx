@@ -25,6 +25,8 @@ class WorldS extends C{
 		playerBase.getC(NodeC).state = NodeState.active;
 		
 		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
+		//ec.getC(NodeC).state = NodeState.active;
+		
 		e.addC(GenerateNodeC).init(playerBase);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
@@ -185,6 +187,16 @@ class WorldS extends C{
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.25;
 		e.addC(GoldAgentC).init(toNode);
+		return e;
+	}
+	
+	public function createMonster(fromNode:E, gold:Int, ?mine:Bool = true):E {
+		var e = createNode(mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		e.getC(NodeC).targetScaleFactor *= 0.4;
+		e.getC(NodeC).gold = e.getC(NodeC).gold;
+		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
+		flxSprite.scale.x = flxSprite.scale.y = 0.25;
+		e.addC(MonsterC).init(fromNode);
 		return e;
 	}
 	

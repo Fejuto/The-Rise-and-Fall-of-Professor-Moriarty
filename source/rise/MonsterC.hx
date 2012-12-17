@@ -1,5 +1,6 @@
 package rise;
 import engine.entities.C;
+import engine.entities.E;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Linear;
@@ -17,7 +18,6 @@ class MonsterC extends C{
 	@inject var updateS:UpdateS;
 	@inject var renderS:RenderS;
 	@inject var nodeC:NodeC;
-	@inject var nodeBarracksC:NodeBarracksC;
 	
 	var monsterBounceY = 0;
 	
@@ -27,7 +27,6 @@ class MonsterC extends C{
 	var attackCounter : Float = 0;
 	var attackDelay : Float = 1;
 	
-	var health = 100;
 	var attack = 100;
 	var speed = 40;
 	
@@ -36,7 +35,6 @@ class MonsterC extends C{
 		if (v != state) {
 			switch (v) {
 				case MonsterState.combat:
-					
 				case MonsterState.idle:					
 					Actuate.stop(this);
 					wanderDelay = Math.random() * 2 + 1;
@@ -52,6 +50,8 @@ class MonsterC extends C{
 		}
 		return state = v;
 	}
+	
+	var parentNode:E;
 	
 	var _targetNode:NodeC = null;
 	var targetNodeC(getTargetNode, setTargetNode):NodeC = null;
@@ -70,34 +70,9 @@ class MonsterC extends C{
 	
 	public var lastDegrees : Float;
 	
-	public var x(getX, setX):Float;
-	function getX():Float{
-		return e.getC(SpriteC).x; 
-	}
-	function setX(v:Float):Float{
-		e.getC(CircleC).x = v;
-		return e.getC(SpriteC).x = v;
-	}
-	
-	public var y(getY, setY):Float;
-	function getY():Float{
-		return e.getC(SpriteC).y;
-	}
-	function setY(v:Float):Float{	
-		e.getC(CircleC).y = v;
-		return e.getC(SpriteC).y = v;		
-	}
-	
-	public function init(x:Float, y:Float):Void{
-		e.addC(CircleC).init(x, y, renderS.topLayer, !nodeC.mine?[209, 214, 223, 225]:[54, 45, 34, 225]);
-		e.getC(CircleC).radius = 12;		
-
-		e.addC(SpriteC).init(nodeC.mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', renderS.topLayer, x, y);
-		e.getC(SpriteC).scaleX = 0.3;
-		e.getC(SpriteC).scaleY = 0.3;
-	
-		m.add(updateS, UpdateS.UPDATE, onUpdate);
-		
+	public function init(parentNode:E):Void{
+		this.parentNode = parentNode;
+		m.add(updateS, UpdateS.UPDATE, onUpdate);		
 	}
 	
 	function onUpdate():Void {
@@ -125,10 +100,10 @@ class MonsterC extends C{
 			if (attackCounter > attackDelay) {
 				attackCounter = 0;
 				
-				var newY = y - 30;
-				Actuate.tween(this, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
+				var newY = nodeC.y - 30;
+				Actuate.tween(nodeC, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
 					if (targetNodeC.gold <= 0) {
-						nodeBarracksC.targetDestroyed(targetNodeC, this);
+						//e.getC(NodeBarracksC).targetDestroyed(targetNodeC, this);
 						returnToBase();
 						return;
 					}
@@ -151,25 +126,25 @@ class MonsterC extends C{
 	
 	function wander(td:Float):Void {
 		if(e.destroyed) return;
-	  	var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, td);
-	  	x = point[0];
-	  	y = point[1] + monsterBounceY;
+	  	var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, td);
+	  	nodeC.x = point[0];
+	  	nodeC.y = point[1] + monsterBounceY;
 
 	}
 	
 	function moveTo(nx:Int, ny:Int):Void {		
-		x = nx;
-		y = ny + monsterBounceY;
+		nodeC.x = nx;
+		nodeC.y = ny + monsterBounceY;
 	}
 	
 	function returnToBase():Void {
 		targetNodeC = null;
 		
-		var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, lastDegrees);
-		var distance = U.distance(x, y, point[0], point[1]);
+		var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, lastDegrees);
+		var distance = U.distance(nodeC.x, nodeC.y, point[0], point[1]);
 				
 		state = approaching;
-		Actuate.update(moveTo, distance/(speed * 2), [x,y], [point[0], point[1]], false).ease(Linear.easeNone).onComplete(function () {			
+		Actuate.update(moveTo, distance/(speed * 2), [nodeC.x,nodeC.y], [point[0], point[1]], false).ease(Linear.easeNone).onComplete(function () {			
 			state = idle;
 		});
 	}
@@ -184,10 +159,10 @@ class MonsterC extends C{
 			
 		}
 		
-		var distance = U.distance(x, y, targetNodeC.x, targetNodeC.y);
+		var distance = U.distance(nodeC.x, nodeC.y, targetNodeC.x, targetNodeC.y);
 		
 		state = approaching;
-		Actuate.update(moveTo, distance/(speed * 2), [x, y], [targetNodeC.x, targetNodeC.y], false).ease(Linear.easeNone).onComplete(function () {
+		Actuate.update(moveTo, distance/(speed * 2), [nodeC.x, nodeC.y], [targetNodeC.x, targetNodeC.y], false).ease(Linear.easeNone).onComplete(function () {
 			if (state == approaching) {
 				state = combat;	
 			}
