@@ -20,18 +20,19 @@ class GenerateNodeC extends C{
 		var mountainCount = 5;
 
 		for (z in 0...mountainCount) {
-			var point = validPosition(playerBaseLocation, Config.RandomizerMainGoldDistance);
+			var point = validPosition([0,0]);
 			worldS.createMountain(point[0], point[1]);
 		}
 
 		for (i in 0...mineCount){
-			var point = validPosition([0,0]);
+			var point = validPosition(i==0?playerBaseLocation:randomPointInSquareCoord(0, 0), Config.RandomizerMainGoldDistance);
 			var centerNode = worldS.createGold(point[0], point[1], Std.random(6) * 10 + 50);
 			
 			// have valid first point
 			var clusterCount = Std.random(6) + 2;
 			for (z in 0...clusterCount) {
 				var clusterPoint = validPosition(point, Config.RandomizerGoldClusterRadius);
+				
 				worldS.createGold(clusterPoint[0], clusterPoint[1], Std.random(6) * 10 + 50);				
 			}			
 		}
