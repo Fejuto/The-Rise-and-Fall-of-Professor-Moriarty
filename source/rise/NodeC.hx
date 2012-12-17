@@ -134,33 +134,44 @@ class NodeC extends C{
 		worldS.addNode(e);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
+	
 		
 	function onUpdate():Void {
 		decline = decline || isUnderAttack();
 		 
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) {
-				// check if able to drop there
 				scrollS.enabled = true;
 				if (e.hasC(FollowMouseC)) {
 					e.getC(FollowMouseC).enabled = false;
 				} 
 				
-				if (e.hasC(NodeRoadC)) { // vanish road and create new edge
+				var validBuildingDropLocation = false;
+				
+				if (edges.length > 0) {
 					
-					var closestNode = worldS.getClosestBuilding(x, y, mine);
-					if (U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y) > Config.NodeStartRadius) {
-						// refund
+					if (e.hasC(NodeRoadC)) {
+						var myClosestBuilding = worldS.getClosestBuilding(x, y, mine);						
+						if (U.distance(myClosestBuilding.getC(NodeC).x, myClosestBuilding.getC(NodeC).y, x, y) < Config.NodeStartRadius) {
+							worldS.createEdge(myClosestBuilding, edges[0].getC(EdgeC).getEndPoint(e));							
+						} else {
+							refund();		
+						}
 					} else {
-						// reconnect 
-						worldS.createEdge(closestNode, edges[0].getC(EdgeC).getEndPoint(e));
+						var closestNode = worldS.getClosestNodeToNode(e);
+						var distance = U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y);						
+						validBuildingDropLocation = distance > Config.NodeStartRadius; 
+						if (validBuildingDropLocation) {
+							this.state = NodeState.active;													
+						} else {
+							refund();
+						}
 					}
-						
-					updateS.kill(e);
-				} else {									
-					this.state = NodeState.active;
+ 															
 				}
 				
+				if (e.hasC(NodeRoadC) || !validBuildingDropLocation) 
+					updateS.kill(e);
 			}
 		} else if (this.state == NodeState.active){
 			decayCounter += FlxG.elapsed;
@@ -213,6 +224,11 @@ class NodeC extends C{
 				}
 			}			
 		}
+	}
+	
+	function refund():Void {
+		var draggedFromNode = edges[0].getC(EdgeC).getEndPoint(e);
+		draggedFromNode.getC(NodeC).gold += gold;
 	}
 	
 	function isUnderAttack():Bool{
