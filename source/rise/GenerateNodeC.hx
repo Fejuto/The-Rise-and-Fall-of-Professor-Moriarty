@@ -12,6 +12,7 @@ class GenerateNodeC extends C{
 	var squareSize:Int = 5000;
 	
 	public function init(playerBase:E):Void{
+		return;
 		// generate nearby content
 		var playerBaseLocation = [Std.int(playerBase.getC(NodeC).x), Std.int(playerBase.getC(NodeC).y)];
 		
@@ -41,7 +42,7 @@ class GenerateNodeC extends C{
 		}
 	}
 	
-	function createVillageAtPoint(point:Array<Int>) {
+	public function createVillageAtPoint(point:Array<Int>) {
 		var extraCastleCount = Std.random(2) + 1;
 		var barracksCount = Std.random(2) + 1;
 		var minerCount = 1;

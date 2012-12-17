@@ -58,7 +58,8 @@ class NodeC extends C{
 			}else{
 				updateS.kill(e);
 				if (!mine && !e.hasC(MonsterC) && !e.hasC(NodeGoldC)) // if enemy building dies drop gold
-					worldS.createGold(x, y, Std.random(6) * 10 + 50 * (e.hasC(NodeCastleC)?3:1));
+					//worldS.createGold(x, y, Std.random(6) * 10 + 50 * (e.hasC(NodeCastleC)?3:1));
+					worldS.createGold(x, y, 100);
 			}
 		}
 		
@@ -216,6 +217,12 @@ class NodeC extends C{
 						return 1;
 					if (other2.getC(NodeC).state == NodeState.dragging)
 						return -1;
+						
+					if(other1.getC(NodeC).mine != other2.getC(NodeC).mine){
+						if(other1.getC(NodeC).mine && !other2.getC(NodeC).mine){
+							return -1;
+						}
+					}
 					
 					var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
 					return b?-1:1; 

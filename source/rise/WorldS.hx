@@ -21,16 +21,33 @@ class WorldS extends C{
 	public function init():Void{
 		nodes = new Array<E>();
 		
-		var playerBase = createCastle(FlxG.width/2, FlxG.height/2, 1000);
+		var sX = FlxG.width/2;
+		var sY = FlxG.height/2;
+		var playerBase = createCastle(sX, sY, 100);
 		playerBase.getC(NodeC).state = NodeState.active;
+		
+		var mine = createGoldMine(sX + 100, sY + 100, 30, true);
+		mine.getC(NodeC).state = NodeState.active;
+		createEdge(playerBase, mine);
+		
+		var monsterDen = createBarracks(sX - 100, sY + 100, 0, true);
+		monsterDen.getC(NodeC).state = NodeState.building;
+		createEdge(playerBase, monsterDen);
+		
+		var gold = createGold(sX + 200, sY + 100, 150);
+		
+		var opponent = createCastle(sX - 200, sY + 100, 50, false);
+		opponent.getC(NodeC).state = active;
 		
 		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
 		//ec.getC(NodeC).state = NodeState.active;
 		
-		e.addC(GenerateNodeC).init(playerBase);
-		m.add(updateS, UpdateS.UPDATE, onUpdate);
+		var generate = e.addC(GenerateNodeC);
 		
-		FlxG.fullscreen();
+		generate.createVillageAtPoint([0,0]);
+		
+		
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 
 	function onUpdate():Void {
@@ -238,6 +255,7 @@ class WorldS extends C{
 		e.addC(EdgeC).init(node1, node2);
 		return e;
 	}
+	
 }
 
 
