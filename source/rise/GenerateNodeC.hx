@@ -11,8 +11,9 @@ class GenerateNodeC extends C{
 	
 	var squareSize:Int = 2500;
 	
-	public function init():Void{
+	public function init(playerBase:E):Void{
 		// generate nearby content
+		var playerBaseLocation = [Std.int(playerBase.getC(NodeC).x), Std.int(playerBase.getC(NodeC).y)];
 		
 		var mineCount = 10;
 		var villageCount = 2;
@@ -24,13 +25,14 @@ class GenerateNodeC extends C{
 		}
 
 		for (i in 0...mineCount){
-			var point = validPosition([0,0]);
+			var point = validPosition(i==0?playerBaseLocation:randomPointInSquareCoord(0, 0), Config.RandomizerMainGoldDistance);
 			var centerNode = worldS.createGold(point[0], point[1], Std.random(6) * 10 + 50);
 			
 			// have valid first point
 			var clusterCount = Std.random(6) + 2;
 			for (z in 0...clusterCount) {
 				var clusterPoint = validPosition(point, Config.RandomizerGoldClusterRadius);
+				
 				worldS.createGold(clusterPoint[0], clusterPoint[1], Std.random(6) * 10 + 50);				
 			}			
 		}

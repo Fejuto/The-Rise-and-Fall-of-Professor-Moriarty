@@ -19,11 +19,11 @@ class RenderS extends C{
 	var flxState:FlxState;
 	
 	public function init(flxState:FlxState):Void{
-		this.flxState = flxState;
-		edgeLayer = new FlxGroup();
-		flxState.add(edgeLayer);
+		this.flxState = flxState;		
 		gaiaLayer= new FlxGroup();
 		flxState.add(gaiaLayer);
+		edgeLayer = new FlxGroup();
+		flxState.add(edgeLayer);
 		backgroundMenuLayer = new FlxGroup();
 		flxState.add(backgroundMenuLayer);
 		nodeLayer = new FlxGroup();
