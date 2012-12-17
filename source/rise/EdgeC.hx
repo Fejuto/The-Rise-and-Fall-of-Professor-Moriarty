@@ -59,6 +59,8 @@ class EdgeC extends C{
 		var dx:Float = node2.getC(NodeC).x - node1.getC(NodeC).x;
 		var dy:Float = node2.getC(NodeC).y - node1.getC(NodeC).y;
 		spriteC.flxSprite.angle = U.toDegrees(Math.atan2(dy, dx));
+		
+		setTempHouses();
 	}
 	
 	function onUpdate():Void{
@@ -67,20 +69,39 @@ class EdgeC extends C{
 		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
 		
 		if(distance > Config.MaxEdgeDistance && node1.getC(NodeC).state == active && node2.getC(NodeC).state == active){
-			var numHouses:Int = Math.floor(distance / Config.MaxEdgeDistance);
+			setTempHouses();
 			
 			var lastHouse = node1;
-			for(i in 0...numHouses){
-				var hx = node1.getC(NodeC).x + (node2.getC(NodeC).x - node1.getC(NodeC).x) / (numHouses + 1) * (i + 1);
-				var hy = node1.getC(NodeC).y + (node2.getC(NodeC).y - node1.getC(NodeC).y) / (numHouses + 1) * (i + 1);
-				var house = worldS.createCastle(hx, hy , 20, node1.getC(NodeC).mine);
-				house.getC(NodeC).state = node1.getC(NodeC).state;
+			while(tempHouses.length > 0){
+				var house = tempHouses.shift();
 				worldS.createEdge(lastHouse, house);
 				lastHouse = house;
+				house.getC(NodeC).state = active;				
 			}
 			worldS.createEdge(lastHouse, node2);
-			
 			updateS.kill(e);
+		}
+	}
+	
+	function setTempHouses():Void{
+		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
+		
+		var numHouses:Int = Math.floor(distance / Config.MaxEdgeDistance);
+		while(tempHouses.length != numHouses){
+			if(tempHouses.length < numHouses){
+				tempHouses.push(worldS.createCastle(0, 0, 20, node1.getC(NodeC).mine));
+			}
+			if(tempHouses.length > numHouses){
+				updateS.kill(tempHouses.pop());
+			}
+		}
+		
+		var lastHouse = node1;
+		for(i in 0...numHouses){
+			var hx = node1.getC(NodeC).x + (node2.getC(NodeC).x - node1.getC(NodeC).x) / (numHouses + 1) * (i + 1);
+			var hy = node1.getC(NodeC).y + (node2.getC(NodeC).y - node1.getC(NodeC).y) / (numHouses + 1) * (i + 1);
+			tempHouses[i].getC(NodeC).x = hx;
+			tempHouses[i].getC(NodeC).y = hy;
 		}
 	}
 	
@@ -89,6 +110,10 @@ class EdgeC extends C{
 		
 		node1.getC(NodeC).removeEdge(e);
 		node2.getC(NodeC).removeEdge(e);
+		
+		while(tempHouses.length > 0){
+			updateS.kill(tempHouses.pop());
+		}
 	}
 
 	public function getEndPoint(beginPoint:E):E{
