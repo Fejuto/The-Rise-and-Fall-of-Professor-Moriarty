@@ -30,9 +30,10 @@ class WorldS extends C{
 	}
 
 	function onUpdate():Void {
-		/*if (FlxG.mouse.justReleased()) {
-			trace(FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
-		}*/
+		return;
+		if (FlxG.mouse.justReleased()) {
+			trace('mouse click at ' + FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
+		}
 	}
 
 	override public function destroy():Void{
@@ -63,10 +64,23 @@ class WorldS extends C{
 	public function getNodesWith<T>(type:Class<T>):Array<E>{		
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
-	
-	// not working for some reason?!s
-	public function getOtherNodeBuildings(mine:Bool):Array<E>{
-		return Lambda.array(Lambda.filter(nodes, function(e){ return e.getC(NodeC).mine != mine; }));
+
+	public function getClosestNodeToNode(e:E):E {
+		var winner : E = null;
+		var minDist:Float = Math.POSITIVE_INFINITY;
+		var x = e.getC(NodeC).x;
+		var y = e.getC(NodeC).y;
+		
+		for (node in nodes){
+			if (e == node) continue; // skip myself
+			
+			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
+			if(dist < minDist){
+				winner = node;
+				minDist = dist;
+			}
+		}
+		return winner;
 	}
 
 	public function getClosestBuilding(x:Float, y:Float, mine:Bool):E{
@@ -75,6 +89,7 @@ class WorldS extends C{
 		for (node in nodes){
 			if(!node.getC(NodeC).isBuilding()) continue;
 			if(node.getC(NodeC).mine != mine) continue;
+			if(node.getC(NodeC).state != active) continue;
 			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
 			if(dist < minDist){
 				winner = node;
@@ -98,7 +113,7 @@ class WorldS extends C{
 			case NodeType.mine:
 				newE = createGoldMine(x,y,20, mine);
 			case NodeType.road:
-				newE = createRoad(x,y,10);
+				newE = createRoad(x,y,10);			
 		}
 		
 		if (mine) {
@@ -111,8 +126,6 @@ class WorldS extends C{
 		
 		if(fromE != null && newE != null){
 			createEdge(fromE, newE);
-		} else {
-			trace('INVALID EDGE');
 		}
 	}
 	
@@ -153,6 +166,12 @@ class WorldS extends C{
 	public function createRoad(x:Float, y:Float, gold:Int):E {
 		var e = createNode("assets/rise_icon_road_red.png", renderS.topLayer, x, y, gold);
 		e.addC(NodeRoadC).init();		
+		return e;
+	}
+	
+	public function createMountain(x:Float, y:Float):E {
+		var e = createNode('assets/rise_mountain.png', renderS.gaiaLayer, x, y, 1);
+		e.getC(NodeC).state = inactive;
 		return e;
 	}
 	

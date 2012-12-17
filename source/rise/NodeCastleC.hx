@@ -20,6 +20,8 @@ class NodeCastleC extends C{
 	
 	public function init():Void{
 		nodeC.goldOffset = Config.CastleLie;
+		//nodeC.maxGold = nodeC.mine ? 9999 : Config.CastleMax;
+		nodeC.maxGold = 9999;
 		setCanBuildSomething(ableToBuild());
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);		
@@ -33,7 +35,7 @@ class NodeCastleC extends C{
 	}
 
 	function ableToBuild():Bool {
-		return (nodeC.gold > Config.NodeBarracksCost || nodeC.gold > Config.NodeCastleCost || nodeC.gold > Config.NodeMineCost);
+		return (nodeC.gold > Config.NodeBarracksCost || nodeC.gold > Config.NodeCastleCost || nodeC.gold > Config.NodeMineCost || nodeC.gold > Config.NodeRoadCost);
 	}
 	
 	override public function destroy():Void{

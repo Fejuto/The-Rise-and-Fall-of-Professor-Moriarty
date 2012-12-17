@@ -13,7 +13,8 @@ class NodeMineC extends C{
 	
 	public function init():Void{
 		edges = new Array<E>();
-		nodeC.goldOffset = 10;
+		nodeC.goldOffset = Config.MineLie;
+		nodeC.maxGold = Config.GoldMineMax;
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	

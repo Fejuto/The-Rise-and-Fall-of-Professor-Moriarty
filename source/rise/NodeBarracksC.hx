@@ -23,7 +23,8 @@ class NodeBarracksC extends C{
 
 	public function init():Void{
 		monsters = new Array<E>();
-		nodeC.goldOffset = -20;
+		nodeC.goldOffset = Config.BarracksLie;
+		nodeC.maxGold = Config.BarracksMax;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		//spawnMonster();
@@ -66,7 +67,7 @@ class NodeBarracksC extends C{
 			}
 		}
 		
-		nodeC.decline = targetNode == null;
+		nodeC.decline = (targetNode == null) && nodeC.mine;
 	}
 	
 	function spawnMonster():Void {		

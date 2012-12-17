@@ -15,30 +15,23 @@ class GenerateNodeC extends C{
 		// generate nearby content
 		
 		var mineCount = 10;
-		var villageCount = 1;
-		var mountains = 20;
-		
-		
+		var villageCount = 2;
+		var mountainCount = 5;
+
+		for (z in 0...mountainCount) {
+			var point = validPosition([0,0]);
+			worldS.createMountain(point[0], point[1]);
+		}
+
 		for (i in 0...mineCount){
-			var point = randomPointInSquareCoord(0, 0);
-			while (!worldS.isEmptySpot(point[0], point[1])) {
-				point = randomPointInSquareCoord(0, 0);
-			}
-			
+			var point = validPosition([0,0]);
 			var centerNode = worldS.createGold(point[0], point[1], Std.random(6) * 10 + 50);
 			
 			// have valid first point
 			var clusterCount = Std.random(6) + 2;
-			while(clusterCount > 0) {
-				var distance = Config.RandomizerGoldClusterRadius;
-				var clusterPoint = randomPointNearPoint(point[0], point[1], distance);
-				while(!worldS.isEmptySpot(clusterPoint[0], clusterPoint[1], Config.RandomizerGoldClusterRadius)) {
-					distance += 10;
-					clusterPoint = randomPointNearPoint(point[0], point[1], distance);
-				}
-				worldS.createGold(clusterPoint[0], clusterPoint[1], Std.random(6) * 10 + 50);
-				
-				clusterCount--;
+			for (z in 0...clusterCount) {
+				var clusterPoint = validPosition(point, Config.RandomizerGoldClusterRadius);
+				worldS.createGold(clusterPoint[0], clusterPoint[1], Std.random(6) * 10 + 50);				
 			}			
 		}
 		
@@ -52,41 +45,55 @@ class GenerateNodeC extends C{
 				point = randomPointInSquareCoord(0, 0);
 			}
 			
-			point = [400 + 250, 300];
 			var centerCastleE = worldS.createCastle(point[0], point[1], 200, false);
 			centerCastleE.getC(NodeC).state = active;
 			
 			for (z in 0...castleCount) {
-				createEnemyNodeType(point, NodeType.castle, centerCastleE);
+				createNodeType(point, NodeType.castle, centerCastleE, Config.RandomizerVillageClusterRadius);
 			}
 			
 			for (z in 0...minerCount) {
-				var p = createEnemyNodeType(point, NodeType.mine, centerCastleE);
+				var p = createNodeType(point, NodeType.mine, centerCastleE, Config.RandomizerVillageClusterRadius);
 				worldS.createGold(p[0]+100, p[1], 100);
 			}
 			
 			for (z in 0...barracksCount) {
-				createEnemyNodeType(point, NodeType.barracks, centerCastleE);
+				createNodeType(point, NodeType.barracks, centerCastleE, Config.RandomizerVillageClusterRadius);
 			}			
 		}
 	}
 	
-	function createEnemyNodeType(point:Array<Int>, type:NodeType, fromE:E):Array<Int> {
-		var distance = Config.RandomizerVillageClusterRadius;
-		var p = randomPointNearPoint(point[0], point[1], distance);
-		var da = 4;
-		while (!worldS.isEmptySpot(p[0], p[1], Config.RandomizerVillageClusterRadius)) {
-			if (da <= 0) {						
-				distance += 10;
-				da = 4;
-			}
-			p = randomPointNearPoint(point[0], point[1], distance);
-			da--;
-		}
+	function createNodeType(startingPoint:Array<Int>, type:NodeType, fromE:E, distance:Int = 0):Array<Int> {
+		var p = validPosition(startingPoint, distance);
+		worldS.createNodeFromEntity(fromE, p[0], p[1], type, false);
+		return p;
+	}
 	
-		if (fromE != null) 
-			worldS.createNodeFromEntity(fromE, p[0], p[1], type, false);
+	function validPosition(point:Array<Int>, distance:Int = 0):Array<Int> {
+		var p:Array<Int>;
+		if (distance > 0) // it's a cluster request if an distancei s involved
+			p = randomPointNearPoint(point[0], point[1], distance); 
+		else {
+			p = randomPointInSquareCoord(point[0], point[1]);
+		}
+		
+		var d = distance;
+		var da = 4; // number of attempts before increasing distance
+		while (!worldS.isEmptySpot(p[0], p[1], distance)) {
 			
+			if (d > 0) { // cluster
+				if (da <= 0) {						
+					d += 10;
+					da = 4;
+				}
+				
+				p = randomPointNearPoint(point[0], point[1], d);
+				da--;	
+			} else { // grid
+				p = randomPointInSquareCoord(point[0], point[1]);			
+			}
+		}
+		
 		return p;
 	}
 	

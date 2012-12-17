@@ -89,7 +89,7 @@ class MonsterC extends C{
 	}
 	
 	public function init(x:Float, y:Float):Void{
-		e.addC(CircleC).init(x, y, renderS.topLayer, nodeC.mine?[209, 214, 223, 225]:[54, 45, 34, 225]);
+		e.addC(CircleC).init(x, y, renderS.topLayer, !nodeC.mine?[209, 214, 223, 225]:[54, 45, 34, 225]);
 		e.getC(CircleC).radius = 12;		
 
 		e.addC(SpriteC).init(nodeC.mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', renderS.topLayer, x, y);
@@ -150,7 +150,7 @@ class MonsterC extends C{
 	}
 	
 	function wander(td:Float):Void {
-
+		if(e.destroyed) return;
 	  	var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, td);
 	  	x = point[0];
 	  	y = point[1] + monsterBounceY;
@@ -195,6 +195,7 @@ class MonsterC extends C{
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
+		Actuate.stop(wander);
 		
 		super.destroy();
 	}
