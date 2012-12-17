@@ -180,6 +180,10 @@ class MonsterC extends C{
 		//Actuate.stop(wander);
 		
 		this.targetNodeC = targetNodeC;
+		if (this.targetNodeC.e.hasC(NodeBarracksC)) { // when attacking barracks, look for monster
+			
+		}
+		
 		var distance = U.distance(x, y, targetNodeC.x, targetNodeC.y);
 		
 		state = approaching;
@@ -190,12 +194,17 @@ class MonsterC extends C{
 		});
 	}
 	
-	override public function destroy():Void{
-		setTargetNode(null);
+	function stopAllAnimations():Void {
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
 		Actuate.stop(wander);
+		
+	}
+	
+	override public function destroy():Void{
+		setTargetNode(null);
+		stopAllAnimations();
 		
 		super.destroy();
 	}
