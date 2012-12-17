@@ -94,8 +94,10 @@ class MonsterC extends C{
 			
 			state = MonsterState.wandering;
 			Actuate.update(wander, distance/speed, [lastDegrees], [newdeg], false).ease(Linear.easeNone).onComplete(function () {
+				if(!e.destroyed){
 				if (state == MonsterState.wandering) // validate that the state is still the one i started with
 					state = MonsterState.idle;
+				}
 			});
 			
 			lastDegrees = newdeg;

@@ -73,6 +73,11 @@ class WorldS extends C{
 	}
 
 	function onUpdate():Void {
+		if(FlxG.keys.R){
+			FlxG.switchState(new MenuState());
+		}
+		
+		
 		return;
 		if (FlxG.mouse.justReleased()) {
 			trace('mouse click at ' + FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
