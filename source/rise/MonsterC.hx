@@ -150,7 +150,7 @@ class MonsterC extends C{
 	}
 	
 	function wander(td:Float):Void {
-
+		if(e.destroyed) return;
 	  	var point = U.pointOnEdgeOfCircle(nodeC.x, nodeC.y, Config.NodeStartRadius + 20, td);
 	  	x = point[0];
 	  	y = point[1] + monsterBounceY;
