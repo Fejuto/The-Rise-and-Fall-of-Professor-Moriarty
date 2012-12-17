@@ -2,8 +2,8 @@
 <launchConfiguration type="com.powerflasher.fdt.ui.ViewerLaunchGroup">
 <booleanAttribute key="KILL_PREVIOUS_VIEWER" value="true"/>
 <stringAttribute key="MAIN_CLASS" value="export/flash/bin/rise.swf"/>
-<intAttribute key="PLAYER_HEIGHT" value="480"/>
-<intAttribute key="PLAYER_WIDTH" value="640"/>
+<intAttribute key="PLAYER_HEIGHT" value="600"/>
+<intAttribute key="PLAYER_WIDTH" value="800"/>
 <stringAttribute key="PROJECT_NAME" value="rise"/>
 <stringAttribute key="START_SWF_WITH" value="External SWF Viewer"/>
 </launchConfiguration>

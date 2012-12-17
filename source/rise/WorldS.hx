@@ -99,7 +99,7 @@ class WorldS extends C{
 			case NodeType.mine:
 				newE = createGoldMine(x,y,20, mine);
 			case NodeType.road:
-				newE = createRoad(x,y,10);
+				newE = createRoad(x,y,10);			
 		}
 		
 		if (mine) {
@@ -112,8 +112,6 @@ class WorldS extends C{
 		
 		if(fromE != null && newE != null){
 			createEdge(fromE, newE);
-		} else {
-			trace('INVALID EDGE');
 		}
 	}
 	
@@ -158,7 +156,7 @@ class WorldS extends C{
 	}
 	
 	public function createMountain(x:Float, y:Float):E {
-		var e = createNode('assets/rise_mountain', renderS.gaiaLayer, x, y, 1);
+		var e = createNode('assets/rise_mountain.png', renderS.gaiaLayer, x, y, 1);
 		e.getC(NodeC).state = inactive;
 		return e;
 	}
