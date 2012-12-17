@@ -10,8 +10,6 @@ class EdgeC extends C{
 	
 	public var node1:E;
 	public var node2:E;
-	public var goldAgentsNode1:Array<E>;
-	public var goldAgentsNode2:Array<E>;
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
@@ -23,8 +21,9 @@ class EdgeC extends C{
 		
 		m.add(node1.getC(NodeC), NodeC.MOVED, onMoved);
 		m.add(node2.getC(NodeC), NodeC.MOVED, onMoved);
-		m.add(node1, E.DESTROY, e.destroy, false, 1);
-		m.add(node2, E.DESTROY, e.destroy, false, 1);
+		m.add(node1, E.DESTROY, e.destroy);
+		m.add(node2, E.DESTROY, e.destroy);
+		
 	}
 	
 	
@@ -42,6 +41,12 @@ class EdgeC extends C{
 		spriteC.flxSprite.scale.y = 10 / spriteC.flxSprite.height;
 		spriteC.flxSprite.x = node1.getC(NodeC).x;
 		spriteC.flxSprite.y = node1.getC(NodeC).y;
+		
+		
+		if (node1.getC(NodeC).mine)
+			spriteC.setColor(209, 214, 223, 225);
+		else
+			spriteC.setColor(54, 45, 34, 225);
 		
 		var dx:Float = node2.getC(NodeC).x - node1.getC(NodeC).x;
 		var dy:Float = node2.getC(NodeC).y - node1.getC(NodeC).y;

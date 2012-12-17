@@ -57,7 +57,6 @@ class ButtonC extends C{
 	}
 	
 	function onUpdate():Void{ 
-
 		var dis = (e.getC(NodeC).gold <= goldCost());
 		if (disabled != dis) {
 			disabled = dis;
@@ -76,8 +75,6 @@ class ButtonC extends C{
 		var nodeRadius = e.getC(NodeC).radius;
 			
 		if (U.inCircle(x, y, (Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX)/2, mouseX, mouseY)) {
-			
-			
 			worldS.createNodeFromEntity(e, mouseX, mouseY, type);
 			e.getC(RadialMenuC).animateMenu(false);
 		}
@@ -92,18 +89,20 @@ class ButtonC extends C{
 				return Config.NodeCastleCost;
 			case NodeType.mine:
 				return Config.NodeMineCost;
+			case NodeType.road:
+				return Config.NodeRoadCost;
 		}
 	}
 		
 	function createCircle():E{
 		var e = new E(e);
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png', renderS.nodeLayer);
+		e.addC(SpriteC).init('assets/rise_circle_highlight.png', renderS.interfaceLayer);
 		return e;
 	}
 	
 	function createGraphic(graphic):E{
 		var e = new E(e);
-		e.addC(SpriteC).init(graphic);
+		e.addC(SpriteC).init(graphic, renderS.interfaceLayer);
 		return e;
 	}
 	

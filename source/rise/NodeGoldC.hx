@@ -9,9 +9,3 @@ class NodeGoldC extends C{
 		super.destroy();
 	}
 }
-
-
-
-
-
-

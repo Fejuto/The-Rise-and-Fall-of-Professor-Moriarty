@@ -13,6 +13,7 @@ class NodeMineC extends C{
 	
 	public function init():Void{
 		edges = new Array<E>();
+		nodeC.goldOffset = 10;
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
@@ -32,6 +33,8 @@ class NodeMineC extends C{
 		if(edges.length < 2){
 			findClosestMine();		
 		}
+		
+		nodeC.decline = edges.length == 0;
 	}
 	
 	function findClosestMine():Void{

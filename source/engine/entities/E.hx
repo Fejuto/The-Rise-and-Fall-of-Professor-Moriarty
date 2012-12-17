@@ -8,6 +8,8 @@ import flash.events.Event;
 class E extends EventDispatcher, implements Infos{
 	public static inline var DESTROY = "DESTROY";
 	
+	public var destroyed(default, null):Bool = false;
+	
 	var m:EventMap;
 	var parent:E;
 	var children:Array<E>;
@@ -25,7 +27,7 @@ class E extends EventDispatcher, implements Infos{
 			parent.addChild(this);
 		}
 		
-		m.add(this, DESTROY, onDestroy);
+		m.add(this, DESTROY, onDestroy, false, -1);
 	}
 	
 	public function destroy():Void{
@@ -38,6 +40,7 @@ class E extends EventDispatcher, implements Infos{
 	}
 	
 	function onDestroy():Void{
+		destroyed = true;
 		m.removeAll();
 		if(parent != null){
 			parent.removeChild(this);		
@@ -47,7 +50,7 @@ class E extends EventDispatcher, implements Infos{
 		}
 	}
 	
-	public function broadcastDepthFirst(e:Event):Void{
+	function broadcastDepthFirst(e:Event):Void{
 		for (child in children.copy()){
 			child.broadcastDepthFirst(e);
 		}

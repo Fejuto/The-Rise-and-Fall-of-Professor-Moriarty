@@ -1,7 +1,7 @@
 package rise;
 import engine.entities.C;
 
-class __ extends C{
+class NodeRoadC extends C{
 	
 	public function init():Void{
 	}

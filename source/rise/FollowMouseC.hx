@@ -21,6 +21,8 @@ class FollowMouseC extends C{
 			nodeC.x = pos.x;
 			nodeC.y = pos.y;
 		}
+		
+		scrollS.edgeScrollEnabled = enabled;
 	}
 	
 	override public function destroy():Void{
