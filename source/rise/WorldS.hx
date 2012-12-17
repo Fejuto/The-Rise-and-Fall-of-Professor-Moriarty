@@ -44,8 +44,29 @@ class WorldS extends C{
 		
 		var generate = e.addC(GenerateNodeC);
 		
-		generate.createVillageAtPoint([0,0]);
-		generate.createVillageAtPoint([FlxG.width,0]);
+		
+		var locs:Array<Array<Int>> = [
+		[-300,0],
+		[-300,FlxG.height],
+		[0,0],
+		[FlxG.width,0],
+		[FlxG.width,FlxG.height],
+		[FlxG.width,FlxG.height+300],
+		];
+		
+		for(i in 0...4){
+			FlxU.shuffle(locs, 10);
+			generate.createVillageAtPoint(locs.pop());
+		}
+		
+		locs.push([0, FlxG.height]);
+		locs.push([0, FlxG.height+300]);
+		
+		while(locs.length > 0){
+			var loc = locs.pop();
+			var gold = createGold(loc[0], loc[1], 150);
+		}
+		
 		
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
