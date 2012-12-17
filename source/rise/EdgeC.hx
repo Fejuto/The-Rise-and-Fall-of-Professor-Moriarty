@@ -7,9 +7,11 @@ import org.flixel.FlxPoint;
 
 class EdgeC extends C{
 	@inject var spriteC:SpriteC;
+	@inject var updateS:UpdateS;
 	
 	public var node1:E;
 	public var node2:E;
+	public var sendCounter:Float;
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
@@ -23,7 +25,7 @@ class EdgeC extends C{
 		m.add(node2.getC(NodeC), NodeC.MOVED, onMoved);
 		m.add(node1, E.DESTROY, e.destroy);
 		m.add(node2, E.DESTROY, e.destroy);
-		
+		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 	
 	
@@ -51,6 +53,10 @@ class EdgeC extends C{
 		var dx:Float = node2.getC(NodeC).x - node1.getC(NodeC).x;
 		var dy:Float = node2.getC(NodeC).y - node1.getC(NodeC).y;
 		spriteC.flxSprite.angle = U.toDegrees(Math.atan2(dy, dx));  
+	}
+	
+	function onUpdate():Void{
+		sendCounter += FlxG.elapsed;
 	}
 	
 	override public function destroy():Void{

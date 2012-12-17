@@ -168,39 +168,40 @@ class NodeC extends C{
 				evaporate();
 			}
 			
-			sendCounter += FlxG.elapsed;
-			while(sendCounter > Config.SendRate){
-				sendCounter -= Config.SendRate;		
-				edges.sort(function(edge1, edge2){
-					var other1 = edge1.getC(EdgeC).getEndPoint(e);
-					var other2 = edge2.getC(EdgeC).getEndPoint(e);
-					
-					if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
-						return 1;
-					if (other2.getC(NodeC).state != NodeState.active)
-						return -1;
-					
-					var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
-					return b?-1:1; 
-				});
+			//sending			
+			edges.sort(function(edge1, edge2){
+				var other1 = edge1.getC(EdgeC).getEndPoint(e);
+				var other2 = edge2.getC(EdgeC).getEndPoint(e);
 				
-				//var targets = Lambda.array(Lambda.filter(edges, function(edge){}));
+				if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
+					return 1;
+				if (other2.getC(NodeC).state != NodeState.active)
+					return -1;
 				
-				
-				if((edges.length > 0) && (decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath())){
+				var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
+				return b?-1:1; 
+			});
+			
+			//var targets = Lambda.array(Lambda.filter(edges, function(edge){}));
+			
+			for(edge in edges){
+				if(edge.getC(EdgeC).sendCounter < Config.SendRate) continue;
+				if(decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
 					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
 					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
-						break;
+						continue;
 					
-					//if(e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC) && otherNode.mine){
 					if(!otherNode.mine && otherNode.e.hasC(NodeMineC)){
 					}else{
 						gold -= Config.AgentSize;
 					}
 					
 					worldS.createGoldAgent(e, edges[0].getC(EdgeC).getEndPoint(e), Config.AgentSize, mine);
+					//edge.getC(EdgeC).sendCounter -= Config.SendRate;
+					edge.getC(EdgeC).sendCounter = 0;
 				}
-			}			
+			}
+					
 		}
 	}
 	

@@ -23,7 +23,7 @@ class NodeBarracksC extends C{
 
 	public function init():Void{
 		monsters = new Array<E>();
-		nodeC.goldOffset = -20;
+		nodeC.goldOffset = Config.BarracksLie;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		//spawnMonster();
