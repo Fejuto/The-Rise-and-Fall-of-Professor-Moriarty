@@ -268,6 +268,11 @@ class NodeC extends C{
 					if(other2.hasC(NodeGoldC)){
 						return -1;
 					}
+					
+					if (other1.getC(NodeC).decline) // move inactive ones to bottom 
+						return 1;
+					if (other2.getC(NodeC).decline)
+						return -1;
 						
 					if(other1.getC(NodeC).mine != other2.getC(NodeC).mine){
 						if(other1.getC(NodeC).mine && !other2.getC(NodeC).mine){

@@ -19,6 +19,7 @@ import rise.SpriteC;
 import rise.RenderS;
 import rise.WorldS;
 import rise.ScrollS;
+import rise.ScoreS;
 
 class MenuState extends FlxState
 {
@@ -33,8 +34,10 @@ class MenuState extends FlxState
 		e = new E();
 		e.addC(UpdateS).init();
 		e.addC(RenderS).init(this);
+		e.addC(ScoreS).init();
 		e.addC(ScrollS).init(true);
-		e.addC(WorldS).init();		
+		e.addC(WorldS).init();
+		
 	}
 
 	override public function update():Void{
