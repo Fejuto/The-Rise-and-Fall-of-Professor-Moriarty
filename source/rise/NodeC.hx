@@ -133,33 +133,44 @@ class NodeC extends C{
 		worldS.addNode(e);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
+	
 		
 	function onUpdate():Void {
 		decline = decline || isUnderAttack();
 		 
 		if (this.state == NodeState.dragging) {
-			if (FlxG.mouse.justReleased()) {
+			if (FlxG.mouse.justReleased()) {				
 				// check if able to drop there
 				scrollS.enabled = true;
 				if (e.hasC(FollowMouseC)) {
 					e.getC(FollowMouseC).enabled = false;
 				} 
 				
-				if (e.hasC(NodeRoadC)) { // vanish road and create new edge
-					
-					var closestNode = worldS.getClosestBuilding(x, y, mine);
-					if (U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y) > Config.NodeStartRadius) {
-						// refund
-					} else {
-						// reconnect 
-						worldS.createEdge(closestNode, edges[0].getC(EdgeC).getEndPoint(e));
-					}
+				//var draggedFromNode = edges[0].getC(EdgeC).getEndPoint(e);
+				if (edges.length > 0) {
+									
+					if (e.hasC(NodeRoadC)) { // vanish road and create new edge
 						
+						var closestNode = worldS.getClosestBuilding(x, y, mine);
+						if (U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y) > Config.NodeStartRadius) {
+							// refund
+							
+							
+							
+						} else {
+							// reconnect 
+							worldS.createEdge(closestNode, edges[0].getC(EdgeC).getEndPoint(e));
+						}
+						
+						updateS.kill(e);
+					} else {									
+						this.state = NodeState.active;
+					}
+															
+				} else {
+					
 					updateS.kill(e);
-				} else {									
-					this.state = NodeState.active;
 				}
-				
 			}
 		} else if (this.state == NodeState.active){
 			decayCounter += FlxG.elapsed;
