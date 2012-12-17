@@ -23,13 +23,14 @@ class NodeMineC extends C{
 	}
 	
 	function onUpdate():Void{
-		if(nodeC.state == dragging){
+		/*if(nodeC.state == dragging){
 			for(e in edges.copy()){
 				if(e.getC(EdgeC).getLength() > Config.MineDistance){
 					updateS.kill(e);
 				}
 			}
-		}
+		}*/
+		if(nodeC.state != active) return;
 		
 		if(edges.length < 2){
 			findClosestMine();		

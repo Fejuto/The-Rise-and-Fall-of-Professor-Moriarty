@@ -38,7 +38,7 @@ class CircleC extends C{
 		if (layer == null)
 			layer = renderS.defaultLayer;
 		
-		e.addC(SpriteC, 'circleSprite').init('assets/rise_circle_highlight.png', layer, x, y);
+		e.addC(SpriteC, 'circleSprite').init('assets/rise_circle_white.png', layer, x, y);
 		if (color != null)
 			e.getC(SpriteC, 'circleSprite').setColor(color[0], color[1], color[2], color[3]);
 		this.radius = Config.NodeStartRadius;

@@ -21,11 +21,32 @@ class WorldS extends C{
 	public function init():Void{
 		nodes = new Array<E>();
 		
-		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
-		c1.getC(NodeC).state = NodeState.active;
+		var sX = FlxG.width/2;
+		var sY = FlxG.height/2;
+		var playerBase = createCastle(sX, sY, 100);
+		playerBase.getC(NodeC).state = NodeState.active;
+		
+		var mine = createGoldMine(sX + 100, sY + 100, 30, true);
+		mine.getC(NodeC).state = NodeState.active;
+		createEdge(playerBase, mine);
+		
+		var monsterDen = createBarracks(sX - 100, sY + 100, 0, true);
+		monsterDen.getC(NodeC).state = NodeState.building;
+		createEdge(playerBase, monsterDen);
+		
+		var gold = createGold(sX + 200, sY + 100, 150);
+		
+		var opponent = createCastle(sX - 200, sY + 100, 50, false);
+		opponent.getC(NodeC).state = active;
 		
 		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
-		e.addC(GenerateNodeC).init();
+		//ec.getC(NodeC).state = NodeState.active;
+		
+		var generate = e.addC(GenerateNodeC);
+		
+		generate.createVillageAtPoint([0,0]);
+		
+		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 
@@ -50,12 +71,18 @@ class WorldS extends C{
 		nodes.remove(e);
 	}
 	
-	public function isEmptySpot(x:Int, y:Int, distanceRadius:Int = Config.RandomizerPlacementRadius):Bool {
+	public function isEmptySpot<T>(x:Int, y:Int, ?distanceRadius:Int = Config.RandomizerPlacementRadius, ?type:Class<T>, ?typedDistance:Int):Bool {
 		
 		for (node in nodes) {
 			var nodeC = node.getC(NodeC);
-			if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius) 
-				return false;
+			if (type != null && node.hasC(type)) {
+				if (U.distance(x, y, nodeC.x, nodeC.y) < typedDistance)
+					return false; 
+			} else {
+				if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius) 
+					return false;	
+			}
+			
 		}
 			
 		return true;
@@ -82,12 +109,34 @@ class WorldS extends C{
 		}
 		return winner;
 	}
+	
+	public function getClosestNodeToPoint(x:Float, y:Float):E {
+		var winner : E = null;
+		var minDist:Float = Math.POSITIVE_INFINITY;
+		
+		for (node in nodes){
+			if (e == node) continue; // skip myself
+			
+			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
+			if(dist < minDist){
+				winner = node;
+				minDist = dist;
+			}
+		}
+		return winner;
+	}
 
-	public function getClosestBuilding(x:Float, y:Float, mine:Bool):E{
+	public function getClosestBuilding(x:Float, y:Float, mine:Bool, includingMonsters:Bool = false):E{
 		var winner : E = null;
 		var minDist:Float = Math.POSITIVE_INFINITY;
 		for (node in nodes){
-			if(!node.getC(NodeC).isBuilding()) continue;
+			if (includingMonsters) {
+				if(!node.hasC(MonsterC)) {
+					if (!node.getC(NodeC).isBuilding()) continue;
+				}
+			} else {
+				if(!node.getC(NodeC).isBuilding()) continue;
+			}
 			if(node.getC(NodeC).mine != mine) continue;
 			if(node.getC(NodeC).state != active) continue;
 			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
@@ -101,19 +150,19 @@ class WorldS extends C{
 	
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType, ?mine:Bool = true):Void{
 		
-		fromE.getC(NodeC).gold -= 20;
+		//fromE.getC(NodeC).gold -= 20;
 		
 		var newE;
 		
 		switch(type) {
 			case NodeType.barracks:
-				newE = createBarracks(x,y,20, mine);
+				newE = createBarracks(x,y,50, mine);
 			case NodeType.castle:
-				newE = createCastle(x,y,20, mine);
+				newE = createCastle(x,y,50, mine);
 			case NodeType.mine:
-				newE = createGoldMine(x,y,20, mine);
+				newE = createGoldMine(x,y,50, mine);
 			case NodeType.road:
-				newE = createRoad(x,y,10);			
+				newE = createRoad(x,y,50);			
 		}
 		
 		if (mine) {
@@ -156,7 +205,7 @@ class WorldS extends C{
 	}
 	
 	public function createGold(x:Float, y:Float, gold:Int):E{
-		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
+		var e = createNode("assets/rise_icon_gold.png", renderS.backgroundMenuLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.5;
 		e.addC(NodeGoldC).init();
@@ -171,7 +220,7 @@ class WorldS extends C{
 	
 	public function createMountain(x:Float, y:Float):E {
 		var e = createNode('assets/rise_mountain.png', renderS.gaiaLayer, x, y, 1);
-		e.getC(NodeC).state = inactive;
+		e.getC(NodeC).state = active;
 		return e;
 	}
 	
@@ -179,12 +228,22 @@ class WorldS extends C{
 		if(!toNode.hasC(NodeC)) throw "must have edge";
 		if(!fromNode.hasC(NodeC)) throw "most have node";
 		
-		var e = createNode("assets/rise_icon_gold.png", fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		var e = createNode("assets/rise_icon_gold.png", renderS.agentLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
 		e.getC(NodeC).targetScaleFactor *= 0.75;
 		e.getC(NodeC).gold = e.getC(NodeC).gold;
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.25;
 		e.addC(GoldAgentC).init(toNode);
+		return e;
+	}
+	
+	public function createMonster(fromNode:E, gold:Int, ?mine:Bool = true):E {
+		var e = createNode(mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', renderS.topLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		e.getC(NodeC).targetScaleFactor *= 0.4;
+		e.getC(NodeC).gold = e.getC(NodeC).gold;
+		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
+		flxSprite.scale.x = flxSprite.scale.y = 0.25;
+		e.addC(MonsterC).init(fromNode);
 		return e;
 	}
 	
@@ -196,6 +255,7 @@ class WorldS extends C{
 		e.addC(EdgeC).init(node1, node2);
 		return e;
 	}
+	
 }
 
 

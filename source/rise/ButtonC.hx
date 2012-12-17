@@ -57,11 +57,11 @@ class ButtonC extends C{
 	}
 	
 	function onUpdate():Void{ 
-		var dis = (e.getC(NodeC).gold <= goldCost());
+		/*var dis = (e.getC(NodeC).getEffectiveGold() <= goldCost() + 20);
 		if (disabled != dis) {
 			disabled = dis;
 			Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha: disabled?0.2:1 }).onComplete( function () { animating: false } ); 
-		}
+		}*/
 		
 		if (disabled)
 			return;
@@ -96,7 +96,7 @@ class ButtonC extends C{
 		
 	function createCircle():E{
 		var e = new E(e);
-		e.addC(SpriteC).init('assets/rise_circle_highlight.png', renderS.interfaceLayer);
+		e.addC(SpriteC).init('assets/rise_circle_white.png', renderS.interfaceLayer);
 		e.getC(SpriteC).setColor(135, 111, 90, 225);
 		return e;
 	}
