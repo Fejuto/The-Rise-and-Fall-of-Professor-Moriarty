@@ -10,8 +10,9 @@ import org.flixel.FlxGroup;
 import haxe.Json;
 
 enum NodeState {
-	active;
 	dragging;
+	building;
+	active;
 }
 
 enum NodeType {
@@ -43,13 +44,20 @@ class NodeC extends C{
 	}
 	function setGold(v:Int):Int{
 		var visual = v;
-		if(v <= 10 && getEffectiveGold() > 0){
-			visual = 10;
+		if(state == building && v > 20){
+			state = active;
+		}
+		if(v <= 5 && getEffectiveGold() > 0){
+			visual = 5;
 		}
 		
 		var area = visual / 100.0;
 		if(area <= 0){
-			updateS.kill(e);
+			if(v == 0 && state == building){
+				
+			}else{
+				updateS.kill(e);
+			}
 		}
 		
 		if(area > 1){
@@ -146,8 +154,13 @@ class NodeC extends C{
 	
 		
 	function onUpdate():Void {
+		if (mine)
+			setCanBuildSomething(state == active);
+		else
+			setCanBuildSomething(true);
+		
 		decline = decline || isUnderAttack();
-		 
+		
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) {
 				scrollS.enabled = true;
@@ -171,12 +184,12 @@ class NodeC extends C{
 						var distance = U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y);						
 						validBuildingDropLocation = distance > Config.NodeStartRadius; 
 						if (validBuildingDropLocation) {
-							this.state = NodeState.active;													
+							this.state = NodeState.building;
+							gold = 0;
 						} else {
 							refund();
 						}
 					}
- 															
 				}
 				
 				if (e.hasC(NodeRoadC) || !validBuildingDropLocation) 
@@ -197,9 +210,9 @@ class NodeC extends C{
 					var other1 = edge1.getC(EdgeC).getEndPoint(e);
 					var other2 = edge2.getC(EdgeC).getEndPoint(e);
 					
-					if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
+					if (other1.getC(NodeC).state == NodeState.dragging) // move inactive ones to bottom 
 						return 1;
-					if (other2.getC(NodeC).state != NodeState.active)
+					if (other2.getC(NodeC).state == NodeState.dragging)
 						return -1;
 					
 					var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
@@ -213,10 +226,10 @@ class NodeC extends C{
 					otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC);
 				} 
 				if((edges.length > 0) && (decline || gold > maxGold || otherNode.getTimeUntilDeath() < getTimeUntilDeath())){
-					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
+					if(otherNode.state == dragging || otherNode.decline) // if the most important edge node is inactive dont send any gold 
 						break;
 						
-					if(!e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC)){
+					if(otherNode.state != building && !e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC)){
 						break;
 					}
 					
@@ -304,6 +317,16 @@ class NodeC extends C{
 	
 	public function getDistance(other:E):Float{
 		return U.distance(x, y, other.getC(NodeC).x, other.getC(NodeC).y);
+	}
+	
+	var initbool = false;
+	public var canBuildSomething(default, setCanBuildSomething):Bool;
+	function setCanBuildSomething(v : Bool):Bool {
+		if (!initbool || v != canBuildSomething) {
+			initbool = true;
+			Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha:v?1.0:0.2 } );	
+		}
+		return canBuildSomething = v;
 	}
 }
 

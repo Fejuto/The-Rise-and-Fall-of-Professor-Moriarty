@@ -57,11 +57,11 @@ class ButtonC extends C{
 	}
 	
 	function onUpdate():Void{ 
-		var dis = (e.getC(NodeC).getEffectiveGold() <= goldCost() + 20);
+		/*var dis = (e.getC(NodeC).getEffectiveGold() <= goldCost() + 20);
 		if (disabled != dis) {
 			disabled = dis;
 			Actuate.tween(graphic.getC(SpriteC).flxSprite, 1, { alpha: disabled?0.2:1 }).onComplete( function () { animating: false } ); 
-		}
+		}*/
 		
 		if (disabled)
 			return;

@@ -1,6 +1,7 @@
 package rise;
 import engine.entities.C;
 import com.eclecticdesignstudio.motion.Actuate;
+import rise.NodeC.NodeState;
 
 class NodeCastleC extends C{
 	
@@ -35,7 +36,8 @@ class NodeCastleC extends C{
 	}
 
 	function ableToBuild():Bool {
-		return (nodeC.gold > Config.NodeBarracksCost || nodeC.gold > Config.NodeCastleCost || nodeC.gold > Config.NodeMineCost || nodeC.gold > Config.NodeRoadCost);
+		//return (nodeC.gold > Config.NodeBarracksCost || nodeC.gold > Config.NodeCastleCost || nodeC.gold > Config.NodeMineCost || nodeC.gold > Config.NodeRoadCost);
+		return nodeC.state == active;
 	}
 	
 	override public function destroy():Void{

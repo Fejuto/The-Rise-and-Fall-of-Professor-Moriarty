@@ -68,7 +68,7 @@ class EdgeC extends C{
 		
 		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
 		
-		if(distance > Config.MaxEdgeDistance && node1.getC(NodeC).state == active && node2.getC(NodeC).state == active){
+		if(distance > Config.MaxEdgeDistance && node1.getC(NodeC).state != dragging && node2.getC(NodeC).state != dragging){
 			setTempHouses();
 			
 			var lastHouse = node1;
@@ -76,7 +76,7 @@ class EdgeC extends C{
 				var house = tempHouses.shift();
 				worldS.createEdge(lastHouse, house);
 				lastHouse = house;
-				house.getC(NodeC).state = active;				
+				house.getC(NodeC).state = building;				
 			}
 			worldS.createEdge(lastHouse, node2);
 			updateS.kill(e);
@@ -89,7 +89,7 @@ class EdgeC extends C{
 		var numHouses:Int = Math.floor(distance / Config.MaxEdgeDistance);
 		while(tempHouses.length != numHouses){
 			if(tempHouses.length < numHouses){
-				tempHouses.push(worldS.createCastle(0, 0, 20, node1.getC(NodeC).mine));
+				tempHouses.push(worldS.createCastle(0, 0, 0, node1.getC(NodeC).mine));
 			}
 			if(tempHouses.length > numHouses){
 				updateS.kill(tempHouses.pop());

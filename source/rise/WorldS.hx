@@ -21,7 +21,7 @@ class WorldS extends C{
 	public function init():Void{
 		nodes = new Array<E>();
 		
-		var playerBase = createCastle(FlxG.width/2, FlxG.height/2, 100);
+		var playerBase = createCastle(FlxG.width/2, FlxG.height/2, 1000);
 		playerBase.getC(NodeC).state = NodeState.active;
 		
 		var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
@@ -109,7 +109,7 @@ class WorldS extends C{
 	
 	public function createNodeFromEntity(fromE:E, x:Float, y:Float, type:NodeType, ?mine:Bool = true):Void{
 		
-		fromE.getC(NodeC).gold -= 20;
+		//fromE.getC(NodeC).gold -= 20;
 		
 		var newE;
 		

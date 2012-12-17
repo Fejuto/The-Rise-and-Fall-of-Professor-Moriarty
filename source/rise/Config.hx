@@ -24,9 +24,9 @@ class Config {
 	public static inline var NodeMineCost = 20;
 	public static inline var NodeRoadCost = 10;
 	
-	public static inline var CastleLie = -10;
-	public static inline var BarracksLie = -20;
-	public static inline var MineLie = 10;
+	public static inline var CastleLie = 0;
+	public static inline var BarracksLie = 0;
+	public static inline var MineLie = 0;
 	
 	public static inline var CastleMax = 100;
 	public static inline var BarracksMax = 50;
