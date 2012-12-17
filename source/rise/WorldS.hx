@@ -21,11 +21,11 @@ class WorldS extends C{
 	public function init():Void{
 		nodes = new Array<E>();
 		
-		var c1 = createCastle(FlxG.width/2, FlxG.height/2, 100);
-		c1.getC(NodeC).state = NodeState.active;
+		var playerBase = createCastle(FlxG.width/2, FlxG.height/2, 100);
+		playerBase.getC(NodeC).state = NodeState.active;
 		
 		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
-		e.addC(GenerateNodeC).init();
+		e.addC(GenerateNodeC).init(playerBase);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
 
@@ -156,7 +156,7 @@ class WorldS extends C{
 	}
 	
 	public function createGold(x:Float, y:Float, gold:Int):E{
-		var e = createNode("assets/rise_icon_gold.png", renderS.gaiaLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
+		var e = createNode("assets/rise_icon_gold.png", renderS.backgroundMenuLayer, x, y, gold, 0, NodeState.active); // gold deposites start out active
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
 		flxSprite.scale.x = flxSprite.scale.y = 0.5;
 		e.addC(NodeGoldC).init();

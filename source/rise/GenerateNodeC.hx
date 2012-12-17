@@ -11,15 +11,16 @@ class GenerateNodeC extends C{
 	
 	var squareSize:Int = 2500;
 	
-	public function init():Void{
+	public function init(playerBase:E):Void{
 		// generate nearby content
+		var playerBaseLocation = [Std.int(playerBase.getC(NodeC).x), Std.int(playerBase.getC(NodeC).y)];
 		
 		var mineCount = 10;
 		var villageCount = 2;
 		var mountainCount = 5;
 
 		for (z in 0...mountainCount) {
-			var point = validPosition([0,0]);
+			var point = validPosition(playerBaseLocation, Config.RandomizerMainGoldDistance);
 			worldS.createMountain(point[0], point[1]);
 		}
 

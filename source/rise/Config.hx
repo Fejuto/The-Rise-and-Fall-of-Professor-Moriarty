@@ -36,5 +36,6 @@ class Config {
 	public static inline var RandomizerPlacementRadius = 300;
 	public static inline var RandomizerGoldClusterRadius = 50;
 	public static inline var RandomizerVillageClusterRadius = 180;
+	public static inline var RandomizerMainGoldDistance = 300;
 	
 }
