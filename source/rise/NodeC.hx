@@ -89,7 +89,9 @@ class NodeC extends C{
 	function setX(v:Float):Float{
 		graphic.getC(SpriteC).x = v;
 		var r = circle.getC(SpriteC).x = v;
-		dispatchEvent(new Event(MOVED));
+		var evt = new MovedEvent(MOVED);
+		evt.who = e;
+		dispatchEvent(evt);
 		return r;
 	}
 	
@@ -100,7 +102,9 @@ class NodeC extends C{
 	function setY(v:Float):Float{
 		graphic.getC(SpriteC).y = v;
 		var r = circle.getC(SpriteC).y = v;
-		dispatchEvent(new Event(MOVED));
+		var evt = new MovedEvent(MOVED);
+		evt.who = e;
+		dispatchEvent(evt);
 		return r;
 	}
 	
@@ -153,6 +157,12 @@ class NodeC extends C{
 		
 		worldS.addNode(e);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
+		
+		m.add(worldS, NodeC.MOVED, onAnyMoved);
+	}
+	
+	function onAnyMoved(evt:MovedEvent):Void{
+		trace(Math.random());
 	}
 	
 		

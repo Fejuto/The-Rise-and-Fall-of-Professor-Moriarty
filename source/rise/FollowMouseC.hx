@@ -6,6 +6,7 @@ class FollowMouseC extends C{
 	@inject var updateS:UpdateS;
 	@inject var scrollS:ScrollS;
 	@inject var nodeC:NodeC;
+	@inject var worldS:WorldS;
 	
 	public var enabled:Bool = true;
 	
@@ -18,8 +19,21 @@ class FollowMouseC extends C{
 		if(enabled){
 							
 			var pos = FlxG.mouse.getWorldPosition();
+			var changed:Bool = false;
+			if(nodeC.x != pos.x){
+				changed = true;
+			}
+			if(nodeC.y != pos.y){
+				changed = true;
+			}
 			nodeC.x = pos.x;
 			nodeC.y = pos.y;
+			
+			if(changed){
+				var evt = new MovedEvent(NodeC.MOVED);
+				evt.who = e;
+				worldS.dispatchEvent(evt);
+			}
 		}
 		
 		scrollS.edgeScrollEnabled = enabled;

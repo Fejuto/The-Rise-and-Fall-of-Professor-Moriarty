@@ -65,7 +65,7 @@ class RadialMenuC extends C{
 		if (FlxG.mouse.pressed())
 			return;
 		
-		if (!e.getC(NodeCastleC).canBuildSomething && !mouseOver)
+		if (!e.getC(NodeC).canBuildSomething && !mouseOver)
 			return;
 		
 		// a wild menu appears!
