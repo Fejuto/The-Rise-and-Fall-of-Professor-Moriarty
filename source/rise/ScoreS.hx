@@ -74,6 +74,15 @@ class ScoreS extends C{
 		text2.alignment = "right";
 		text2.scrollFactor.x = text2.scrollFactor.y = 0;
 		renderS.add(text2, renderS.interfaceLayer);
+		
+		e = new E(this.e);
+		e.addC(SpriteC).init("assets/paper-texture.png", renderS.interfaceLayer, 0,0);
+		//e.getC(SpriteC).pixelWidth = FlxG.width;
+		//e.getC(SpriteC).pixelHeight = FlxG.height; 
+		e.getC(SpriteC).flxSprite.scrollFactor.x = 0;
+		e.getC(SpriteC).flxSprite.scrollFactor.y = 0;
+		e.getC(SpriteC).flxSprite.offset.x = 0;
+		e.getC(SpriteC).flxSprite.offset.y = 0;
 	}
 	
 	override public function destroy():Void{
