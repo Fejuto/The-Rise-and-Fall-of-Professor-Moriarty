@@ -27,7 +27,7 @@ class Config {
 	public static inline var BarracksLie = -20;
 	public static inline var MineLie = 10;
 	
-	public static inline var CastleMax = 0;
+	public static inline var CastleMax = 100;
 	public static inline var BarracksMax = 50;
 	public static inline var GoldMineMax = 20;
 	

@@ -57,6 +57,7 @@ class NodeC extends C{
 	public var decline:Bool = false;
 	public var originalGraphicSize:Float;
 	public var targetScaleFactor:Float = 2;
+	public var maxGold:Int = 99999;
 	
 	public var state(default, default):NodeState;
 	public var mine(default, default):Bool;
@@ -168,40 +169,49 @@ class NodeC extends C{
 				evaporate();
 			}
 			
-			//sending			
-			edges.sort(function(edge1, edge2){
-				var other1 = edge1.getC(EdgeC).getEndPoint(e);
-				var other2 = edge2.getC(EdgeC).getEndPoint(e);
-				
-				if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
-					return 1;
-				if (other2.getC(NodeC).state != NodeState.active)
-					return -1;
-				
-				var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
-				return b?-1:1; 
-			});
-			
-			//var targets = Lambda.array(Lambda.filter(edges, function(edge){}));
-			
-			for(edge in edges){
-				if(edge.getC(EdgeC).sendCounter < Config.SendRate) continue;
-				if(decline || edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC).getTimeUntilDeath() < getTimeUntilDeath()){
-					var otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC); 
-					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
-						continue;
+			sendCounter += FlxG.elapsed;
+			while(sendCounter > Config.SendRate){
+				sendCounter -= Config.SendRate;		
+				edges.sort(function(edge1, edge2){
+					var other1 = edge1.getC(EdgeC).getEndPoint(e);
+					var other2 = edge2.getC(EdgeC).getEndPoint(e);
 					
+					if (other1.getC(NodeC).state != NodeState.active) // move inactive ones to bottom 
+						return 1;
+					if (other2.getC(NodeC).state != NodeState.active)
+						return -1;
+					
+					var b = other1.getC(NodeC).getTimeUntilDeath() < other2.getC(NodeC).getTimeUntilDeath();
+					return b?-1:1; 
+				});
+				
+				//var targets = Lambda.array(Lambda.filter(edges, function(edge){}));
+				
+				var otherNode = null;
+				if(edges.length>0){
+					otherNode = edges[0].getC(EdgeC).getEndPoint(e).getC(NodeC);
+				} 
+				if((edges.length > 0) && (decline || gold > maxGold || otherNode.getTimeUntilDeath() < getTimeUntilDeath())){
+					if((otherNode.state != NodeState.active) || otherNode.decline) // if the most important edge node is inactive dont send any gold 
+						break;
+						
+					if(!e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC)){
+						break;
+					}
+					
+					if(!(e.hasC(NodeGoldC) && otherNode.mine) && otherNode.getEffectiveGold() > otherNode.maxGold){
+						break;
+					}
+					
+					//if(e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC) && otherNode.mine){
 					if(!otherNode.mine && otherNode.e.hasC(NodeMineC)){
 					}else{
 						gold -= Config.AgentSize;
 					}
 					
 					worldS.createGoldAgent(e, edges[0].getC(EdgeC).getEndPoint(e), Config.AgentSize, mine);
-					//edge.getC(EdgeC).sendCounter -= Config.SendRate;
-					edge.getC(EdgeC).sendCounter = 0;
 				}
-			}
-					
+			}			
 		}
 	}
 	
@@ -220,7 +230,7 @@ class NodeC extends C{
 	function createCircle(layer:FlxGroup):E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);		
-		if (!mine)
+		if (mine)
 			e.getC(SpriteC).setColor(209, 214, 223, 225);
 		else
 			e.getC(SpriteC).setColor(54, 45, 34, 225);

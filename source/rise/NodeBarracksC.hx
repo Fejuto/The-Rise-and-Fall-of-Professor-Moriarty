@@ -24,6 +24,7 @@ class NodeBarracksC extends C{
 	public function init():Void{
 		monsters = new Array<E>();
 		nodeC.goldOffset = Config.BarracksLie;
+		nodeC.maxGold = Config.BarracksMax;
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 		//spawnMonster();
