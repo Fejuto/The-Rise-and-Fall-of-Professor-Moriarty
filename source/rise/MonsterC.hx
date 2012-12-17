@@ -19,6 +19,7 @@ class MonsterC extends C{
 	@inject var updateS:UpdateS;
 	@inject var renderS:RenderS;
 	@inject var nodeC:NodeC;
+	@inject var worldS:WorldS;
 	
 	var monsterBounceY = 0;
 	var lastMonsterBounceY = 0;
@@ -130,12 +131,12 @@ class MonsterC extends C{
 
 					var newY = nodeC.y - 30;
 					Actuate.tween(nodeC, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
-						if (targetNodeC.e.destroyed) {						
+						if (targetNodeC.e.destroyed) {							
 							returnToBase();
 							return;
 						}
 						
-						targetNodeC.gold -= 10;
+						targetNodeC.gold -= 10;						
 					});
 				}
 				

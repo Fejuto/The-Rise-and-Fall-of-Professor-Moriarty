@@ -24,11 +24,13 @@ class WorldS extends C{
 		var playerBase = createCastle(FlxG.width/2, FlxG.height/2, 1000);
 		playerBase.getC(NodeC).state = NodeState.active;
 		
-		var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
-		ec.getC(NodeC).state = NodeState.active;
+		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
+		//ec.getC(NodeC).state = NodeState.active;
 		
 		e.addC(GenerateNodeC).init(playerBase);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
+		
+		FlxG.fullscreen();
 	}
 
 	function onUpdate():Void {
@@ -52,12 +54,18 @@ class WorldS extends C{
 		nodes.remove(e);
 	}
 	
-	public function isEmptySpot(x:Int, y:Int, distanceRadius:Int = Config.RandomizerPlacementRadius):Bool {
+	public function isEmptySpot<T>(x:Int, y:Int, ?distanceRadius:Int = Config.RandomizerPlacementRadius, ?type:Class<T>, ?typedDistance:Int):Bool {
 		
 		for (node in nodes) {
 			var nodeC = node.getC(NodeC);
-			if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius) 
-				return false;
+			if (type != null && node.hasC(type)) {
+				if (U.distance(x, y, nodeC.x, nodeC.y) < typedDistance)
+					return false; 
+			} else {
+				if (U.distance(x, y, nodeC.x, nodeC.y) < distanceRadius) 
+					return false;	
+			}
+			
 		}
 			
 		return true;
@@ -72,6 +80,22 @@ class WorldS extends C{
 		var minDist:Float = Math.POSITIVE_INFINITY;
 		var x = e.getC(NodeC).x;
 		var y = e.getC(NodeC).y;
+		
+		for (node in nodes){
+			if (e == node) continue; // skip myself
+			
+			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
+			if(dist < minDist){
+				winner = node;
+				minDist = dist;
+			}
+		}
+		return winner;
+	}
+	
+	public function getClosestNodeToPoint(x:Float, y:Float):E {
+		var winner : E = null;
+		var minDist:Float = Math.POSITIVE_INFINITY;
 		
 		for (node in nodes){
 			if (e == node) continue; // skip myself
@@ -197,7 +221,7 @@ class WorldS extends C{
 	}
 	
 	public function createMonster(fromNode:E, gold:Int, ?mine:Bool = true):E {
-		var e = createNode(mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		var e = createNode(mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', renderS.topLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
 		e.getC(NodeC).targetScaleFactor *= 0.4;
 		e.getC(NodeC).gold = e.getC(NodeC).gold;
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;
