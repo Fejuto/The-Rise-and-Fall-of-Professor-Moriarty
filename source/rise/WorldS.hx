@@ -179,7 +179,7 @@ class WorldS extends C{
 	
 	public function createMountain(x:Float, y:Float):E {
 		var e = createNode('assets/rise_mountain.png', renderS.gaiaLayer, x, y, 1);
-		e.getC(NodeC).state = inactive;
+		e.getC(NodeC).state = active;
 		return e;
 	}
 	

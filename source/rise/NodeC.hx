@@ -10,7 +10,6 @@ import org.flixel.FlxGroup;
 import haxe.Json;
 
 enum NodeState {
-	inactive;
 	active;
 	dragging;
 }
@@ -116,7 +115,7 @@ class NodeC extends C{
 		name = Math.random() + "";
 		
 		if (state == null)
-			this.state = NodeState.inactive;
+			this.state = NodeState.dragging;
 		else 
 			this.state = state;
 			
