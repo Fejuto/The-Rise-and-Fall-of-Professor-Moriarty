@@ -195,6 +195,7 @@ class MonsterC extends C{
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
+		Actuate.stop(wander);
 		
 		super.destroy();
 	}
