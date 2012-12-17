@@ -15,9 +15,8 @@ class GenerateNodeC extends C{
 		// generate nearby content
 		
 		var mineCount = 10;
-		var villageCount = 1;
+		var villageCount = 2;
 		var mountains = 20;
-		
 		
 		for (i in 0...mineCount){
 			var point = randomPointInSquareCoord(0, 0);
@@ -29,16 +28,14 @@ class GenerateNodeC extends C{
 			
 			// have valid first point
 			var clusterCount = Std.random(6) + 2;
-			while(clusterCount > 0) {
+			for (z in 0...clusterCount) {
 				var distance = Config.RandomizerGoldClusterRadius;
 				var clusterPoint = randomPointNearPoint(point[0], point[1], distance);
 				while(!worldS.isEmptySpot(clusterPoint[0], clusterPoint[1], Config.RandomizerGoldClusterRadius)) {
 					distance += 10;
 					clusterPoint = randomPointNearPoint(point[0], point[1], distance);
 				}
-				worldS.createGold(clusterPoint[0], clusterPoint[1], Std.random(6) * 10 + 50);
-				
-				clusterCount--;
+				worldS.createGold(clusterPoint[0], clusterPoint[1], Std.random(6) * 10 + 50);				
 			}			
 		}
 		
@@ -52,7 +49,6 @@ class GenerateNodeC extends C{
 				point = randomPointInSquareCoord(0, 0);
 			}
 			
-			point = [400 + 250, 300];
 			var centerCastleE = worldS.createCastle(point[0], point[1], 200, false);
 			centerCastleE.getC(NodeC).state = active;
 			

@@ -75,6 +75,7 @@ class WorldS extends C{
 		for (node in nodes){
 			if(!node.getC(NodeC).isBuilding()) continue;
 			if(node.getC(NodeC).mine != mine) continue;
+			if(node.getC(NodeC).state != active) continue;
 			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
 			if(dist < minDist){
 				winner = node;
@@ -153,6 +154,12 @@ class WorldS extends C{
 	public function createRoad(x:Float, y:Float, gold:Int):E {
 		var e = createNode("assets/rise_icon_road_red.png", renderS.topLayer, x, y, gold);
 		e.addC(NodeRoadC).init();		
+		return e;
+	}
+	
+	public function createMountain(x:Float, y:Float):E {
+		var e = createNode('assets/rise_mountain', renderS.gaiaLayer, x, y, 1);
+		e.getC(NodeC).state = inactive;
 		return e;
 	}
 	

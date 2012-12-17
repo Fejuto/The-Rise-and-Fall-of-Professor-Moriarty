@@ -66,7 +66,7 @@ class NodeBarracksC extends C{
 			}
 		}
 		
-		nodeC.decline = targetNode == null;
+		nodeC.decline = (targetNode == null) && nodeC.mine;
 	}
 	
 	function spawnMonster():Void {		
