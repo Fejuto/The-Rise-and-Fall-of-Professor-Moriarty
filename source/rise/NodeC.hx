@@ -139,38 +139,38 @@ class NodeC extends C{
 		decline = decline || isUnderAttack();
 		 
 		if (this.state == NodeState.dragging) {
-			if (FlxG.mouse.justReleased()) {				
-				// check if able to drop there
+			if (FlxG.mouse.justReleased()) {
 				scrollS.enabled = true;
 				if (e.hasC(FollowMouseC)) {
 					e.getC(FollowMouseC).enabled = false;
 				} 
 				
-				//var draggedFromNode = edges[0].getC(EdgeC).getEndPoint(e);
+				var validBuildingDropLocation = false;
+				
 				if (edges.length > 0) {
-									
-					if (e.hasC(NodeRoadC)) { // vanish road and create new edge
-						
-						var closestNode = worldS.getClosestBuilding(x, y, mine);
-						if (U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y) > Config.NodeStartRadius) {
-							// refund
-							
-							
-							
-						} else {
-							// reconnect 
-							worldS.createEdge(closestNode, edges[0].getC(EdgeC).getEndPoint(e));
-						}
-						
-						updateS.kill(e);
-					} else {									
-						this.state = NodeState.active;
-					}
-															
-				} else {
 					
-					updateS.kill(e);
+					if (e.hasC(NodeRoadC)) {
+						var myClosestBuilding = worldS.getClosestBuilding(x, y, mine);						
+						if (U.distance(myClosestBuilding.getC(NodeC).x, myClosestBuilding.getC(NodeC).y, x, y) < Config.NodeStartRadius) {
+							worldS.createEdge(myClosestBuilding, edges[0].getC(EdgeC).getEndPoint(e));							
+						} else {
+							refund();		
+						}
+					} else {
+						var closestNode = worldS.getClosestNodeToNode(e);
+						var distance = U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y);						
+						validBuildingDropLocation = distance > Config.NodeStartRadius; 
+						if (validBuildingDropLocation) {
+							this.state = NodeState.active;													
+						} else {
+							refund();
+						}
+					}
+ 															
 				}
+				
+				if (e.hasC(NodeRoadC) || !validBuildingDropLocation) 
+					updateS.kill(e);
 			}
 		} else if (this.state == NodeState.active){
 			decayCounter += FlxG.elapsed;
@@ -214,6 +214,11 @@ class NodeC extends C{
 			}
 					
 		}
+	}
+	
+	function refund():Void {
+		var draggedFromNode = edges[0].getC(EdgeC).getEndPoint(e);
+		draggedFromNode.getC(NodeC).gold += gold;
 	}
 	
 	function isUnderAttack():Bool{

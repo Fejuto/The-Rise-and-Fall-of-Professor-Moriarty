@@ -30,9 +30,10 @@ class WorldS extends C{
 	}
 
 	function onUpdate():Void {
-		/*if (FlxG.mouse.justReleased()) {
-			trace(FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
-		}*/
+		return;
+		if (FlxG.mouse.justReleased()) {
+			trace('mouse click at ' + FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
+		}
 	}
 
 	override public function destroy():Void{
@@ -63,10 +64,23 @@ class WorldS extends C{
 	public function getNodesWith<T>(type:Class<T>):Array<E>{		
 		return Lambda.array(Lambda.filter(nodes, function(e){return e.hasC(type);}));
 	}
-	
-	// not working for some reason?!s
-	public function getOtherNodeBuildings(mine:Bool):Array<E>{
-		return Lambda.array(Lambda.filter(nodes, function(e){ return e.getC(NodeC).mine != mine; }));
+
+	public function getClosestNodeToNode(e:E):E {
+		var winner : E = null;
+		var minDist:Float = Math.POSITIVE_INFINITY;
+		var x = e.getC(NodeC).x;
+		var y = e.getC(NodeC).y;
+		
+		for (node in nodes){
+			if (e == node) continue; // skip myself
+			
+			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
+			if(dist < minDist){
+				winner = node;
+				minDist = dist;
+			}
+		}
+		return winner;
 	}
 
 	public function getClosestBuilding(x:Float, y:Float, mine:Bool):E{
