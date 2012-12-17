@@ -156,13 +156,13 @@ class WorldS extends C{
 		
 		switch(type) {
 			case NodeType.barracks:
-				newE = createBarracks(x,y,20, mine);
+				newE = createBarracks(x,y,50, mine);
 			case NodeType.castle:
-				newE = createCastle(x,y,20, mine);
+				newE = createCastle(x,y,50, mine);
 			case NodeType.mine:
-				newE = createGoldMine(x,y,20, mine);
+				newE = createGoldMine(x,y,50, mine);
 			case NodeType.road:
-				newE = createRoad(x,y,10);			
+				newE = createRoad(x,y,50);			
 		}
 		
 		if (mine) {

@@ -272,7 +272,11 @@ class NodeC extends C{
 	}
 	
 	function evaporate():Void{
-		gold -= Config.Evaporation;
+		if(mine){
+			gold -= Config.Evaporation;
+		}else{
+			gold -= Math.ceil(Config.Evaporation / 2);
+		}
 	}
 	
 	function createCircle(layer:FlxGroup):E{

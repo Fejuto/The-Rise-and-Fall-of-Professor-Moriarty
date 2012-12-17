@@ -28,7 +28,7 @@ class RadialMenuC extends C{
 		
 		// create buttons
 		buttonEntities = new Array();
-		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine], ['rise_icon_road_gray', NodeType.road]];
+		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine]];//, ['rise_icon_road_gray', NodeType.road]];
 		buttonDegrees = [360-degreesMargin, 0, degreesMargin, degreesMargin*2];
 		var i = 0;
 		while (i < buttonImageNames.length) {

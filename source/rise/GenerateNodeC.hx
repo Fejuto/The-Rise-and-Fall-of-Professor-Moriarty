@@ -47,7 +47,7 @@ class GenerateNodeC extends C{
 		var barracksCount = Std.random(2) + 1;
 		var minerCount = 1;
 		
-		var centerCastleE = worldS.createCastle(point[0], point[1], 200, false);
+		var centerCastleE = worldS.createCastle(point[0], point[1], 100, false);
 		centerCastleE.getC(NodeC).state = active;
 		
 		for (z in 0...extraCastleCount) {
