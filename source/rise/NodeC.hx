@@ -46,7 +46,12 @@ class NodeC extends C{
 		var area = v / 100.0;
 		if(area <= 0){
 			updateS.kill(e);
-		}		
+		}
+		
+		if(area > 1){
+			area = Math.pow(area, 0.5);
+		}
+		
 		setRadius(Math.sqrt(area / Math.PI) * originalGraphicSize / 2);
 		return _gold = v;
 	}
