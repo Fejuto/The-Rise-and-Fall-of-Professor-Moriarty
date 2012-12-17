@@ -4,6 +4,7 @@ import engine.entities.E;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Linear;
+import flash.geom.Point;
 
 enum MonsterState {
 	inactive;
@@ -20,6 +21,7 @@ class MonsterC extends C{
 	@inject var nodeC:NodeC;
 	
 	var monsterBounceY = 0;
+	var lastMonsterBounceY = 0;
 	
 	var wanderCounter : Float = 0;
 	var wanderDelay : Float = 0; // at first 0, will be randomly set later
@@ -29,22 +31,25 @@ class MonsterC extends C{
 	
 	var attack = 100;
 	var speed = 40;
+	var attackRadius = 40;
+	
+	public var rawY (getRawY, null):Float;
+	function getRawY():Float {
+		return nodeC.y - lastMonsterBounceY;
+	}
 	
 	public var state (default, setState): MonsterState;
 	function setState(v : MonsterState):MonsterState {
 		if (v != state) {
 			switch (v) {
 				case MonsterState.combat:
-				case MonsterState.idle:					
-					Actuate.stop(this);
+				case MonsterState.idle:
 					wanderDelay = Math.random() * 2 + 1;
 					wanderCounter = 0;				
-				case MonsterState.inactive:
-					Actuate.stop(this);				
+				case MonsterState.inactive:	
 				case MonsterState.wandering:					
 					bounce();
-				case MonsterState.approaching:
-					Actuate.stop(this);
+				case MonsterState.approaching:					
 					bounce();
 			}
 		}
@@ -94,34 +99,63 @@ class MonsterC extends C{
 			
 			lastDegrees = newdeg;
 		} else if (state == MonsterState.approaching) {
-			
-		} else if (state == combat) {
-			// mosnter standing on top of building
-			if (attackCounter > attackDelay) {
-				attackCounter = 0;
 				
-				var newY = nodeC.y - 30;
-				Actuate.tween(nodeC, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
-					if (targetNodeC.gold <= 0) {
-						//e.getC(NodeBarracksC).targetDestroyed(targetNodeC, this);
-						returnToBase();
-						return;
-					}
-					
-					targetNodeC.gold -= 10;
-				});
+			if (targetNodeC != null) {
+				// move towards
+				var tp = new Point(targetNodeC.x, targetNodeC.y);
+				if (targetNodeC.e.hasC(MonsterC)) {
+					tp = new Point(targetNodeC.x, targetNodeC.e.getC(MonsterC).rawY);
+				}
+				var mp = new Point(nodeC.x, rawY);
+				var vel = tp.subtract(mp);
+				vel.normalize((speed*2)*FlxG.elapsed);
+				
+				mp = mp.add(vel);
+				moveTo(mp.x, mp.y);
+				
+				if (targetNodeC.getDistance(e) < attackRadius) {
+					state = combat;
+				} 
 			}
 			
-			attackCounter += FlxG.elapsed;
+		} else if (state == combat) {
+			if (targetNodeC.getDistance(e) > attackRadius * 2) {				
+				state = approaching;
+				
+			} else {
+				
+				// mosnter standing on top of building
+				if (attackCounter > attackDelay) {
+					attackCounter = 0;
+					
+					var newY = nodeC.y - 30;
+					Actuate.tween(nodeC, 0.2, { y: newY }).repeat(1).reflect().onComplete(function () {
+						if (targetNodeC.gold <= 0) {						
+							returnToBase();
+							return;
+						}
+						
+						targetNodeC.gold -= 10;
+					});
+				}
+				
+				attackCounter += FlxG.elapsed;
+				
+			}
 		}
 		
 		if (state == MonsterState.idle)		
-			wanderCounter += FlxG.elapsed;	
+			wanderCounter += FlxG.elapsed;
+			
+		if (nodeC.gold <= 0)
+			parentNode.getC(NodeBarracksC).monsterDied(e);
+		
 	}
 	
 	function bounce():Void {
+		Actuate.stop(this);
 		monsterBounceY = 0;
-		Actuate.tween(this, 0.1, { monsterBounceY: 5 }, false).ease(Linear.easeNone).repeat().reflect();
+		Actuate.tween(this, 0.1, { monsterBounceY: -5 }, false).ease(Linear.easeNone).repeat().reflect();
 	}
 	
 	function wander(td:Float):Void {
@@ -132,17 +166,19 @@ class MonsterC extends C{
 
 	}
 	
-	function moveTo(nx:Int, ny:Int):Void {		
+	function moveTo(nx:Float, ny:Float):Void {		
 		nodeC.x = nx;
 		nodeC.y = ny + monsterBounceY;
+		lastMonsterBounceY = monsterBounceY;
 	}
 	
-	function returnToBase():Void {
+	public function returnToBase():Void {
 		targetNodeC = null;
+		stopAllAnimations();
 		
 		var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, lastDegrees);
 		var distance = U.distance(nodeC.x, nodeC.y, point[0], point[1]);
-				
+		
 		state = approaching;
 		Actuate.update(moveTo, distance/(speed * 2), [nodeC.x,nodeC.y], [point[0], point[1]], false).ease(Linear.easeNone).onComplete(function () {			
 			state = idle;
@@ -154,19 +190,15 @@ class MonsterC extends C{
 		//Actuate.stop(this);
 		//Actuate.stop(wander);
 		
-		this.targetNodeC = targetNodeC;
-		if (this.targetNodeC.e.hasC(NodeBarracksC)) { // when attacking barracks, look for monster
-			
-		}
-		
+		this.targetNodeC = targetNodeC;		
 		var distance = U.distance(nodeC.x, nodeC.y, targetNodeC.x, targetNodeC.y);
 		
 		state = approaching;
-		Actuate.update(moveTo, distance/(speed * 2), [nodeC.x, nodeC.y], [targetNodeC.x, targetNodeC.y], false).ease(Linear.easeNone).onComplete(function () {
+		/*Actuate.update(moveTo, distance/(speed * 2), [nodeC.x, nodeC.y], [targetNodeC.x, targetNodeC.y], false).ease(Linear.easeNone).onComplete(function () {
 			if (state == approaching) {
 				state = combat;	
 			}
-		});
+		});*/
 	}
 	
 	function stopAllAnimations():Void {

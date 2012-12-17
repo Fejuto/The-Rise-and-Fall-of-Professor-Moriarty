@@ -45,8 +45,8 @@ class NodeBarracksC extends C{
 		spawnCounter += FlxG.elapsed;
 		
 		if (targetNode == null) { // only start looking for things to attack when i actually have monsters
-		
-			var node = worldS.getClosestBuilding(nodeC.x, nodeC.y, !nodeC.mine);			
+			
+			var node = worldS.getClosestBuilding(nodeC.x, nodeC.y, !nodeC.mine, true); // including monsters			
 			if (node != null && node.getC(NodeC).gold > 0){										
 				if(U.distance(nodeC.x, nodeC.y, node.getC(NodeC).x, node.getC(NodeC).y) < Config.BarracksAttackRange) {
 					targetNode = node;
@@ -54,9 +54,13 @@ class NodeBarracksC extends C{
 			}
 			
 		} else {
-			if (targetNode.destroyed)
+			if (targetNode.destroyed) {
 				targetNode = null;
-			else {
+				// call back monsters
+				for (monster in monsters) {
+					monster.getC(MonsterC).returnToBase();			
+				}
+			} else {
 				// dispatch monsters
 				for (monster in monsters) {
 					if (monster.getC(MonsterC).state == idle || monster.getC(MonsterC).state == wandering) {				
@@ -68,6 +72,7 @@ class NodeBarracksC extends C{
 		}
 		
 		nodeC.decline = (targetNode == null) && nodeC.mine;
+		
 	}
 	
 	function spawnMonster():Void {		
@@ -87,8 +92,8 @@ class NodeBarracksC extends C{
 	
 	// monster 'delegation'
 	
-	public function targetDestroyed(targetNodeC:NodeC, monster:MonsterC):Void {
-		targetNode = null;
+	public function monsterDied(monster:E):Void {
+		monsters.remove(monster);
 	}
 	
 	override public function destroy():Void{

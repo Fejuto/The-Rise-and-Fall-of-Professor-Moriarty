@@ -24,8 +24,8 @@ class WorldS extends C{
 		var playerBase = createCastle(FlxG.width/2, FlxG.height/2, 100);
 		playerBase.getC(NodeC).state = NodeState.active;
 		
-		//var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
-		//ec.getC(NodeC).state = NodeState.active;
+		var ec = createCastle(FlxG.width/2 - 200, FlxG.height/2, 100, false);
+		ec.getC(NodeC).state = NodeState.active;
 		
 		e.addC(GenerateNodeC).init(playerBase);
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
@@ -85,11 +85,17 @@ class WorldS extends C{
 		return winner;
 	}
 
-	public function getClosestBuilding(x:Float, y:Float, mine:Bool):E{
+	public function getClosestBuilding(x:Float, y:Float, mine:Bool, includingMonsters:Bool = false):E{
 		var winner : E = null;
 		var minDist:Float = Math.POSITIVE_INFINITY;
 		for (node in nodes){
-			if(!node.getC(NodeC).isBuilding()) continue;
+			if (includingMonsters) {
+				if(!node.hasC(MonsterC)) {
+					if (!node.getC(NodeC).isBuilding()) continue;
+				}
+			} else {
+				if(!node.getC(NodeC).isBuilding()) continue;
+			}
 			if(node.getC(NodeC).mine != mine) continue;
 			if(node.getC(NodeC).state != active) continue;
 			var dist = U.distance(x,y,node.getC(NodeC).x,node.getC(NodeC).y);
