@@ -162,6 +162,7 @@ class NodeC extends C{
 	}
 	
 	function onAnyMoved(evt:MovedEvent):Void{
+		if(e.hasC(NodeGoldC)) return;
 		if(evt.who.hasC(NodeCastleC)){
 			if(e.hasC(GoldAgentC)) return;
 			if(e.hasC(MonsterC)) return;
