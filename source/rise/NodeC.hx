@@ -197,7 +197,8 @@ class NodeC extends C{
 					}
 					
 					worldS.createGoldAgent(e, edges[0].getC(EdgeC).getEndPoint(e), Config.AgentSize, mine);
-					edge.getC(EdgeC).sendCounter -= Config.SendRate;
+					//edge.getC(EdgeC).sendCounter -= Config.SendRate;
+					edge.getC(EdgeC).sendCounter = 0;
 				}
 			}
 					
