@@ -43,7 +43,12 @@ class NodeC extends C{
 		return _gold;
 	}
 	function setGold(v:Int):Int{
-		var area = v / 100.0;
+		var visual = v;
+		if(v <= 10 && getEffectiveGold() > 0){
+			visual = 10;
+		}
+		
+		var area = visual / 100.0;
 		if(area <= 0){
 			updateS.kill(e);
 		}
