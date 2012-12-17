@@ -301,6 +301,10 @@ class NodeC extends C{
 						break;
 					}
 					
+					if(e.hasC(NodeGoldC) && otherNode.isUnderAttack()){
+						break;
+					}
+					
 					//if(e.hasC(NodeGoldC) && otherNode.e.hasC(NodeMineC) && otherNode.mine){
 					if(!otherNode.mine && otherNode.e.hasC(NodeMineC)){
 					}else{

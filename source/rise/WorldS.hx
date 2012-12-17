@@ -231,6 +231,7 @@ class WorldS extends C{
 	public function createGoldAgent(fromNode:E, toNode:E, gold:Int, ?mine:Bool = true):E{
 		if(!toNode.hasC(NodeC)) throw "must have edge";
 		if(!fromNode.hasC(NodeC)) throw "most have node";
+		mine = toNode.getC(NodeC).mine;
 		
 		var e = createNode("assets/rise_icon_gold.png", renderS.agentLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
 		e.getC(NodeC).scaleGraphic = true;
