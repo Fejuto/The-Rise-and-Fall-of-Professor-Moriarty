@@ -73,7 +73,8 @@ class EdgeC extends C{
 			for(i in 0...numHouses){
 				var hx = node1.getC(NodeC).x + (node2.getC(NodeC).x - node1.getC(NodeC).x) / (numHouses + 1) * (i + 1);
 				var hy = node1.getC(NodeC).y + (node2.getC(NodeC).y - node1.getC(NodeC).y) / (numHouses + 1) * (i + 1);
-				var house = worldS.createCastle(hx, hy , 20, true);
+				var house = worldS.createCastle(hx, hy , 20, node1.getC(NodeC).mine);
+				house.getC(NodeC).state = node1.getC(NodeC).state;
 				worldS.createEdge(lastHouse, house);
 				lastHouse = house;
 			}
