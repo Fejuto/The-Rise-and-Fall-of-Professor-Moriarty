@@ -162,7 +162,27 @@ class NodeC extends C{
 	}
 	
 	function onAnyMoved(evt:MovedEvent):Void{
-		trace(Math.random());
+		if(evt.who.hasC(NodeCastleC)){
+			if(e.hasC(GoldAgentC)) return;
+			if(e.hasC(MonsterC)) return;
+			var hasAlreadyEdge:Bool = false;
+			var theEdge:E = null;
+			for(edge in edges){
+				if(edge.getC(EdgeC).getEndPoint(e).getC(NodeC) == evt.who.getC(NodeC)){
+					hasAlreadyEdge = true;
+					theEdge = edge;
+					break;
+				}
+			}
+			
+			if(evt.who.getC(NodeC).getDistance(e) <= Config.MaxEdgeDistance && !hasAlreadyEdge){
+				if(evt.who.getC(NodeC).mine == mine){
+					worldS.createEdge(e, evt.who);
+				}
+			}else if(evt.who.getC(NodeC).getDistance(e) > Config.MaxEdgeDistance && hasAlreadyEdge){
+				updateS.kill(theEdge);
+			}
+		}
 	}
 	
 		

@@ -23,8 +23,9 @@ class WorldS extends C{
 		
 		var sX = FlxG.width/2;
 		var sY = FlxG.height/2;
-		var playerBase = createCastle(sX, sY, 100);
+		var playerBase = createCastle(sX, sY, 300);
 		playerBase.getC(NodeC).state = NodeState.active;
+		return;
 		
 		var mine = createGoldMine(sX + 100, sY + 100, 30, true);
 		mine.getC(NodeC).state = NodeState.active;
