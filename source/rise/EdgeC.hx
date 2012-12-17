@@ -4,20 +4,26 @@ import engine.entities.E;
 import org.flixel.FlxG;
 import org.flixel.FlxU;
 import org.flixel.FlxPoint;
+import rise.NodeC.NodeState;
 
 class EdgeC extends C{
 	@inject var spriteC:SpriteC;
 	@inject var updateS:UpdateS;
+	@inject var worldS:WorldS;
 	
 	public var node1:E;
 	public var node2:E;
 	public var sendCounter:Float;
+	
+	var tempHouses:Array<E>;
 	
 	public function init(node1:E, node2:E):Void{
 		this.node1 = node1;
 		node1.getC(NodeC).addEdge(e);
 		this.node2 = node2;
 		node2.getC(NodeC).addEdge(e);
+		
+		tempHouses = new Array<E>();
 		
 		updateEdge();
 		
@@ -52,11 +58,29 @@ class EdgeC extends C{
 		
 		var dx:Float = node2.getC(NodeC).x - node1.getC(NodeC).x;
 		var dy:Float = node2.getC(NodeC).y - node1.getC(NodeC).y;
-		spriteC.flxSprite.angle = U.toDegrees(Math.atan2(dy, dx));  
+		spriteC.flxSprite.angle = U.toDegrees(Math.atan2(dy, dx));
 	}
 	
 	function onUpdate():Void{
 		sendCounter += FlxG.elapsed;
+		
+		var distance = U.distance(node1.getC(NodeC).x, node1.getC(NodeC).y, node2.getC(NodeC).x, node2.getC(NodeC).y);
+		
+		if(distance > Config.MaxEdgeDistance && node1.getC(NodeC).state == active && node2.getC(NodeC).state == active){
+			var numHouses:Int = Math.floor(distance / Config.MaxEdgeDistance);
+			
+			var lastHouse = node1;
+			for(i in 0...numHouses){
+				var hx = node1.getC(NodeC).x + (node2.getC(NodeC).x - node1.getC(NodeC).x) / (numHouses + 1) * (i + 1);
+				var hy = node1.getC(NodeC).y + (node2.getC(NodeC).y - node1.getC(NodeC).y) / (numHouses + 1) * (i + 1);
+				var house = worldS.createCastle(hx, hy , 20, true);
+				worldS.createEdge(lastHouse, house);
+				lastHouse = house;
+			}
+			worldS.createEdge(lastHouse, node2);
+			
+			updateS.kill(e);
+		}
 	}
 	
 	override public function destroy():Void{
