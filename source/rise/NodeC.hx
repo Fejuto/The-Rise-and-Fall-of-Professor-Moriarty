@@ -51,6 +51,8 @@ class NodeC extends C{
 		var area = visual / 100.0;
 		if(area <= 0){
 			updateS.kill(e);
+			if (!mine && !e.hasC(MonsterC) && !e.hasC(NodeGoldC)) // if enemy building dies drop gold
+				worldS.createGold(x, y, Std.random(6) * 10 + 50 * (e.hasC(NodeCastleC)?3:1));
 		}
 		
 		if(area > 1){
