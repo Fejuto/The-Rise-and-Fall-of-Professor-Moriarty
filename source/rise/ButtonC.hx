@@ -97,6 +97,7 @@ class ButtonC extends C{
 	function createCircle():E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_highlight.png', renderS.interfaceLayer);
+		e.getC(SpriteC).setColor(135, 111, 90, 225);
 		return e;
 	}
 	

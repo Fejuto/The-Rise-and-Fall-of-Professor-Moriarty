@@ -43,7 +43,7 @@ class EdgeC extends C{
 		spriteC.flxSprite.y = node1.getC(NodeC).y;
 		
 		
-		if (node1.getC(NodeC).mine)
+		if (!node1.getC(NodeC).mine)
 			spriteC.setColor(209, 214, 223, 225);
 		else
 			spriteC.setColor(54, 45, 34, 225);

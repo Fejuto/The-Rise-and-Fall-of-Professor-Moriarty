@@ -23,12 +23,12 @@ class RadialMenuC extends C{
 	public function init():Void{
 		
 		// setup circle
-		e.addC(CircleC).init(nodeC.x, nodeC.y, renderS.backgroundMenuLayer);
+		e.addC(CircleC).init(nodeC.x, nodeC.y, renderS.backgroundMenuLayer, [135, 111, 90, 225]);
 		e.getC(CircleC).radius = 0;
 		
 		// create buttons
 		buttonEntities = new Array();
-		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine], ['rise_icon_road_blue', NodeType.road]];
+		var buttonImageNames = [['rise_icon_monster_gray', NodeType.barracks], ['rise_icon_fort_gray', NodeType.castle], ['rise_icon_miner_gray', NodeType.mine], ['rise_icon_road_gray', NodeType.road]];
 		buttonDegrees = [360-degreesMargin, 0, degreesMargin, degreesMargin*2];
 		var i = 0;
 		while (i < buttonImageNames.length) {

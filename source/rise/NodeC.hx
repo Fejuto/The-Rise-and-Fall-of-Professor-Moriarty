@@ -219,7 +219,7 @@ class NodeC extends C{
 	function createCircle(layer:FlxGroup):E{
 		var e = new E(e);
 		e.addC(SpriteC).init('assets/rise_circle_highlight.png', layer);		
-		if (mine)
+		if (!mine)
 			e.getC(SpriteC).setColor(209, 214, 223, 225);
 		else
 			e.getC(SpriteC).setColor(54, 45, 34, 225);
