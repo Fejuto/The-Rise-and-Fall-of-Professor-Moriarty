@@ -85,11 +85,15 @@ class RadialMenuC extends C{
 	}
 	
 	public function animateMenu(show : Bool):Void {
-		if (show)
+		if (show) {
 			e.getC(CircleC).radius = nodeC.radius;
+			FlxG.play('assets/fs.mp3', 1.0, false, false);
+		}
 		Actuate.tween(e.getC(CircleC), 1, { radius: show?Config.NodeHoverRadius:0}).ease(new ElasticEaseOut(0.1, 0.4)).delay(show?0:0.2);
 	
 		for (e in buttonEntities) {
+			Actuate.stop(e.getC(ButtonC));
+			e.getC(ButtonC).disabled = !show;
 			Actuate.tween(e.getC(ButtonC), 0.1, { scale: show?1:0 }).delay(show?0.2:0);
 		}
 		

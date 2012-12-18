@@ -32,7 +32,7 @@ class MonsterC extends C{
 	
 	var attack = 100;
 	var speed = 40;
-	var attackRadius = 40;
+	var attackRadius = 30;
 	
 	public var rawY (getRawY, null):Float;
 	function getRawY():Float {
@@ -94,8 +94,10 @@ class MonsterC extends C{
 			
 			state = MonsterState.wandering;
 			Actuate.update(wander, distance/speed, [lastDegrees], [newdeg], false).ease(Linear.easeNone).onComplete(function () {
+				if(!e.destroyed){
 				if (state == MonsterState.wandering) // validate that the state is still the one i started with
 					state = MonsterState.idle;
+				}
 			});
 			
 			lastDegrees = newdeg;
@@ -160,11 +162,14 @@ class MonsterC extends C{
 	}
 	
 	function wander(td:Float):Void {
-		if(e.destroyed) return;
-	  	var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, td);
-	  	nodeC.x = point[0];
-	  	nodeC.y = point[1] + monsterBounceY;
-
+		try{
+			if(e.destroyed) return;
+	  		var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, td);
+	  		nodeC.x = point[0];
+	  		nodeC.y = point[1] + monsterBounceY;
+		}catch(err:Dynamic){
+			
+		}
 	}
 	
 	function moveTo(nx:Float, ny:Float):Void {		
@@ -203,10 +208,14 @@ class MonsterC extends C{
 	}
 	
 	function stopAllAnimations():Void {
+		try{
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
 		Actuate.stop(wander);
+		}catch(err:Dynamic){
+			
+		}
 		
 	}
 	

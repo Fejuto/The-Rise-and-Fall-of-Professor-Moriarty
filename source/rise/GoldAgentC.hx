@@ -51,12 +51,16 @@ class GoldAgentC extends C{
 	}
 	
 	function onComplete():Void{
+		try{
 		if(targetNode.destroyed){
 			findTarget();
 		}else{
 			targetNode.getC(NodeC).gold += nodeC.gold;
 			nodeC.gold = 0;
 			updateS.kill(e);
+		}
+		}catch(err:Dynamic){
+			
 		}
 	}
 }

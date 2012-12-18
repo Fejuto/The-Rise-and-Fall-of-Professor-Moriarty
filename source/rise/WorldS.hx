@@ -73,6 +73,11 @@ class WorldS extends C{
 	}
 
 	function onUpdate():Void {
+		if(FlxG.keys.R){
+			FlxG.switchState(new MenuState());
+		}
+		
+		
 		return;
 		if (FlxG.mouse.justReleased()) {
 			trace('mouse click at ' + FlxG.mouse.getWorldPosition().x + ',' + FlxG.mouse.getWorldPosition().y);
@@ -215,7 +220,7 @@ class WorldS extends C{
 	}
 	
 	public function createBarracks(x:Float, y:Float, gold:Int, ?mine:Bool = true):E{
-		var e = createNode(mine?"assets/rise_icon_monster_red.png":"assets/rise_icon_monster_blue.png", x, y, gold, Config.BarracksDecayRate, mine);
+		var e = createNode(mine?"assets/rise_icon_monster_red.png":"assets/rise_icon_detective.png", x, y, gold, Config.BarracksDecayRate, mine);
 		e.addC(NodeBarracksC).init();		
 		return e;
 	}
@@ -265,7 +270,7 @@ class WorldS extends C{
 	}
 	
 	public function createMonster(fromNode:E, gold:Int, ?mine:Bool = true):E {
-		var e = createNode(mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_monster_blue.png', renderS.topLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
+		var e = createNode(mine?'assets/rise_icon_monster_red.png':'assets/rise_icon_detective.png', renderS.topLayer, fromNode.getC(NodeC).x, fromNode.getC(NodeC).y, gold, 0, NodeState.active, mine);
 		e.getC(NodeC).targetScaleFactor *= 0.4;
 		e.getC(NodeC).gold = e.getC(NodeC).gold;
 		var flxSprite = e.getC(NodeC).graphic.getC(SpriteC).flxSprite;

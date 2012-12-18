@@ -13,7 +13,7 @@ class Game extends FlxGame
 		var ratioX:Float = stageWidth / 800;
 		var ratioY:Float = stageHeight / 600;
 		var ratio:Float = Math.min(ratioX, ratioY);
-		super(Math.floor(stageWidth / ratio), Math.floor(stageHeight / ratio), MenuState, ratio, 60, 60, true);
+		super(Math.floor(stageWidth / ratio), Math.floor(stageHeight / ratio), TitleState, ratio, 60, 60, true);
 		forceDebugger = true;
 		
 		addEventListener(Event.ADDED_TO_STAGE, create);

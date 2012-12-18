@@ -37,7 +37,7 @@ class EdgeC extends C{
 	
 	
 	function onMoved():Void{
-		updateEdge();		
+		updateEdge();
 	}
 	
 	function updateEdge():Void{
@@ -115,7 +115,7 @@ class EdgeC extends C{
 		}
 	}
 	
-	override public function destroy():Void{
+	override public function destroy():Void{		
 		super.destroy();
 		
 		node1.getC(NodeC).removeEdge(e);
