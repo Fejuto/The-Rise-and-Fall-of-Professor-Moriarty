@@ -76,7 +76,7 @@ class ScoreS extends C{
 		renderS.add(text2, renderS.interfaceLayer);
 		
 		e = new E(this.e);
-		e.addC(SpriteC).init("assets/paper-texture.png", renderS.interfaceLayer, 0,0);
+		e.addC(SpriteC).init("assets/paper-texture.png", renderS.mostTopLayer, 0,0);
 		//e.getC(SpriteC).pixelWidth = FlxG.width;
 		//e.getC(SpriteC).pixelHeight = FlxG.height; 
 		e.getC(SpriteC).flxSprite.scrollFactor.x = 0;

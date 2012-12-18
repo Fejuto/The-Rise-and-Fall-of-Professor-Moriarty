@@ -49,6 +49,10 @@
 	<assets path="assets/data" include="*.png" type="image" />
 	<assets path="assets/data/vcr" include="*.png" type="image" />
 	<assets path="assets/data/vis" include="*.png" type="image" />
+	
+	<assets path="assets">
+		<music path="lazu.mp3" />
+	</assets>
 
 	<assets path="assets"/>
 	
