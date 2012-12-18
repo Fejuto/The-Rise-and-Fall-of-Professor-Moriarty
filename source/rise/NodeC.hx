@@ -129,7 +129,7 @@ class NodeC extends C{
 	}
 	function getRadius():Float {
 		return _radius;
-	}
+	} 
 	
 	public var circleSprite(getCircleSprite, null):SpriteC;
 	function getCircleSprite():SpriteC {
