@@ -208,10 +208,14 @@ class MonsterC extends C{
 	}
 	
 	function stopAllAnimations():Void {
+		try{
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
 		Actuate.stop(wander);
+		}catch(err:Dynamic){
+			
+		}
 		
 	}
 	
