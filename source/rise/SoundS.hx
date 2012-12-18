@@ -12,7 +12,7 @@ class SoundS extends C{
 	}
 	
 	public function playBackgroundMusic():Void {
-		FlxG.playMusic('assets/lazu.mp3');
+		FlxG.playMusic('assets/lazu.mp3', 0.6);
 	}
 	
 	override public function destroy():Void{

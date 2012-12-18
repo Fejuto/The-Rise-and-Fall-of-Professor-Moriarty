@@ -57,9 +57,9 @@ class NodeC extends C{
 				
 			}else{
 				updateS.kill(e);
-				if (!mine && !e.hasC(MonsterC) && !e.hasC(NodeGoldC)) // if enemy building dies drop gold
+				if (!mine && !e.hasC(MonsterC) && !e.hasC(NodeGoldC)) // if enemy building dies drop gold					
+					worldS.createGold(x, y, 30+(e.hasC(NodeCastleC)?20:10));
 					//worldS.createGold(x, y, Std.random(6) * 10 + 50 * (e.hasC(NodeCastleC)?3:1));
-					worldS.createGold(x, y, 50);
 			}
 		}
 		
@@ -210,6 +210,8 @@ class NodeC extends C{
 		
 		if (this.state == NodeState.dragging) {
 			if (FlxG.mouse.justReleased()) {
+				FlxG.play('assets/button-19.mp3', 1.0, false, false);
+				
 				scrollS.enabled = true;
 				if (e.hasC(FollowMouseC)) {
 					e.getC(FollowMouseC).enabled = false;

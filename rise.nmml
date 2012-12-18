@@ -51,7 +51,7 @@
 	<assets path="assets/data/vis" include="*.png" type="image" />
 	
 	<assets path="assets">
-		<music path="lazu.mp3" />
+		<music path="lazu.mp3" />		
 	</assets>
 
 	<assets path="assets"/>
