@@ -61,5 +61,5 @@
 	<haxelib name="nme" />
 	<haxelib name="flixel"/>
 	<haxelib name="actuate"/>
-	<app preloader="NMEPreloader" />
+	<!--<app preloader="NMEPreloader" />-->
 </project>
