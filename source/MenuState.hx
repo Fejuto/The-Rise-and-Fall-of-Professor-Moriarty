@@ -38,7 +38,6 @@ class MenuState extends FlxState
 		e.addC(ScrollS).init(true);
 		e.addC(WorldS).init();
 		//e.addC(TitleScreenS).init();
-		
 	}
 
 	override public function update():Void{
