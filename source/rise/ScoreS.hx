@@ -83,6 +83,7 @@ class ScoreS extends C{
 		e.getC(SpriteC).flxSprite.scrollFactor.y = 0;
 		e.getC(SpriteC).flxSprite.offset.x = 0;
 		e.getC(SpriteC).flxSprite.offset.y = 0;
+		
 	}
 	
 	override public function destroy():Void{
