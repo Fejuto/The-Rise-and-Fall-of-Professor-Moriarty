@@ -20,6 +20,7 @@ import rise.RenderS;
 import rise.WorldS;
 import rise.ScrollS;
 import rise.ScoreS;
+import rise.TitleScreenS;
 import rise.SoundS;
 
 class MenuState extends FlxState
@@ -44,5 +45,9 @@ class MenuState extends FlxState
 	override public function update():Void{
 		super.update();
 		e.getC(UpdateS).update();
+	}
+	
+	override public function destroy():Void{
+		e.destroy();
 	}
 }

@@ -162,11 +162,14 @@ class MonsterC extends C{
 	}
 	
 	function wander(td:Float):Void {
-		if(e.destroyed) return;
-	  	var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, td);
-	  	nodeC.x = point[0];
-	  	nodeC.y = point[1] + monsterBounceY;
-
+		try{
+			if(e.destroyed) return;
+	  		var point = U.pointOnEdgeOfCircle(parentNode.getC(NodeC).x, parentNode.getC(NodeC).y, Config.NodeStartRadius + 20, td);
+	  		nodeC.x = point[0];
+	  		nodeC.y = point[1] + monsterBounceY;
+		}catch(err:Dynamic){
+			
+		}
 	}
 	
 	function moveTo(nx:Float, ny:Float):Void {		
@@ -205,10 +208,14 @@ class MonsterC extends C{
 	}
 	
 	function stopAllAnimations():Void {
+		try{
 		Actuate.stop(nodeC);
 		Actuate.stop(this);
 		Actuate.stop(moveTo);
 		Actuate.stop(wander);
+		}catch(err:Dynamic){
+			
+		}
 		
 	}
 	
