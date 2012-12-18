@@ -33,7 +33,7 @@ class ScoreS extends C{
 		return _score = v;
 	}
 
-	static var _highScore:Int = 0;
+	static var _highScore:Int = 1;
 	public var highScore(getHighScore, setHighScore):Int;
 	function getHighScore():Int{
 		return _highScore;
