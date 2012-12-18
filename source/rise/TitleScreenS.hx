@@ -3,6 +3,8 @@ import engine.entities.C;
 import engine.entities.E;
 import org.flixel.FlxG;
 import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.easing.Linear;
+import com.eclecticdesignstudio.motion.easing.Quad;
 
 class TitleScreenS extends C{
 	@inject var renderS:RenderS;
@@ -31,7 +33,7 @@ class TitleScreenS extends C{
 		if(FlxG.mouse.justPressed()){
 			Actuate.tween(e.getC(SpriteC).flxSprite, 1, {alpha:0}).onComplete(function(){
 				FlxG.switchState(new MenuState());
-			});
+			}).ease(Linear.easeNone);
 		}
 	}
 }

@@ -62,6 +62,12 @@ class ScoreS extends C{
 		temp.alignment = "left";
 		temp.scrollFactor.x = temp.scrollFactor.y = 0;
 		renderS.add(temp, renderS.interfaceLayer);
+
+		temp = new FlxText(FlxG.width - 250,75,300,"Press R to restart", true);
+		temp.size = 20;
+		temp.alignment = "left";
+		temp.scrollFactor.x = temp.scrollFactor.y = 0;
+		renderS.add(temp, renderS.interfaceLayer);
 		
 		text = new FlxText(FlxG.width - 150,15,100,"1", true);
 		text.size = 20;
