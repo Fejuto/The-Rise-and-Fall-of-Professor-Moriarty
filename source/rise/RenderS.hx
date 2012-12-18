@@ -16,6 +16,7 @@ class RenderS extends C{
 	public var agentLayer:FlxGroup;
 	public var topLayer:FlxGroup;
 	public var interfaceLayer:FlxGroup;
+	public var mostTopLayer:FlxGroup;
 	
 	var flxState:FlxState;
 	
@@ -37,6 +38,8 @@ class RenderS extends C{
 		flxState.add(topLayer);
 		interfaceLayer = new FlxGroup();
 		flxState.add(interfaceLayer);
+		mostTopLayer = new FlxGroup();
+		flxState.add(mostTopLayer);
 		
 		m.add(updateS, UpdateS.UPDATE, onUpdate);
 	}
