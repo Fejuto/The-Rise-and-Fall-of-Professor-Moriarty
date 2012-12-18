@@ -32,7 +32,7 @@ class MonsterC extends C{
 	
 	var attack = 100;
 	var speed = 40;
-	var attackRadius = 40;
+	var attackRadius = 30;
 	
 	public var rawY (getRawY, null):Float;
 	function getRawY():Float {

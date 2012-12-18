@@ -4,6 +4,8 @@ import engine.entities.E;
 import org.flixel.FlxG;
 import rise.NodeC.NodeType;
 import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.easing.Elastic.ElasticEaseOut;
+import com.eclecticdesignstudio.motion.easing.Linear;
 
 class ButtonC extends C{
 	
@@ -15,7 +17,9 @@ class ButtonC extends C{
 	var graphic:E;
 	var initialCircleScale:Float = (Config.NodeHoverButtonRadius / Config.NodeCircleImageSize ) * 2;
 	var type:NodeType;
-	var disabled = false;
+	public var disabled = false;
+	
+	var mouseOver = false;	
 		
 	public var x(getX, setX):Float;
 	function getX():Float{
@@ -65,20 +69,35 @@ class ButtonC extends C{
 		
 		if (disabled)
 			return;
+		if (scale == 0)
+			return;
 		
-		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
-			return;		
-	
 		var mouseX = FlxG.mouse.getWorldPosition().x;
 		var mouseY = FlxG.mouse.getWorldPosition().y;
 		
 		var nodeRadius = e.getC(NodeC).radius;
 			
-		if (U.inCircle(x, y, (Config.NodeCircleImageSize * circle.getC(SpriteC).scaleX)/2, mouseX, mouseY)) {
+		var newMouseOver = U.distance(mouseX, mouseY, x, y) < 36;		
+		if (newMouseOver != mouseOver) {
+			mouseOver = newMouseOver;
+			animateMenu(mouseOver);
+		}
+		
+		if (!FlxG.mouse.justPressed()) // dont bother testing of mouse isn't pressed down
+			return;		
+			
+		if (mouseOver) {
 			worldS.createNodeFromEntity(e, mouseX, mouseY, type);
 			e.getC(RadialMenuC).animateMenu(false);
 		}
 
+	}
+	
+	public function animateMenu(show : Bool):Void {
+		if (show) {			
+			FlxG.play('assets/fs.mp3', 1.0, false, false);
+		}		
+		Actuate.tween(this, 1, { scale: show?1.2:1 }, false).ease(new ElasticEaseOut(0.9, 1.0));
 	}
 	
 	function goldCost():Int {
