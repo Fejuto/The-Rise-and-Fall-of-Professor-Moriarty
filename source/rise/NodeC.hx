@@ -232,7 +232,7 @@ class NodeC extends C{
 						var closestNode = worldS.getClosestNodeToNode(e);
 						var distance = U.distance(closestNode.getC(NodeC).x, closestNode.getC(NodeC).y, x, y);						
 						validBuildingDropLocation = distance > Config.NodeStartRadius; 
-						if (validBuildingDropLocation) {
+						if (validBuildingDropLocation || true) {
 							this.state = NodeState.building;
 							gold = 0;
 						} else {
@@ -241,8 +241,8 @@ class NodeC extends C{
 					}
 				}
 				
-				if (e.hasC(NodeRoadC) || !validBuildingDropLocation) 
-					updateS.kill(e);
+				/*if (e.hasC(NodeRoadC) || !validBuildingDropLocation) 
+					updateS.kill(e);*/
 			}
 		} else if (this.state == NodeState.active){
 			decayCounter += FlxG.elapsed;
@@ -325,6 +325,7 @@ class NodeC extends C{
 	}
 	
 	function refund():Void {
+		return;
 		var draggedFromNode = edges[0].getC(EdgeC).getEndPoint(e);
 		draggedFromNode.getC(NodeC).gold += gold;
 	}

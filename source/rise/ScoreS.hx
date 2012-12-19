@@ -39,7 +39,6 @@ class ScoreS extends C{
 		return _highScore;
 	}
 	function setHighScore(v:Int):Int{
-		trace(_highScore + ' ' + v);
 		text2.text = Std.string(v);
 		if(v < _highScore) return _highScore;
 		return _highScore = v;
